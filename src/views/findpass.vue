@@ -1,0 +1,89 @@
+<template>
+  <Navabar v-bind:issee='is_show_log_button'></Navabar>
+  <div class="column is-one-quarter" id="findpass">
+    <div class="control has-icons-left has-icons-right">
+      <input class="input" type="email" placeholder="Email" v-model="uemail" onKeyUp="value=value.replace(/[^\d|chun]/g,'')" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
+      <span class="icon is-small is-left">
+    <i class="fas fa-envelope"></i>
+    </span>
+        <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+    </div>
+    <hr>
+    <div class="field">
+      <button v-bind:class="buttonstyle" v-on:click="getpassword" ><strong>找&nbsp;回&nbsp;密&nbsp;码</strong></button>
+    </div>
+
+    <div class="field">
+      <button class="button is-primary is-outlined is-fullwidth " v-on:click="tochangepwd" ><strong>修&nbsp;改&nbsp;密&nbsp;码</strong></button>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+import Navabar from "../components/Navabar";
+
+export default {
+  name: "findpass",
+  components:{
+    Navabar,
+  },
+  data(){
+    return{
+      uemail: '',
+      buttonstyle:'button is-link is-fullwidth',
+      is_show_log_button:true,
+    }
+  },
+  methods:{
+    getpassword(){
+      this.buttonstyle = 'button is-link is-fullwidth is-loading'
+      if (this.uemail !=''){
+        axios({
+          withCredentials : true,
+          url:'https://127.0.0.1:8081/account/sendfindpwd/',
+          method:'post',
+          data: {
+            uemail: this.uemail,
+          }
+        }).then(res => {
+          if (res.data.is_send_password == 'yes'){
+            alert('邮件发送成功!')
+            this.$router.push('/login')
+          }else{
+            alert('邮箱不存在')
+          }
+        })
+      }else
+      {
+        alert('请输入邮箱')
+      }
+      this.buttonstyle = 'button is-link is-fullwidth'
+    },
+    tochangepwd(){
+      this.$router.push('/changepwd')
+    }
+  }
+}
+</script>
+
+<style scoped>
+label{
+  font-family: Serif;
+}
+button{
+  font-family: Serif;
+}
+input{
+  font-family: Serif;
+}
+a{
+  font-family: Serif;
+}
+strong{
+  font-family: Serif;
+}
+</style>
