@@ -3,7 +3,8 @@
     <div class="column is-one-fifth">
       <slot name="left">这里是左边</slot>
     </div>
-    <div class="column is-three-fifth">
+<!--    is-two-fifths-->
+    <div class="column is-one-third">
       <slot name="middle">这里是中间</slot>
     </div>
     <div class="column">

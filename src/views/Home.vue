@@ -3,15 +3,17 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
+        <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
       </template>
 <!--右边部分      -->
       <template v-slot:right>
-        <changeinfo v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-bind:pschool="primaryschool" v-bind:mschool="middleschool" v-bind:hschool="highschool" v-show="left_show.showchangeinfo" v-on:closecmyinfo="showcmyinfo"></changeinfo>
+        <changeinfo v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-bind:pschool="primaryschool" v-bind:mschool="middleschool" v-bind:hschool="highschool" v-show="right_show.showchangeinfo" v-on:closecmyinfo="showcmyinfo"></changeinfo>
+        <takeorderinfo v-show="right_show.showtakeorderinfo" v-bind:order_info="take_order_info" ></takeorderinfo>
       </template>
 
     </bodycontent>
@@ -27,7 +29,8 @@ import bodycontent from "../components/bodycontent";
 import Vnavigation from "../components/Vnavigation";
 import personalinfo from "../components/personalinfo";
 import changeinfo from "../components/changeinfo";
-
+import mytakeorders from "../components/mytakeorders";
+import takeorderinfo from "../components/takeorderinfo";
 export default {
   name: 'Home',
   components: {
@@ -36,6 +39,8 @@ export default {
     Vnavigation,
     personalinfo,
     changeinfo,
+    mytakeorders,
+    takeorderinfo,
   },
   data(){
     return{
@@ -44,10 +49,11 @@ export default {
       user_email:'',
       user_info:{},
       //订单信息
-      user_take_orders:{},
+      user_take_orders:[],
       user_take_orders_num:0,
-      user_send_orders:{},
+      user_send_orders:[],
       user_send_orders_num:0,
+      take_order_info:{}, //接的订单的详细信息
       //年级课程信息
       primaryschool:{},
       middleschool: {},
@@ -64,9 +70,11 @@ export default {
 
       middle_show:{
         showinfo:false, //是否展示个人信息
+        showmytakeorders:false, //展示个人接单信息
       },
-      left_show:{
-        showchangeinfo:false,
+      right_show:{
+        showchangeinfo:false, //展示修改个人信息
+        showtakeorderinfo:false, //展示接的订单的详细信息
       }
     }
   },
@@ -83,9 +91,9 @@ export default {
           //(但是保留家教业务中的三个现在尚未实现暂时不写)
           this.middle_show[keyvalue] = false
         }
-        for (let keyvalue of Object.keys(this.left_show)){
+        for (let keyvalue of Object.keys(this.right_show)){
           //(但是保留家教业务中的三个现在尚未实现暂时不写)
-          this.left_show[keyvalue] = false
+          this.right_show[keyvalue] = false
         }
       }
     },
@@ -108,13 +116,27 @@ export default {
           }
         }
 
-        for(let keyvalue of Object.keys(this.left_show)){
-            this.left_show[keyvalue] = false
+        for(let keyvalue of Object.keys(this.right_show)){
+            this.right_show[keyvalue] = false
+        }
+      }
+    },
+    showtakeorders(){  //个人接单信息展示
+      if(this.middle_show.showmytakeorders != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+            if(keyvalue != 'showmytakeorders'){
+               this.middle_show[keyvalue] = false
+            }else {
+              this.middle_show[keyvalue] = true
+            }
+        }
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
         }
       }
     },
     showcmyinfo(mess){
-      this.left_show.showchangeinfo = mess
+      this.right_show.showchangeinfo = mess
     },
     getnewmyinfo(){
       //获取个人信息
@@ -139,6 +161,55 @@ export default {
         }
       })
     },
+    //获取takeorder信息
+    gettorderinfo(torderinfo){
+      this.take_order_info = torderinfo
+      if(this.right_show.showtakeorderinfo == false){
+        this.right_show.showtakeorderinfo = true
+      }
+    },
+    closetinfo(){
+      this.right_show.showtakeorderinfo = false
+    },
+
+    //刷新接单信息
+    refreshtakeorders(){
+      //获取用户接单信息
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/orders/wtakelist/'+this.user_email+'/',
+        method:'get',
+        data: {
+        }
+      }).then(res => {
+        if(res.data.is_login == 'no'){
+          alert('请重新登录')
+        }else{
+          this.user_take_orders = res.data.orders
+          this.user_take_orders_num = res.data.order_num
+          console.log(this.user_take_orders)
+        }
+      })
+    },
+    //刷新用户发单信息
+    refreshsendorders(){
+      //获取用户发单信息
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/orders/breleaselist/'+this.user_email+'/',
+        method:'get',
+        data: {
+        }
+      }).then(res => {
+        if(res.data.is_login == 'no'){
+          alert('请重新登录')
+        }else{
+          this.user_send_orders = res.data.orders
+          this.user_send_orders_num = res.data.order_num
+          console.log(this.user_send_orders)
+        }
+      })
+    }
   },
   created() {
     //获取个人信息
@@ -196,11 +267,10 @@ export default {
       this.highschool = res.data
       console.log(res.data);
     })
-
   },
   watch:{
     user_email(){
-      //监听当获取到用户email之后请求用户信息
+      //监听当获取到用户email之后请求用户发单信息
       if(this.user_email !=''){
         //获取用户接单信息
         axios({
@@ -215,7 +285,7 @@ export default {
           }else{
             this.user_take_orders = res.data.orders
             this.user_take_orders_num = res.data.order_num
-            console.log(res.data.orders)
+            console.log(this.user_take_orders)
           }
         })
 
@@ -231,16 +301,14 @@ export default {
             alert('请重新登录')
           }else{
             this.user_send_orders = res.data.orders
-            this.user_take_orders_num = res.data.order_num
-            console.log(res.data.orders)
+            this.user_send_orders_num = res.data.order_num
+            console.log(this.user_send_orders)
           }
         })
 
       }
     }
   }
-
-
 }
 </script>
 

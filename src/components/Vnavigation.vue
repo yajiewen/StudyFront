@@ -27,7 +27,7 @@
           <a class="is-active" v-on:click="show_personal_center">个 人 中 心</a>
           <ul v-show="isunfold_personal_center">
             <li><a @click="show_myinfo">个人信息</a></li>
-            <li><a>我接的单</a></li>
+            <li><a @click="show_take_orders">我接的单</a></li>
             <li><a>我发的单</a></li>
           </ul>
         </li>
@@ -60,24 +60,29 @@ props:{
   is_login:Boolean,
 },
 methods:{
-  show_tutoring_business(){
+  show_tutoring_business(){  //展示家教业务
     this.$emit('changstatetb')
   },
-  show_personal_center(){
+  show_personal_center(){ //展示个人中心
     if(this.is_login){
       this.$emit('changestatepc')
     }
   },
-  show_paid_business(){
+  show_paid_business(){ //展示充值业务
     if(this.is_login){
       this.$emit('changestatepb')
     }
   },
-  show_myinfo(){
+  show_myinfo(){ //在中间展示个人信息
     if(this.is_login){
       this.$emit('showmyinfo')
     }
-  }
+  },
+  show_take_orders(){ //在中间和右边展示接单信息
+    if(this.is_login){
+      this.$emit('showtorders')
+    }
+  },
 }
 }
 </script>
