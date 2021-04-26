@@ -3,17 +3,19 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
+        <mysendorders v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
       </template>
 <!--右边部分      -->
       <template v-slot:right>
         <changeinfo v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-bind:pschool="primaryschool" v-bind:mschool="middleschool" v-bind:hschool="highschool" v-show="right_show.showchangeinfo" v-on:closecmyinfo="showcmyinfo"></changeinfo>
         <takeorderinfo v-show="right_show.showtakeorderinfo" v-bind:order_info="take_order_info" ></takeorderinfo>
+        <sendorderinfo v-bind:order_info="send_order_info" v-show="right_show.showsendorderinfo"></sendorderinfo>
       </template>
 
     </bodycontent>
@@ -31,6 +33,9 @@ import personalinfo from "../components/personalinfo";
 import changeinfo from "../components/changeinfo";
 import mytakeorders from "../components/mytakeorders";
 import takeorderinfo from "../components/takeorderinfo";
+import mysendorders from "../components/mysendorders";
+import sendorderinfo from "../components/sendorderinfo";
+
 export default {
   name: 'Home',
   components: {
@@ -41,6 +46,8 @@ export default {
     changeinfo,
     mytakeorders,
     takeorderinfo,
+    mysendorders,
+    sendorderinfo,
   },
   data(){
     return{
@@ -54,6 +61,7 @@ export default {
       user_send_orders:[],
       user_send_orders_num:0,
       take_order_info:{}, //接的订单的详细信息
+      send_order_info:{}, //发的订单的详细信息
       //年级课程信息
       primaryschool:{},
       middleschool: {},
@@ -71,10 +79,12 @@ export default {
       middle_show:{
         showinfo:false, //是否展示个人信息
         showmytakeorders:false, //展示个人接单信息
+        showmysendorders:false, //展示个人发单信息
       },
       right_show:{
         showchangeinfo:false, //展示修改个人信息
         showtakeorderinfo:false, //展示接的订单的详细信息
+        showsendorderinfo:false, //展示发的订单的详细信息
       }
     }
   },
@@ -135,6 +145,20 @@ export default {
         }
       }
     },
+    showsendorders(){
+       if(this.middle_show.showmysendorders != true){
+         for(let keyvalue of Object.keys(this.middle_show)){
+           if(keyvalue != 'showmysendorders'){
+             this.middle_show[keyvalue] = false
+           }else {
+             this.middle_show[keyvalue] = true
+           }
+         }
+         for(let keyvalue of Object.keys(this.right_show)){
+           this.right_show[keyvalue] = false
+         }
+       }
+    },
     showcmyinfo(mess){
       this.right_show.showchangeinfo = mess
     },
@@ -168,8 +192,18 @@ export default {
         this.right_show.showtakeorderinfo = true
       }
     },
+    //获取sendorder信息
+    getsorderinfo(sorderinfo){
+      this.send_order_info = sorderinfo
+      if(this.right_show.showsendorderinfo == false){
+        this.right_show.showsendorderinfo = true
+      }
+    },
     closetinfo(){
       this.right_show.showtakeorderinfo = false
+    },
+    closesinfo(){
+      this.right_show.showsendorderinfo = false
     },
 
     //刷新接单信息

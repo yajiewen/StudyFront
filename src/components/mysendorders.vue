@@ -1,7 +1,7 @@
 <template>
-  <div id="mytakeorders">
+  <div id="mysendorders">
     <div class="notification is-link">
-      我 的 教 学 订 单
+      我 的 家 教 订 单
     </div>
     <div class="action-buttons">
       <div class="control is-grouped">
@@ -14,13 +14,13 @@
     </div>
 
     <div class="inbox-messages" id="inbox-messages">
-      <div v-for="(order, index) in mytakeorders.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}" class="card" v-bind:id="index" v-on:click="showMessage(index,order)" v-bind:data-preview-id="index">
+      <div v-for="(order, index) in mysendorders.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}" class="card" v-bind:id="index" v-on:click="showMessage(index,order)" v-bind:data-preview-id="index">
         <div class="card-content">
           <div class="msg-header">
-            <span class="msg-from font1"><small>学生: {{order.order_boss_name}}</small></span>
+            <span class="msg-from font1"><small>老师: {{order.order_boss_name}}</small></span>
             <span class="msg-timestamp"></span>
             <span class="msg-attachment"><i class="fa fa-paperclip"></i></span>
-            <p class="font3">接单时间:{{ order.order_accept_time }}</p>
+            <p class="font3">创建时间:{{ order.order_start_time }}</p>
           </div>
 
           <div class="columns">
@@ -29,7 +29,9 @@
             <div class="column font2">金 额 <p class="font3">{{order.order_total_money}} 元</p></div>
             <div class="column font2">状 态
               <div class="tags are-small">
-                <span class="tag is-link " v-if="order.order_status == 2">待完成2</span>
+                <span class="tag is-dark " v-if="order.order_status == 0">待付款0</span>
+                <span class="tag is-black " v-if="order.order_status == 1">待接单1</span>
+                <span class="tag is-link " v-if="order.order_status == 2">进行中2</span>
                 <span class="tag is-success " v-if="order.order_status == 3">已完成3</span>
                 <span class="tag is-danger " v-if="order.order_status == 4">申请退款中4</span>
                 <span class="tag is-info " v-if="order.order_status == 5">已退款5</span>
@@ -49,6 +51,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -57,10 +60,10 @@ import axios from 'axios'
 
 
 export default {
-  name: "mytakeorders",
+  name: "mysendorders",
   props:{
-    mytakeorders:Array,
-    mytakeordersnum:Number, //订单数
+    mysendorders:Array,
+    mysendordersnum:Number, //订单数
   },
   data(){
     return{
@@ -76,15 +79,15 @@ export default {
     },
     //切片结束位置
     sliceend(){
-      if (this.slicestart + this.eachpageitemnum > this.mytakeordersnum){
-        return this.mytakeordersnum
+      if (this.slicestart + this.eachpageitemnum > this.mysendordersnum){
+        return this.mysendordersnum
       }else{
         return this.slicestart + this.eachpageitemnum
       }
     },
     //页数
     pagenum(){
-      return Math.ceil(this.mytakeordersnum/this.eachpageitemnum)
+      return Math.ceil(this.mysendordersnum/this.eachpageitemnum)
     }
   },
   methods:{
@@ -96,19 +99,19 @@ export default {
       }
     },
     nextpage(){
-     if(this.pageindex < this.pagenum-1){
-       this.pageindex +=1
-       this.click_item_id = -1 //初始化选中的itemid
-       this.$emit('closeorderinfo')
-     }
+      if(this.pageindex < this.pagenum-1){
+        this.pageindex +=1
+        this.click_item_id = -1 //初始化选中的itemid
+        this.$emit('closeorderinfo')
+      }
     },
     showMessage(index,order) {
       this.click_item_id = index
       console.log(order)
-      this.$emit('torderinfo',order)
+      this.$emit('sorderinfo',order)
     },
     refreshorders(){
-      this.$emit('refreshtorders')
+      this.$emit('refreshsorders')
     },
     askcomplete(otoken){ //申请结单
       axios({
