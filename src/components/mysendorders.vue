@@ -17,7 +17,7 @@
       <div v-for="(order, index) in mysendorders.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}" class="card" v-bind:id="index" v-on:click="showMessage(index,order)" v-bind:data-preview-id="index">
         <div class="card-content">
           <div class="msg-header">
-            <span class="msg-from font1"><small>老师: {{order.order_boss_name}}</small></span>
+            <span class="msg-from font1"><small>老师: {{order.order_worker_name}}</small></span>
             <span class="msg-timestamp"></span>
             <span class="msg-attachment"><i class="fa fa-paperclip"></i></span>
             <p class="font3">创建时间:{{ order.order_start_time }}</p>
@@ -43,10 +43,10 @@
           </div>
 
           <div>
-            <button v-on:click="askcomplete(order.order_token)" v-if="order.order_status == 2">结单</button>
-            <button v-on:click="cancelorder(order.order_token)" v-if="order.order_status == 2">取消订单</button>
-            <button v-on:click="agreerefund(order.order_token)" v-if="order.order_status == 4">同意退款</button>
-            <button v-on:click="disagreerefund(order.order_token)" v-if="order.order_status == 4">拒绝退款</button>
+            <button v-on:click="payorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0">付款</button>
+            <button v-on:click="cancelorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0 ||order.order_status ==1">取消订单</button>
+            <button v-on:click="cancelrefund(order.order_token)" v-if="order.order_status == 4">取消申请退款</button>
+            <button v-on:click="agreecomplete(order.order_token)" v-if="order.order_status == 8">同意收货</button>
           </div>
         </div>
       </div>
@@ -113,78 +113,77 @@ export default {
     refreshorders(){
       this.$emit('refreshsorders')
     },
-    askcomplete(otoken){ //申请结单
+
+    payorder(order_token,order_boss_email){ //支付订单
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/waskok/',
+        url:'https://127.0.0.1:8081/orders/payorder/',
         method:"post",
         data:{
-          otoken:otoken,
+          otoken:order_token,
+          uemail:order_boss_email,
         }
       }).then(res => {
-        if(res.data.is_login == 'yes'){
-          if(res.data.ask_success == 'yes'){
-            this.$emit('refreshtorders') //刷新订单
-          }
-        }else{
-          alert("请重新登录")
+        if(res.data.is_payed == 'yes'){
+            this.$emit('refreshsorders') //刷新订单
+        }else if(res.data.lack_money == 'yes'){
+          alert('金额不足请充值后支付')
         }
       })
     },
-    cancelorder(otoken){ //取消接单
+
+    cancelorder(order_token,order_boss_email){ //取消订单
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/wcancelorder/',
+        url:'https://127.0.0.1:8081/orders/bcancelorder/',
         method:"post",
         data:{
-          otoken:otoken,
+          otoken:order_token,
+          uemail:order_boss_email,
         }
       }).then(res => {
         if(res.data.is_login == 'yes'){
           if(res.data.is_order_cancel == 'yes'){
-            this.$emit('refreshtorders') //刷新订单
+            this.$emit('refreshsorders') //刷新订单
+            alert('退回金额:'+res.data.coin_refund)
           }
-        }else{
-          alert("请重新登录")
         }
       })
     },
-    agreerefund(otoken){ //同意退款
+    cancelrefund(order_token){  //取消申请退款
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/wagreerefund/',
+        url:'https://127.0.0.1:8081/orders/bcancelrefund/',
         method:"post",
         data:{
-          otoken:otoken,
+          otoken:order_token,
+        }
+      }).then(res => {
+        if(res.data.is_login == 'yes'){
+          if(res.data.is_cancel_refund == 'yes'){
+            this.$emit('refreshsorders') //刷新订单
+            alert('已经取消申请退款')
+          }
+        }
+      })
+    },
+    agreecomplete(order_token){  //同意结单
+      axios({
+        withCredentials:true,
+        url:'https://127.0.0.1:8081/orders/bagreeok/',
+        method:"post",
+        data:{
+          otoken:order_token,
         }
       }).then(res => {
         if(res.data.is_login == 'yes'){
           if(res.data.agree_success == 'yes'){
-            this.$emit('refreshtorders') //刷新订单
+            this.$emit('refreshsorders') //刷新订单
           }
-        }else{
-          alert("请重新登录")
         }
       })
     },
-    disagreerefund(otoken){ //拒绝退款
-      axios({
-        withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/wdenyrefund/',
-        method:"post",
-        data:{
-          otoken:otoken,
-        }
-      }).then(res => {
-        if(res.data.is_login == 'yes'){
-          if(res.data.deny_success == 'yes'){
-            this.$emit('refreshtorders') //刷新订单
-          }
-        }else{
-          alert("请重新登录")
-        }
-      })
-    },
+
   }
 }
 </script>
