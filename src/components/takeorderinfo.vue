@@ -78,7 +78,7 @@
            <textarea v-bind:class="{'is-danger':is_emailcontentdanger}" class="textarea font2" :placeholder="textplaceholder" rows="5" maxlength="500" v-model="emailcontent"></textarea>
          </div>
            <div class="columns ">
-             <span><div class="column"><button v-bind:class="{'is-loading':bisloading}" @click="sendstudynote(order_info.order_boss_email)" class="button is-small font3 is-dark is-outlined">发 送</button></div></span>
+             <span><div class="column"><button v-bind:disabled="bisdisable" v-bind:class="{'is-loading':bisloading}" @click="sendstudynote(order_info.order_boss_email)" class="button is-small font3 is-dark is-outlined">发 送</button></div></span>
              <div class="column"><span class="help ont3 is-danger is-left" v-if="showsuccesssend" >已发送</span></div>
            </div>
 
@@ -123,6 +123,7 @@ data(){
   return{
     showsuccesssend:false,
     bisloading:false,  //按钮处于loading状态
+    bisdisable:false, //按钮被禁用
     textplaceholder :'xxx同学,请于xx时间打开会议链接(https://..),上课',
     emailcontent:'',
     is_emailcontentdanger:false,
@@ -146,6 +147,8 @@ methods:{
                 this.showsuccesssend = true
                 setTimeout(() => {this.showsuccesssend = false},2000)
                 this.bisloading = false
+                this.bisdisable = true
+                setTimeout(() => {this.bisdisable = false},1000*60)
               }
             }
           })
