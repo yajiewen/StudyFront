@@ -249,22 +249,26 @@ methods:{
     let idex = 0
     //根据选取设置执教年级
     for(let keyvalue of Object.keys(this.selectedg)){
-      this.usr_teaching_grade += strs[idex] + '('
-      idex +=1
-      for(let grade of this.selectedg[keyvalue]){
-        this.usr_teaching_grade += grade +' '
+      if(this.selectedg[keyvalue].length !=0){
+        this.usr_teaching_grade += strs[idex] + '('
+        idex +=1
+        for(let grade of this.selectedg[keyvalue]){
+          this.usr_teaching_grade += grade +' '
+        }
+        this.usr_teaching_grade += ') '
       }
-      this.usr_teaching_grade += ') '
     }
     //根据选取设置执教学科
     idex = 0
     for(let keyvalue of Object.keys(this.selectedc)){
-      this.usr_teaching_subjects += strs[idex] + '('
-      idex +=1
-      for(let classev of this.selectedc[keyvalue]){
-        this.usr_teaching_subjects += classev +' '
+      if(this.selectedc[keyvalue].length !=0){
+        this.usr_teaching_subjects += strs[idex] + '('
+        idex +=1
+        for(let classev of this.selectedc[keyvalue]){
+          this.usr_teaching_subjects += classev +' '
+        }
+        this.usr_teaching_subjects += ') '
       }
-      this.usr_teaching_subjects += ') '
     }
 /*    console.log(this.usr_teaching_subjects);*/
     axios({
