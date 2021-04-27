@@ -1,6 +1,9 @@
 <template>
  <div id="takeorderinfo">
-   {{order_info}}
+   <div class="notification ">
+     订 单 详 情
+   </div>
+   <br>
    <div class="columns">
      <!--学生信息   -->
      <div class="column font2">
@@ -53,15 +56,37 @@
    </div>
 
 <!--  订单信息 -->
-   <div class="card">
-     <div class="columns">
-       <div class="column">年 级<p class="font3">{{order_info.order_teaching_grade}}</p></div>
-       <div class="column">学 科<p class="font3">{{order_info.order_teaching_subjects}}</p></div>
-       <div class="column">单 价<p class="font3">{{order_info.order_hourly_money}}元</p></div>
-       <div class="column">教学时长<p class="font3">{{order_info.order_teaching_time}}小时</p></div>
-       <div class="column">总 额<p class="font3">{{order_info.order_total_money}}元</p></div>
-       <div class="column">保 证 金<p class="font3">{{order_info.order_worker_earnest_money}}元</p></div>
-     </div>
+   <div class="content font2">
+     <ul>
+       <li><span class="tag is-light">年 级</span> {{order_info.order_teaching_grade}}</li>
+       <li><span class="tag is-light">学 科</span> {{order_info.order_teaching_subjects}}</li>
+       <li><span class="tag is-light">金额/小时</span> {{order_info.order_hourly_money}} 元</li>
+       <li><span class="tag is-light">教 学 时 长</span> {{order_info.order_teaching_time}} 小时</li>
+       <li><span class="tag is-light">总 额</span> {{order_info.order_total_money}} 元</li>
+       <li><span class="tag is-light">保 证 金</span> {{order_info.order_worker_earnest_money}} 元</li>
+       <li>
+         <div class="columns">
+         <div class="column">
+           <p class="font2">
+             <span class="tag is-light">订 单 状 态</span>
+             <span class="tag is-link " v-if="order_info.order_status == 2">待完成2</span>
+             <span class="tag is-success " v-if="order_info.order_status == 3">已完成3</span>
+             <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中4</span>
+             <span class="tag is-info " v-if="order_info.order_status == 5">已退款5</span>
+             <span class="tag is-primary " v-if="order_info.order_status == 6">已取消6</span>
+             <span class="tag is-warning " v-if="order_info.order_status == 7">客服处理中7</span>
+             <span class="tag is-light " v-if="order_info.order_status == 8">待确认8</span>
+           </p>
+         </div>
+         <div class="column">
+           <p class="font2" v-if="order_info.order_status == 3">完成时间:{{order_info.order_complet_time}}</p>
+           <p class="font2" v-if="order_info.order_status == 4">退款金额:{{order_info.order_refund_money}} 元</p>
+           <p class="font2" v-if="order_info.order_status == 5">退款金额:{{order_info.order_refund_money}} 元</p>
+           <p class="font2" v-if="order_info.order_status == 6">取消时间:{{order_info.order_end_time}}</p>
+         </div>
+       </div>
+       </li>
+     </ul>
    </div>
    <br>
    <p v-if="order_info.order_status == 2 ">
@@ -85,28 +110,6 @@
        </div>
      </div>
    </div>
-
-   <div class="columns">
-     <div class="column">
-       <p class="font2">
-         订单状态
-         <span class="tag is-link " v-if="order_info.order_status == 2">待完成2</span>
-         <span class="tag is-success " v-if="order_info.order_status == 3">已完成3</span>
-         <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中4</span>
-         <span class="tag is-info " v-if="order_info.order_status == 5">已退款5</span>
-         <span class="tag is-primary " v-if="order_info.order_status == 6">已取消6</span>
-         <span class="tag is-warning " v-if="order_info.order_status == 7">客服处理中7</span>
-         <span class="tag is-light " v-if="order_info.order_status == 8">待确认8</span>
-       </p>
-     </div>
-     <div class="column">
-       <p class="font2" v-if="order_info.order_status == 3">完成时间:{{order_info.order_complet_time}}</p>
-       <p class="font2" v-if="order_info.order_status == 4">退款金额:{{order_info.order_refund_money}} 元</p>
-       <p class="font2" v-if="order_info.order_status == 5">退款金额:{{order_info.order_refund_money}} 元</p>
-       <p class="font2" v-if="order_info.order_status == 6">取消时间:{{order_info.order_end_time}}</p>
-     </div>
-   </div>
-
  </div>
 </template>
 

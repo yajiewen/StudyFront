@@ -126,6 +126,7 @@ export default {
       }).then(res => {
         if(res.data.is_payed == 'yes'){
             this.$emit('refreshsorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
         }else if(res.data.lack_money == 'yes'){
           alert('金额不足请充值后支付')
         }
@@ -145,6 +146,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.is_order_cancel == 'yes'){
             this.$emit('refreshsorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
             alert('退回金额:'+res.data.coin_refund)
           }
         }
@@ -162,6 +164,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.is_cancel_refund == 'yes'){
             this.$emit('refreshsorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
             alert('已经取消申请退款')
           }
         }
@@ -179,6 +182,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.agree_success == 'yes'){
             this.$emit('refreshsorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }
       })

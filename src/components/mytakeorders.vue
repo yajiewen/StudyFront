@@ -122,6 +122,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.ask_success == 'yes'){
             this.$emit('refreshtorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
           alert("请重新登录")
@@ -140,6 +141,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.is_order_cancel == 'yes'){
             this.$emit('refreshtorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
           alert("请重新登录")
@@ -158,6 +160,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.agree_success == 'yes'){
             this.$emit('refreshtorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
           alert("请重新登录")
@@ -176,6 +179,7 @@ export default {
         if(res.data.is_login == 'yes'){
           if(res.data.deny_success == 'yes'){
             this.$emit('refreshtorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
           alert("请重新登录")
