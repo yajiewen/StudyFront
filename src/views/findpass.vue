@@ -51,6 +51,7 @@ export default {
           }
         }).then(res => {
           if (res.data.is_send_password == 'yes'){
+            this.buttonstyle = 'button is-link is-fullwidth'
             alert('邮件发送成功!')
             this.$router.push('/login')
           }else{

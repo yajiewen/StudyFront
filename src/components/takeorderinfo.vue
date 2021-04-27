@@ -1,11 +1,119 @@
 <template>
  <div id="takeorderinfo">
-   <h2>这里是接单详细信息</h2>
    {{order_info}}
+   <div class="columns">
+     <!--学生信息   -->
+     <div class="column font2">
+       <div class="card">
+         <p>
+           <span class="icon">
+            <i class="fas fa-user-graduate"></i>
+           </span>
+           <strong>{{order_info.order_boss_name}}</strong>
+         </p>
+        <p>
+         <span class="icon">
+          <i class="fas fa-mobile"></i>
+         </span>
+         {{order_info.order_boss_phone_number}}
+        </p>
+        <p>
+         <span class="icon">
+          <i class="fab fa-weixin"></i>
+         </span>
+         {{order_info.order_boss_qq_wei}}
+        </p>
+       </div>
+     </div>
+     <!--老师信息  -->
+     <div class="column font2">
+       <div class="card">
+         <p>
+           <span class="icon">
+            <i class="fas fa-user-graduate"></i>
+           </span>
+           <strong>{{order_info.order_worker_name}}</strong>
+         </p>
+
+         <p>
+           <span class="icon">
+            <i class="fas fa-mobile"></i>
+           </span>
+          {{order_info.order_worker_phone_number}}
+         </p>
+         <p>
+           <span class="icon">
+            <i class="fab fa-weixin"></i>
+           </span>
+           {{order_info.order_worker_qq_wei}}
+         </p>
+       </div>
+     </div>
+
+   </div>
+
+<!--  订单信息 -->
+   <div class="card">
+     <div class="columns">
+       <div class="column">年 级<p class="font3">{{order_info.order_teaching_grade}}</p></div>
+       <div class="column">学 科<p class="font3">{{order_info.order_teaching_subjects}}</p></div>
+       <div class="column">单 价<p class="font3">{{order_info.order_hourly_money}}元</p></div>
+       <div class="column">教学时长<p class="font3">{{order_info.order_teaching_time}}小时</p></div>
+       <div class="column">总 额<p class="font3">{{order_info.order_total_money}}元</p></div>
+       <div class="column">保 证 金<p class="font3">{{order_info.order_worker_earnest_money}}元</p></div>
+     </div>
+   </div>
+   <br>
+   <p v-if="order_info.order_status == 2 ">
+     <span class="icon">
+      <i class="fas fa-comment"></i>
+     </span>
+     <span class="font3">发送上课通知</span>
+   </p>
+
+   <div class="columns is-centered" v-if="order_info.order_status == 2 ">
+     <div class="column is-two-thirds">
+       <div class="field">
+         <div class="control">
+           <textarea v-bind:class="{'is-danger':is_emailcontentdanger}" class="textarea font2" :placeholder="textplaceholder" rows="5" maxlength="500" v-model="emailcontent"></textarea>
+         </div>
+           <div class="columns ">
+             <span><div class="column"><button v-bind:class="{'is-loading':bisloading}" @click="sendstudynote(order_info.order_boss_email)" class="button is-small font3 is-dark is-outlined">发 送</button></div></span>
+             <div class="column"><span class="help ont3 is-danger is-left" v-if="showsuccesssend" >已发送</span></div>
+           </div>
+
+       </div>
+     </div>
+   </div>
+
+   <div class="columns">
+     <div class="column">
+       <p class="font2">
+         订单状态
+         <span class="tag is-link " v-if="order_info.order_status == 2">待完成2</span>
+         <span class="tag is-success " v-if="order_info.order_status == 3">已完成3</span>
+         <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中4</span>
+         <span class="tag is-info " v-if="order_info.order_status == 5">已退款5</span>
+         <span class="tag is-primary " v-if="order_info.order_status == 6">已取消6</span>
+         <span class="tag is-warning " v-if="order_info.order_status == 7">客服处理中7</span>
+         <span class="tag is-light " v-if="order_info.order_status == 8">待确认8</span>
+       </p>
+     </div>
+     <div class="column">
+       <p class="font2" v-if="order_info.order_status == 3">完成时间:{{order_info.order_complet_time}}</p>
+       <p class="font2" v-if="order_info.order_status == 4">退款金额:{{order_info.order_refund_money}} 元</p>
+       <p class="font2" v-if="order_info.order_status == 5">退款金额:{{order_info.order_refund_money}} 元</p>
+       <p class="font2" v-if="order_info.order_status == 6">取消时间:{{order_info.order_end_time}}</p>
+     </div>
+   </div>
+
  </div>
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
 name: "takeorderinfo",
 props:{
@@ -13,12 +121,51 @@ props:{
 },
 data(){
   return{
-
+    showsuccesssend:false,
+    bisloading:false,  //按钮处于loading状态
+    textplaceholder :'xxx同学,请于xx时间打开会议链接(https://..),上课',
+    emailcontent:'',
+    is_emailcontentdanger:false,
+  }
+},
+methods:{
+  sendstudynote(studentemail){
+    if(this.emailcontent.length != 0){
+      this.bisloading = true,
+          axios({
+            withCredentials:true,
+            url:'https://127.0.0.1:8081/orders/sendclassreminder/',
+            method:"post",
+            data:{
+              bemail:studentemail,
+              umessage:this.emailcontent,
+            }
+          }).then(res => {
+            if(res.data.is_login == 'yes'){
+              if(res.data.is_send == 'yes'){
+                this.showsuccesssend = true
+                setTimeout(() => {this.showsuccesssend = false},2000)
+                this.bisloading = false
+              }
+            }
+          })
+    }else {
+          this.is_emailcontentdanger = true
+          setTimeout(() => {this.is_emailcontentdanger = false},2000)
+    }
   }
 }
 }
 </script>
 
 <style scoped>
-
+.font1{   /*发单者字体大小*/
+  font-size: 1.2em
+}
+.font2{  /*年级 学科 ...字体大小*/
+  font-size: 0.875em
+}
+.font3{
+  font-size: 0.5em
+}
 </style>
