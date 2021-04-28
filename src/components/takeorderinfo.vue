@@ -86,6 +86,7 @@
          </div>
        </div>
        </li>
+       <li v-if="order_info.order_status == 4 || order_info.order_status == 5 || order_info.order_status == 7" class="font2"><span class="tag is-light">退 款 原 因</span> {{order_info.order_refund_reason}}</li>
      </ul>
    </div>
    <br>
@@ -106,7 +107,6 @@
              <span><div class="column"><button v-bind:disabled="bisdisable" v-bind:class="{'is-loading':bisloading}" @click="sendstudynote(order_info.order_boss_email)" class="button is-small font3 is-dark is-outlined">发 送</button></div></span>
              <div class="column"><span class="help ont3 is-danger is-left" v-if="showsuccesssend" >已发送</span></div>
            </div>
-
        </div>
      </div>
    </div>

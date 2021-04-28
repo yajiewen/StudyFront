@@ -2,6 +2,99 @@
  <div id="sendorderinfo">
     <h2>这里是订单信息</h2>
    {{order_info}}
+   <div class="notification ">
+     订 单 详 情
+   </div>
+   <br>
+   <div class="columns">
+     <!--学生信息   -->
+     <div class="column font2">
+       <div class="card">
+         <p>
+           <span class="icon">
+            <i class="fas fa-user-graduate"></i>
+           </span>
+           <strong>{{order_info.order_boss_name}}</strong>
+         </p>
+         <p>
+         <span class="icon">
+          <i class="fas fa-mobile"></i>
+         </span>
+           {{order_info.order_boss_phone_number}}
+         </p>
+         <p>
+         <span class="icon">
+          <i class="fab fa-weixin"></i>
+         </span>
+           {{order_info.order_boss_qq_wei}}
+         </p>
+       </div>
+     </div>
+     <!--老师信息  -->
+     <div class="column font2">
+       <div class="card">
+         <p>
+           <span class="icon">
+            <i class="fas fa-user-graduate"></i>
+           </span>
+           <strong>{{order_info.order_worker_name}}</strong>
+         </p>
+
+         <p>
+           <span class="icon">
+            <i class="fas fa-mobile"></i>
+           </span>
+           {{order_info.order_worker_phone_number}}
+         </p>
+         <p>
+           <span class="icon">
+            <i class="fab fa-weixin"></i>
+           </span>
+           {{order_info.order_worker_qq_wei}}
+         </p>
+       </div>
+     </div>
+
+   </div>
+
+   <!--  订单信息 -->
+   <div class="content font2">
+     <ul>
+       <li><span class="tag is-light">年 级</span> {{order_info.order_teaching_grade}}</li>
+       <li><span class="tag is-light">学 科</span> {{order_info.order_teaching_subjects}}</li>
+       <li><span class="tag is-light">金额/小时</span> {{order_info.order_hourly_money}} 元</li>
+       <li><span class="tag is-light">教 学 时 长</span> {{order_info.order_teaching_time}} 小时</li>
+       <li><span class="tag is-light">总 额</span> {{order_info.order_total_money}} 元</li>
+<!--       <li><span class="tag is-light">保 证 金</span> {{order_info.order_worker_earnest_money}} 元</li>-->
+       <li>
+         <div class="columns">
+           <div class="column">
+             <p class="font2">
+               <span class="tag is-light">订 单 状 态</span>
+               <span class="tag is-dark " v-if="order_info.order_status == 0">待付款0</span>
+               <span class="tag is-black " v-if="order_info.order_status == 1">待接单1</span>
+               <span class="tag is-link " v-if="order_info.order_status == 2">待完成2</span>
+               <span class="tag is-success " v-if="order_info.order_status == 3">已完成3</span>
+               <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中4</span>
+               <span class="tag is-info " v-if="order_info.order_status == 5">已退款5</span>
+               <span class="tag is-primary " v-if="order_info.order_status == 6">已取消6</span>
+               <span class="tag is-warning " v-if="order_info.order_status == 7">客服处理中7</span>
+               <span class="tag is-light " v-if="order_info.order_status == 8">待确认8</span>
+             </p>
+           </div>
+           <div class="column">
+             <p class="font2" v-if="order_info.order_status == 3">完成时间:{{order_info.order_complet_time}}</p>
+             <p class="font2" v-if="order_info.order_status == 4">退款金额:{{order_info.order_refund_money}} 元</p>
+             <p class="font2" v-if="order_info.order_status == 5">退款金额:{{order_info.order_refund_money}} 元</p>
+             <p class="font2" v-if="order_info.order_status == 6">取消时间:{{order_info.order_end_time}}</p>
+           </div>
+         </div>
+       </li>
+       <li v-if="order_info.order_status == 4 || order_info.order_status == 5 || order_info.order_status == 7" class="font2"><span class="tag is-light">退 款 原 因</span> {{order_info.order_refund_reason}}</li>
+     </ul>
+   </div>
+   <br>
+
  </div>
 </template>
 
@@ -15,5 +108,13 @@ export default {
 </script>
 
 <style scoped>
-
+.font1{   /*发单者字体大小*/
+  font-size: 1.2em
+}
+.font2{  /*年级 学科 ...字体大小*/
+  font-size: 0.875em
+}
+.font3{
+  font-size: 0.5em
+}
 </style>
