@@ -43,10 +43,36 @@
           </div>
 
           <div>
-            <button v-on:click="payorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0">付款</button>
-            <button v-on:click="cancelorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0 ||order.order_status ==1">取消订单</button>
-            <button v-on:click="cancelrefund(order.order_token)" v-if="order.order_status == 4">取消申请退款</button>
-            <button v-on:click="agreecomplete(order.order_token)" v-if="order.order_status == 8">同意收货</button>
+            <button class="button is-small" v-on:click="payorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0">付款</button>
+            <button class="button is-small" v-on:click="cancelorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0 ||order.order_status ==1">取消订单</button>
+            <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="cancelrefund(order.order_token)" v-if="order.order_status == 4">取消退款</button>
+            <button class="button is-small" v-on:click="agreecomplete(order.order_token)" v-if="order.order_status == 8">同意收货</button>
+            <button class="button is-small" v-on:click="showrefundbutton=false" v-if="(order.order_status == 8||order.order_status == 2)&&showrefundbutton">退款</button>
+            <div v-if="(order.order_status == 8||order.order_status == 2)&&!showrefundbutton">
+              <button class="delete is-small" v-on:click="showrefundbutton=true"></button>
+              <div class="field">
+                <label class="label">退款金额</label>
+                <div class="control">
+                  <input class="input" type="number"  placeholder="退款金额" min="0"  v-model="refundmoney">
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">退款原因</label>
+                <div class="control">
+                  <textarea class="textarea" placeholder="请输入退款原因" maxlength="500" v-model="refundreason"></textarea>
+                </div>
+              </div>
+
+              <div class="field is-grouped">
+                <div class="control">
+                  <button v-bind:class="{'is-loading':button_is_loading}" class="button is-link is-small" v-on:click="dorefund(order.order_boss_email,order.order_token,order.order_total_money)">提交</button>
+                </div>
+                <div class="control">
+                  <button class="button is-link is-light is-small" v-on:click="showrefundbutton=true">取消</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -70,6 +96,12 @@ export default {
       pageindex:0,   //页码
       eachpageitemnum:4, //每页显示数
       click_item_id : -1, //用于给item添加样式
+
+      showrefundbutton:true, //显示退款按钮
+
+      refundmoney:0, //退款金额
+      refundreason:'', //退款原因
+      button_is_loading:false, //button 是否在载入状态
     }
   },
   computed:{
@@ -88,7 +120,7 @@ export default {
     //页数
     pagenum(){
       return Math.ceil(this.mysendordersnum/this.eachpageitemnum)
-    }
+    },
   },
   methods:{
     prepage(){
@@ -154,6 +186,7 @@ export default {
       })
     },
     cancelrefund(order_token){  //取消申请退款
+      this.button_is_loading = true
       axios({
         withCredentials:true,
         url:'https://127.0.0.1:8081/orders/bcancelrefund/',
@@ -166,8 +199,12 @@ export default {
           if(res.data.is_cancel_refund == 'yes'){
             this.$emit('refreshsorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+            this.button_is_loading = false
             alert('已经取消申请退款')
           }
+        }else{
+          this.button_is_loading = false
+          alert('请重新登录')
         }
       })
     },
@@ -185,8 +222,52 @@ export default {
             this.$emit('refreshsorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
+        }else{
+          alert('请重新登录')
         }
       })
+    },
+    dorefund(boss_email,order_token,totalmoney){ //学生申请退款
+      this.button_is_loading = true
+      if(this.refundmoney > 0 && this.refundmoney <= totalmoney){
+        axios({
+          withCredentials:true,
+          url:'https://127.0.0.1:8081/orders/brefundorder/',
+          method:"post",
+          data:{
+            otoken:order_token,
+            uemail:boss_email,
+            remoney:this.refundmoney,
+            reason:this.refundreason,
+          }
+        }).then(res => {
+          if(res.data.is_login == 'yes'){
+            if(res.data.is_order_refund == 'doing'){  //接单后一小时申请
+              this.$emit('refreshsorders') //刷新订单
+              this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+              this.button_is_loading = false
+              this.showrefundbutton = true  //要加这句话
+              this.refundmoney = 0
+              this.refundreason=''
+            }else if(res.data.is_order_refund == 'yes'){  //被接后1小时内申请
+              this.$emit('refreshsorders') //刷新订单
+              this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+              this.button_is_loading = false
+              this.showrefundbutton = true
+              this.refundmoney = 0
+              this.refundreason=''
+              alert('退回金额:'+res.data.coin_refund)
+            }
+          }else {
+            this.button_is_loading = false
+            alert('请重新登录')
+          }
+        })
+      }else{
+        this.refundmoney = 0
+        this.button_is_loading = false
+        alert('请重新输入')
+      }
     },
 
   }

@@ -94,6 +94,11 @@
      </ul>
    </div>
    <br>
+   <div class="columns">
+     <div class="column">
+       <a v-on:click="showrefundmenu">退款</a>
+     </div>
+   </div>
 
  </div>
 </template>

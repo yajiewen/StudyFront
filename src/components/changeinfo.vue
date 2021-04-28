@@ -46,7 +46,6 @@
              <input class="input" type="tel" placeholder="Your phone number" v-model="usr_phone_number">
            </p>
          </div>
-<!--         <p class="help">Do not enter the first zero</p>-->
        </div>
      </div>
    </div>

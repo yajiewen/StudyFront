@@ -41,10 +41,10 @@
           </div>
 
           <div>
-            <button v-on:click="askcomplete(order.order_token)" v-if="order.order_status == 2">结单</button>
-            <button v-on:click="cancelorder(order.order_token)" v-if="order.order_status == 2">取消订单</button>
-            <button v-on:click="agreerefund(order.order_token)" v-if="order.order_status == 4">同意退款</button>
-            <button v-on:click="disagreerefund(order.order_token)" v-if="order.order_status == 4">拒绝退款</button>
+            <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="askcomplete(order.order_token)" v-if="order.order_status == 2">结单</button>
+            <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="cancelorder(order.order_token)" v-if="order.order_status == 2">取消订单</button>
+            <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="agreerefund(order.order_token)" v-if="order.order_status == 4">同意退款</button>
+            <button class="button is-small" v-on:click="disagreerefund(order.order_token)" v-if="order.order_status == 4">拒绝退款</button>
           </div>
         </div>
       </div>
@@ -67,6 +67,7 @@ export default {
       pageindex:0,   //页码
       eachpageitemnum:4, //每页显示数
       click_item_id : -1, //用于给item添加样式
+      button_is_loading:false,
     }
   },
   computed:{
@@ -112,6 +113,7 @@ export default {
       this.$emit('closeorderinfo')
     },
     askcomplete(otoken){ //申请结单
+      this.button_is_loading = true
       axios({
         withCredentials:true,
         url:'https://127.0.0.1:8081/orders/waskok/',
@@ -122,15 +124,18 @@ export default {
       }).then(res => {
         if(res.data.is_login == 'yes'){
           if(res.data.ask_success == 'yes'){
+            this.button_is_loading = false
             this.$emit('refreshtorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
+          this.button_is_loading = false
           alert("请重新登录")
         }
       })
     },
     cancelorder(otoken){ //取消接单
+      this.button_is_loading = true
       axios({
         withCredentials:true,
         url:'https://127.0.0.1:8081/orders/wcancelorder/',
@@ -141,15 +146,18 @@ export default {
       }).then(res => {
         if(res.data.is_login == 'yes'){
           if(res.data.is_order_cancel == 'yes'){
+            this.button_is_loading = false
             this.$emit('refreshtorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
+          this.button_is_loading = false
           alert("请重新登录")
         }
       })
     },
     agreerefund(otoken){ //同意退款
+      this.button_is_loading = true
       axios({
         withCredentials:true,
         url:'https://127.0.0.1:8081/orders/wagreerefund/',
@@ -160,10 +168,12 @@ export default {
       }).then(res => {
         if(res.data.is_login == 'yes'){
           if(res.data.agree_success == 'yes'){
+            this.button_is_loading = false
             this.$emit('refreshtorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
+          this.button_is_loading = false
           alert("请重新登录")
         }
       })
