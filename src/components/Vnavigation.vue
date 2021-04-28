@@ -26,7 +26,7 @@
         <li>
           <a class="is-active" v-on:click="show_personal_center">个 人 中 心</a>
           <ul v-show="isunfold_personal_center">
-            <li><a @click="show_myinfo">个人信息</a></li>
+            <li><a @click="show_myinfo" class="vnavfontcolor">个人信息</a></li>
             <li><a @click="show_take_orders">我接的单</a></li>
             <li><a @click="show_send_orders">我发的单</a></li>
           </ul>
@@ -93,5 +93,8 @@ methods:{
 </script>
 
 <style scoped>
+.vnavfontcolor{
+  color:red;
+}
 
 </style>

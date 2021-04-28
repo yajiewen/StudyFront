@@ -1,7 +1,7 @@
 <template>
   <div id="mytakeorders">
     <div class="notification is-link">
-      我 的 教 学 订 单
+      我 的 教 学 订 单 / / / / / / / / / / / / /共 {{mytakeordersnum}} 单
     </div>
     <div class="action-buttons">
       <div class="control is-grouped">
