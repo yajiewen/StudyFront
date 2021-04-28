@@ -37,8 +37,8 @@
         <li>
           <a class="is-active" v-on:click="show_paid_business">充 值 业 务</a>
           <ul v-show="isunfold_paid_business">
-            <li><a>充值</a></li>
-            <li><a>提现</a></li>
+            <li><a v-bind:class="{font1:changefontsize.recharge, font2:!changefontsize.recharge}">充值</a></li>
+            <li><a v-bind:class="{font1:changefontsize.withdrawal, font2:!changefontsize.withdrawal}">提现</a></li>
           </ul>
         </li>
       </ul>
