@@ -279,7 +279,7 @@ export default {
 
 <style scoped>
 .font1{   /*发单者字体大小*/
-  font-size: 1.2em
+  font-size: 1.1em
 }
 .font2{  /*年级 学科 ...字体大小*/
   font-size: 0.875em
