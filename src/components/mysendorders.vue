@@ -46,7 +46,7 @@
             <button class="button is-small" v-on:click="payorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0">付款</button>
             <button class="button is-small" v-on:click="cancelorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0 ||order.order_status ==1">取消订单</button>
             <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="cancelrefund(order.order_token)" v-if="order.order_status == 4">取消退款</button>
-            <button class="button is-small" v-on:click="agreecomplete(order.order_token)" v-if="order.order_status == 8">同意收货</button>
+            <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="agreecomplete(order.order_token)" v-if="order.order_status == 8">同意收货</button>
             <button class="button is-small" v-on:click="showrefundbutton=false" v-if="(order.order_status == 8||order.order_status == 2)&&showrefundbutton">退款</button>
             <div v-if="(order.order_status == 8||order.order_status == 2)&&!showrefundbutton">
               <button class="delete is-small" v-on:click="showrefundbutton=true"></button>
@@ -209,6 +209,7 @@ export default {
       })
     },
     agreecomplete(order_token){  //同意结单
+      this.button_is_loading = true
       axios({
         withCredentials:true,
         url:'https://127.0.0.1:8081/orders/bagreeok/',
@@ -219,10 +220,12 @@ export default {
       }).then(res => {
         if(res.data.is_login == 'yes'){
           if(res.data.agree_success == 'yes'){
+            this.button_is_loading = false
             this.$emit('refreshsorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
           }
         }else{
+          this.button_is_loading = false
           alert('请重新登录')
         }
       })
