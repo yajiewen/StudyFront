@@ -109,6 +109,7 @@ export default {
     },
     refreshorders(){
       this.$emit('refreshtorders')
+      this.$emit('closeorderinfo')
     },
     askcomplete(otoken){ //申请结单
       axios({

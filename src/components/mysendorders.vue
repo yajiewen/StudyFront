@@ -112,6 +112,7 @@ export default {
     },
     refreshorders(){
       this.$emit('refreshsorders')
+      this.$emit('closeorderinfo')
     },
 
     payorder(order_token,order_boss_email){ //支付订单
