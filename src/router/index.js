@@ -7,6 +7,7 @@ const findpass = () => import('../views/findpass')
 const register = () => import('../views/register')
 const changepwd = () => import('../views/changepwd')
 
+
 const routes = [
   {
     path: '/',

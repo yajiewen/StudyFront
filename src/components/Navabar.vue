@@ -20,6 +20,7 @@
             红 树 林 家 教
           </a>
 
+
           <a class="navbar-item">
             关 于 我 们
           </a>
@@ -122,6 +123,9 @@ methods:{
   },
   turnactive(){   //这个必须绑定class 否则 当页面缩小后 点击不会有到导航栏里面的字段 单纯源代码不够
     this.isactive = !this.isactive
+  },
+  tocreateorder(){
+    this.$router.push('/createorder')
   }
 }
 }

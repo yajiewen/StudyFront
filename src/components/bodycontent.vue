@@ -35,8 +35,8 @@ name: "bodycontent"
 </script>
 
 <style scoped>
-/*div{
+div{
   border-style: solid;
-}*/
+}
 
 </style>

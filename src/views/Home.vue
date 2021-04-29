@@ -3,13 +3,14 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
+        <createorder  v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
       </template>
 <!--右边部分      -->
       <template v-slot:right>
@@ -35,10 +36,11 @@ import mytakeorders from "../components/mytakeorders";
 import takeorderinfo from "../components/takeorderinfo";
 import mysendorders from "../components/mysendorders";
 import sendorderinfo from "../components/sendorderinfo";
+import createorder from "../components/createorder";
 
 export default {
   name: 'Home',
-  components: {
+  components: {  //home中显示的组件
     Navabar,
     bodycontent,
     Vnavigation,
@@ -48,6 +50,7 @@ export default {
     takeorderinfo,
     mysendorders,
     sendorderinfo,
+    createorder,
   },
   data(){
     return{
@@ -80,6 +83,7 @@ export default {
         showinfo:false, //是否展示个人信息
         showmytakeorders:false, //展示个人接单信息
         showmysendorders:false, //展示个人发单信息
+        showmycorder:false, //展示创建订单
       },
       right_show:{
         showchangeinfo:false, //展示修改个人信息
@@ -125,7 +129,7 @@ export default {
             this.middle_show[keyvalue] = true
           }
         }
-
+        //所有右边信息关闭
         for(let keyvalue of Object.keys(this.right_show)){
             this.right_show[keyvalue] = false
         }
@@ -140,6 +144,7 @@ export default {
               this.middle_show[keyvalue] = true
             }
         }
+        //所有右边信息关闭
         for(let keyvalue of Object.keys(this.right_show)){
           this.right_show[keyvalue] = false
         }
@@ -154,14 +159,32 @@ export default {
              this.middle_show[keyvalue] = true
            }
          }
+         //所有右边信息关闭
          for(let keyvalue of Object.keys(this.right_show)){
            this.right_show[keyvalue] = false
          }
        }
     },
+    showcorder(){
+      if(this.middle_show.showmycorder != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+          if(keyvalue != 'showmycorder'){
+            this.middle_show[keyvalue] = false
+          }else {
+            this.middle_show[keyvalue] = true
+          }
+        }
+        //所有右边信息关闭
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
+        }
+      }
+    },
+
     showcmyinfo(mess){
       this.right_show.showchangeinfo = mess
     },
+
     getnewmyinfo(){
       //获取个人信息
       axios({

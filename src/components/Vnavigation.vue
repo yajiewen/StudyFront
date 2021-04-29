@@ -25,6 +25,7 @@
             <li><a @click="show_myinfo" v-bind:class="{font1:changefontsize.person_info,font2:!changefontsize.person_info}">个人信息</a></li>
             <li><a @click="show_take_orders" v-bind:class="{font1:changefontsize.mytorder,font2:!changefontsize.mytorder}">我接的单</a></li>
             <li><a @click="show_send_orders" v-bind:class="{font1:changefontsize.mysorder,font2:!changefontsize.mysorder}">我发的单</a></li>
+            <li><a @click="show_create_order" v-bind:class="{font1:changefontsize.createorder,font2:!changefontsize.createorder}">创建订单</a></li>
           </ul>
         </li>
       </ul>
@@ -66,6 +67,7 @@ data(){
       mysorder:false,
       recharge:false,
       withdrawal:false,
+      createorder:false,
     }
   }
 },
@@ -122,6 +124,19 @@ methods:{
       }
     }
   },
+  show_create_order(){ //显示创建订单项
+    if(this.is_login){
+      this.$emit('showcorder')
+      //改变导航栏字大小
+      for(let keyvalue of Object.keys(this.changefontsize)){
+        if(keyvalue != "createorder"){
+          this.changefontsize[keyvalue] = false
+        }else {
+          this.changefontsize[keyvalue] = true
+        }
+      }
+    }
+  }
 }
 }
 </script>
