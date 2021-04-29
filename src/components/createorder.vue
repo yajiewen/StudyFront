@@ -1,9 +1,10 @@
 <template>
   <div is="createorder" class="column is-5 is-offset-2">
-    <div class="field font2">
-      <p class="help is-danger" v-if="show_danger.grade">
-        请选择年级
-      </p>
+    <div v-show="show_create_block">
+      <div class="field font2">
+        <p class="help is-danger" v-if="show_danger.grade">
+          请选择年级
+        </p>
         <label class="label font1">年 级:</label>
         <div >
           <label class="radio" v-for="grade in pschoolinfo.grades" >
@@ -26,126 +27,162 @@
           </label>
         </div>
 
-      <div class="field">
-        <p class="help is-danger" v-if="show_danger.classvalue">
-          请选择科目
-        </p>
-        <label class="label font1">学 科</label>
-        <div v-if="showclasses.pclass">
-          <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
-            <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
-            {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-          </label>
-        </div>
+        <div class="field">
+          <p class="help is-danger" v-if="show_danger.classvalue">
+            请选择科目
+          </p>
+          <label class="label font1">学 科</label>
+          <div v-if="showclasses.pclass">
+            <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
+              <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
+              {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+            </label>
+          </div>
 
-        <div v-if="showclasses.mclass">
-          <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
-            <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
-            {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-          </label>
-        </div>
+          <div v-if="showclasses.mclass">
+            <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
+              <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+              {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+            </label>
+          </div>
 
-        <div v-if="showclasses.hclass">
-          <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
-            <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
-            {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-          </label>
+          <div v-if="showclasses.hclass">
+            <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
+              <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+              {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+            </label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="columns">
-      <div class="column is-half">
-        <div class="field is-horizontal">
-          <div class="field-body">
-            <div class="field">
-              <label class="label font2">单价/小时</label>
-              <div class="control has-icons-left">
-                <input v-bind:class="{'is-danger':show_danger.hourlym}" class="input is-link" type="text" placeholder="" v-model="hourly_money">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-dollar-sign"></i>
+      <div class="columns">
+        <div class="column is-half">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <label class="label font2">单价/小时</label>
+                <div class="control has-icons-left">
+                  <input v-bind:class="{'is-danger':show_danger.hourlym}" class="input is-link" type="text" placeholder="" v-model="hourly_money">
+                  <span class="icon is-small is-left">
+                  <i class="fas fa-yen-sign"></i>
                 </span>
+                </div>
               </div>
-            </div>
 
-            <div class="field">
-              <label class="label font2">时长(小时)</label>
-              <div class="control has-icons-left">
-                <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="text" placeholder="Time" v-model="teaching_time">
-                <span class="icon is-small is-left">
+              <div class="field">
+                <label class="label font2">时长(小时)</label>
+                <div class="control has-icons-left">
+                  <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="text" placeholder="Time" v-model="teaching_time">
+                  <span class="icon is-small is-left">
                   <i class="far fa-clock"></i>
                 </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field">
-          <label class="label font2">名 字</label>
-          <div class="control has-icons-left">
-            <input v-bind:class="{'is-danger':show_danger.sname}" class="input is-link" type="text" placeholder="Student's Name" v-model="student_name">
-            <span class="icon is-small is-left">
+      <div class="field is-horizontal">
+        <div class="field-body">
+          <div class="field">
+            <label class="label font2">名 字</label>
+            <div class="control has-icons-left">
+              <input v-bind:class="{'is-danger':show_danger.sname}" class="input is-link" type="text" placeholder="Student's Name" v-model="student_name">
+              <span class="icon is-small is-left">
               <i class="fas fa-signature"></i>
             </span>
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <label class="label font2">微 信</label>
-          <div class="control has-icons-left">
-            <input v-bind:class="{'is-danger':show_danger.swechat}" class="input is-success" type="text" placeholder="Wechat" v-model="student_wei">
-            <span class="icon is-small is-left">
+          <div class="field">
+            <label class="label font2">微 信</label>
+            <div class="control has-icons-left">
+              <input v-bind:class="{'is-danger':show_danger.swechat}" class="input is-success" type="text" placeholder="Wechat" v-model="student_wei">
+              <span class="icon is-small is-left">
               <i class="fab fa-weixin"></i>
             </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-body">
+          <div class="field is-expanded">
+            <div class="field has-addons">
+              <p class="control">
+                <a class="button is-static">
+                  +86
+                </a>
+              </p>
+              <p class="control is-expanded">
+                <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model="student_phone_number">
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label font2">其 它 要 求</label>
+        <div class="control">
+          <textarea class="textarea is-info" placeholder="Other requirements" maxlength="460" v-model="student_require"></textarea>
+        </div>
+      </div>
+
+      <!--    <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox">
+                I agree to the <a href="#">terms and conditions</a>
+              </label>
+            </div>
+          </div>-->
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button " v-on:click="create_a_order">提 交</button>
+        </div>
+      </div>
+    </div>
+<!-- 支付div    -->
+    <div v-show="show_pay_block">
+      <h2 class="title is-5">订 单 创 建 成 功</h2>
+      <div class="columns">
+        <div class="column is-10 is-offset-1">
+          <div class="content">
+            <label class="label font2">订 单 详 情:</label>
+            <ul class="font2">
+              <li>年级: {{selectedgrade}}</li>
+              <li>学科: {{selectedclassString}}</li>
+              <li>单价: {{hourly_money}}</li>
+              <li>时长: {{teaching_time}}</li>
+              <li>名字: {{student_name}}</li>
+              <li>联系方式</li>
+              <ul>
+                <li>微信: {{student_wei}}</li>
+                <li>电话: {{student_phone_number}}</li>
+              </ul>
+              <li>其它要求: {{student_require}}</li>
+            </ul>
+          </div>
+          <div class="columns">
+            <div class="column is-3">
+              <button class="button is-small" v-on:click="pay_order">确认并支付</button>
+            </div>
+            <div class="column is-2">
+              <button class="button is-small" v-on:click="cancelcorder">取消</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field is-expanded">
-          <div class="field has-addons">
-            <p class="control">
-              <a class="button is-static">
-                +86
-              </a>
-            </p>
-            <p class="control is-expanded">
-              <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model="student_phone_number">
-            </p>
-          </div>
-        </div>
-      </div>
+    <!-- 支付结果div    -->
+    <div class="card" v-show="show_outcome_block">
+      <h2 class="title is-5">{{showdmessege}}{{time_second}}</h2>
     </div>
 
-
-    <div class="field">
-      <label class="label font2">其 他 要 求</label>
-      <div class="control">
-        <textarea class="textarea is-info" placeholder="Other requirements" maxlength="460" v-model="student_require"></textarea>
-      </div>
-    </div>
-
-<!--    <div class="field">
-      <div class="control">
-        <label class="checkbox">
-          <input type="checkbox">
-          I agree to the <a href="#">terms and conditions</a>
-        </label>
-      </div>
-    </div>-->
-
-    <div class="field is-grouped">
-      <div class="control">
-        <button class="button is-link is-light" v-on:click="create_a_order">提 交</button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -173,7 +210,13 @@ export default {
       student_wei:'', //学生微信
       student_require:'', //其他特殊要求
 
+      o_token:'', // 创建成功后返回的订单号
+
+      show_create_block:true, //显示创建订单窗口
       show_pay_block:false, //创建成功后显示支付模块 支付成功后显示
+      show_outcome_block:false, //支付后支付结果显示
+      time_second:0, //页面显示的计时数
+      showdmessege:'', //支付后显示的信息
 
       show_danger:{  //单输入不合法时候显示
         grade:false,
@@ -243,7 +286,9 @@ export default {
           if(res.data.is_login == 'yes'){
             if(res.data.is_add_order == 'yes'){
               //转到支付div
+              this.show_create_block = false
               this.show_pay_block = true
+              this.o_token = res.data.order_token
               //向home发送刷新订单请求
               this.$emit('refreshsorders')
             }
@@ -279,6 +324,85 @@ export default {
           }
         },3000)
       }
+    },
+    pay_order(){
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/orders/payorder/',
+        method:'post',
+        data:{
+          uemail:this.usr_email,
+          otoken:this.o_token,
+        }
+      }).then(res => {
+        if(res.data.is_payed == 'yes'){
+          //向home发送刷新订单请求
+          this.$emit('refreshsorders')
+          //展示支付结果div
+          this.show_pay_block = false //关闭支付block
+          this.show_outcome_block = true //打开支付结果
+          this.showdmessege = '支付成功!即将跳转至创建订单页面...'
+          this.time_second = 6
+
+           let timer = setInterval(() => {
+              this.time_second-=1
+              if(this.time_second == 0){
+                this.show_create_block = true
+                this.show_outcome_block = false
+                clearInterval(timer)
+              }
+          },1000)
+
+        }else if(res.data.lack_money == 'yes'){
+          this.show_pay_block = false //关闭支付block
+          this.show_outcome_block = true //打开支付结果
+          //展示支付结果div
+          this.showdmessege = '金额不足,支付失败!即将跳转至创建订单页面...'
+          this.time_second = 6
+
+          let timer = setInterval(() => {
+            this.time_second-=1
+            if(this.time_second == 0){
+              this.show_create_block = true
+              this.show_outcome_block = false
+              clearInterval(timer)
+            }
+          },1000)
+        }
+      })
+    },
+    cancelcorder(){
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/orders/bcancelorder/',
+        method:'post',
+        data:{
+          uemail:this.usr_email,
+          otoken:this.o_token,
+        }
+      }).then(res => {
+          if(res.data.is_login == 'yes'){
+            if(res.data.is_order_cancel =='yes'){
+              //向home发送刷新订单请求
+              this.$emit('refreshsorders')
+              this.show_pay_block = false //关闭支付block
+              this.show_outcome_block = true //打开支付结果
+              //展示支付结果div
+              this.showdmessege = '订单已取消!即将跳转至创建订单页面...'
+              this.time_second = 6
+              let timer = setInterval(() => {
+                this.time_second-=1
+                if(this.time_second == 0){
+                  this.show_create_block = true
+                  this.show_outcome_block = false
+                  clearInterval(timer)
+                }
+              },1000)
+            }
+          }else{
+            alert("请重新登录")
+          }
+      })
     },
     initselectedclass(){
       this.selectedclass = []
