@@ -1,5 +1,5 @@
 <template>
-  <div id="mysendorders">
+  <div id="mysendorders" class="card column is-one-third">
     <div class="notification is-link">
       我 的 学 习 订 单/ / / / / / / / / / / / /共 {{mysendordersnum}} 单
     </div>

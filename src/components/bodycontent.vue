@@ -4,12 +4,15 @@
       <slot name="left">这里是左边</slot>
     </div>
 <!--    is-two-fifths-->
-    <div class="column is-one-third">
+<!--    <div class="column is-one-third">
       <slot name="middle">这里是中间</slot>
-    </div>
-    <div class="column">
+    </div>-->
+<!--修改后中间和右边部分需要自己写上 class="column is-two-fifths" 以及大小is-two-fifths-->
+    <slot name="middle">这里是中间</slot>
+<!--    <div class="column">
       <slot name="right">这里是右边</slot>
-    </div>
+    </div>-->
+    <slot name="right">这里是右边</slot>
   </div>
 
   <div class="columns">
@@ -32,8 +35,8 @@ name: "bodycontent"
 </script>
 
 <style scoped>
-div{
+/*div{
   border-style: solid;
-}
+}*/
 
 </style>

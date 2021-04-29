@@ -1,5 +1,5 @@
 <template>
- <div id="takeorderinfo">
+ <div id="takeorderinfo" class="column">
    <div class="notification ">
      订 单 详 情
    </div>

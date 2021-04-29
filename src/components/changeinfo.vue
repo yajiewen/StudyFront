@@ -1,5 +1,5 @@
 <template>
- <div id="changeinfo" class="card">
+ <div id="changeinfo" class="card column">
    <div class="block">
            <button class="delete is-small" v-on:click="closecmyinfo"></button>
    </div>
