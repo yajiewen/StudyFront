@@ -14,7 +14,7 @@
 
    <div class="field is-horizontal">
      <div class="field-label is-normal">
-       <label class="label">年龄</label>
+       <label class="label font2">年龄</label>
      </div>
      <div class="field-body">
        <div class="field">
@@ -54,16 +54,16 @@
 
    <div class="field is-horizontal">
      <div class="field-label">
-       <label class="label">性别</label>
+       <label class="label font2">性别</label>
      </div>
      <div class="field-body">
        <div class="field is-narrow">
          <div class="control">
-           <label class="radio">
+           <label class="radio font2">
              <input type="radio" name="member" v-model="usr_sex" value="男">
              男
            </label>
-           <label class="radio">
+           <label class="radio font2">
              <input type="radio" name="member" v-model="usr_sex" value="女">
              女
            </label>
@@ -74,7 +74,7 @@
 
    <div class="field is-horizontal">
      <div class="field-label is-normal">
-       <label class="label">就读学校</label>
+       <label class="label font2">就读学校</label>
      </div>
      <div class="field-body">
        <div class="field">
@@ -89,7 +89,7 @@
 
    <div class="field is-horizontal">
      <div class="field-label is-normal">
-       <label class="label">所学专业</label>
+       <label class="label font2">所学专业</label>
      </div>
      <div class="field-body">
        <div class="field">
@@ -102,24 +102,24 @@
 
    <div class="field is-horizontal">
      <div class="field-label is-normal">
-       <label class="label">执教年级</label>
+       <label class="label font2">执教年级</label>
      </div>
      <div class="field-body">
        <div class="field">
          <div class="control">
            <div class="select is-multiple ">
              <select multiple size="6" v-model="selectedg.selectedpgrades">
-               <option v-bind:value="grade" v-for="grade in pschool.grades">{{grade}}</option>
+               <option class="font2" v-bind:value="grade" v-for="grade in pschool.grades">{{grade}}</option>
              </select>
            </div>
            <div class="select is-multiple ">
              <select multiple size="6" v-model="selectedg.selectedmgrades">
-               <option v-bind:value="grade" v-for="grade in mschool.grades">{{grade}}</option>
+               <option class="font2" v-bind:value="grade" v-for="grade in mschool.grades">{{grade}}</option>
              </select>
            </div>
            <div class="select is-multiple ">
              <select multiple size="6" v-model="selectedg.selectedhgrades">
-               <option v-bind:value="grade" v-for="grade in hschool.grades">{{grade}}</option>
+               <option class="font2" v-bind:value="grade" v-for="grade in hschool.grades">{{grade}}</option>
              </select>
            </div>
          </div>
@@ -130,24 +130,24 @@
 
    <div class="field is-horizontal">
      <div class="field-label is-normal">
-       <label class="label">执教学科</label>
+       <label class="label font2">执教学科</label>
      </div>
      <div class="field-body">
        <div class="field">
          <div class="control">
            <div class="select is-multiple ">
              <select multiple size="8" v-model="selectedc.selectedpclasses">
-               <option v-bind:value="classvalue" v-for="classvalue in pschool.classes">{{classvalue}}</option>
+               <option class="font2" v-bind:value="classvalue" v-for="classvalue in pschool.classes">{{classvalue}}</option>
              </select>
            </div>
            <div class="select is-multiple ">
              <select multiple size="8" v-model="selectedc.selectedmclasses">
-               <option v-bind:value="classvalue" v-for="classvalue in mschool.classes">{{classvalue}}</option>
+               <option class="font2" v-bind:value="classvalue" v-for="classvalue in mschool.classes">{{classvalue}}</option>
              </select>
            </div>
            <div class="select is-multiple ">
              <select multiple size="8" v-model="selectedc.selectedhclasses">
-               <option v-bind:value="classvalue" v-for="classvalue in hschool.classes">{{classvalue}}</option>
+               <option class="font2" v-bind:value="classvalue" v-for="classvalue in hschool.classes">{{classvalue}}</option>
              </select>
            </div>
          </div>
@@ -158,12 +158,12 @@
 
    <div class="field is-horizontal">
      <div class="field-label is-normal">
-       <label class="label">个人经历</label>
+       <label class="label font2">个人经历</label>
      </div>
      <div class="field-body">
        <div class="field">
          <div class="control">
-           <textarea class="textarea is-link" placeholder="Please enter your personal history" rows="6" maxlength="500" v-model="usr_experience"></textarea>
+           <textarea class="textarea is-link font2" placeholder="Please enter your personal history" rows="6" maxlength="500" v-model="usr_experience"></textarea>
          </div>
        </div>
      </div>
@@ -303,5 +303,13 @@ methods:{
 </script>
 
 <style scoped>
-
+.font1{   /*发单者字体大小*/
+  font-size: 1.1em
+}
+.font2{  /*年级 学科 ...字体大小*/
+  font-size: 0.875em
+}
+.font3{
+  font-size: 0.5em
+}
 </style>
