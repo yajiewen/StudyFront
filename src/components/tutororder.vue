@@ -94,19 +94,27 @@
         </div>
         <div v-show="showtakemenu == index" class="columns">
           <div class="column is-half">
+
             <div class="field">
-              <label class="label">退款金额</label>
+              <label class="label font2">老师名字:</label>
               <div class="control">
-                <input class="input" type="number"  placeholder="退款金额" min="0"  v-model="refundmoney">
+                <input class="input" type="text">
               </div>
             </div>
 
             <div class="field">
-              <label class="label">退款原因</label>
+              <label class="label font2">微信:</label>
               <div class="control">
-                <textarea class="textarea" placeholder="请输入退款原因" maxlength="500" v-model="refundreason"></textarea>
+                <input type="text">
               </div>
             </div>
+            <div class="field">
+              <label class="label font2">电话:</label>
+              <div class="control">
+                <input type="text">
+              </div>
+            </div>
+
 
             <div class="field is-grouped">
               <div class="control">
