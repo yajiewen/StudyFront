@@ -288,7 +288,8 @@ export default {
   font-size: 0.5em
 }
 .cardbackground{  /*选中后换的背景颜色*/
-  background-color:ghostwhite;
+  /*background-color:ghostwhite;*/
+  background-color: rgb(10 10 10 / 10%);
 }
 
 </style>

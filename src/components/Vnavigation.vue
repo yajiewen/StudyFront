@@ -1,6 +1,6 @@
 <template>
   <div id="Vnavigation">
-    <aside class="menu" >
+    <aside class="menu menubackground" >
       <p class="menu-label">
         Tutoring business
       </p>
@@ -166,5 +166,7 @@ methods:{
 .font3{
   font-size: 0.5em
 }
-
+.menubackground{
+  background-color: #F9F9F9;
+}
 </style>

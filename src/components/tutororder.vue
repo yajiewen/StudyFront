@@ -50,8 +50,9 @@
           </label>
         </div>
       </div>
+      <a class="button is-small" @click="searchorders"><i class="fas fa-search"></i></a>
     </div>
-    <a class="button is-small" @click="searchorders"><i class="fas fa-search"></i></a>
+
     <div class="action-buttons">
       <div class="control is-grouped">
         <a class="button is-small" @click="refreshorders"><i class="fa fa-refresh"></i></a>
@@ -246,7 +247,7 @@ export default {
   font-size: 0.5em
 }
 .cardbackground{  /*选中后换的背景颜色*/
-  background-color:ghostwhite;
+  background-color:rgb(10 10 10 / 10%);
 }
 
 </style>
