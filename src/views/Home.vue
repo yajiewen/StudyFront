@@ -3,14 +3,15 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
+        <tutororder v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
-        <createorder v-on:refreshsorders="refreshsendorders" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
+        <createorder v-on:refreshorderlist="refreshzorderlist"  v-on:refreshsorders="refreshsendorders" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
       </template>
 <!--右边部分      -->
       <template v-slot:right>
@@ -37,6 +38,7 @@ import takeorderinfo from "../components/takeorderinfo";
 import mysendorders from "../components/mysendorders";
 import sendorderinfo from "../components/sendorderinfo";
 import createorder from "../components/createorder";
+import tutororder from "../components/tutororder";
 
 export default {
   name: 'Home',
@@ -51,6 +53,7 @@ export default {
     mysendorders,
     sendorderinfo,
     createorder,
+    tutororder,
   },
   data(){
     return{
@@ -69,6 +72,11 @@ export default {
       primaryschool:{},
       middleschool: {},
       highschool: {},
+      //主页待结单列表信息
+      orderlistinfo:{
+        ordernum:0,//订单数
+        ordersinfo:[],//订单信息
+      },
 
       //界面展示
       show_personal_info:false,
@@ -84,6 +92,7 @@ export default {
         showmytakeorders:false, //展示个人接单信息
         showmysendorders:false, //展示个人发单信息
         showmycorder:false, //展示创建订单
+        showorderlist:true, //展示待接单列表
       },
       right_show:{
         showchangeinfo:false, //展示修改个人信息
@@ -150,7 +159,7 @@ export default {
         }
       }
     },
-    showsendorders(){
+    showsendorders(){ //展示我发的单
        if(this.middle_show.showmysendorders != true){
          for(let keyvalue of Object.keys(this.middle_show)){
            if(keyvalue != 'showmysendorders'){
@@ -165,10 +174,25 @@ export default {
          }
        }
     },
-    showcorder(){
+    showcorder(){ //展示创建订单
       if(this.middle_show.showmycorder != true){
         for(let keyvalue of Object.keys(this.middle_show)){
           if(keyvalue != 'showmycorder'){
+            this.middle_show[keyvalue] = false
+          }else {
+            this.middle_show[keyvalue] = true
+          }
+        }
+        //所有右边信息关闭
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
+        }
+      }
+    },
+    showturtorlist(){ //展示家教订单
+      if(this.middle_show.showorderlist != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+          if(keyvalue != 'showorderlist'){
             this.middle_show[keyvalue] = false
           }else {
             this.middle_show[keyvalue] = true
@@ -184,7 +208,6 @@ export default {
     showcmyinfo(mess){
       this.right_show.showchangeinfo = mess
     },
-
     getnewmyinfo(){
       //获取个人信息
       axios({
@@ -266,7 +289,39 @@ export default {
           console.log(this.user_send_orders)
         }
       })
-    }
+    },
+    //刷新主页代接订单
+    refreshzorderlist(){
+      //获取待接单列表
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/orders/ordertotake/no/no/',
+        method:'get',
+        data: {
+        }
+      }).then(res => {
+        if(res.data.is_get == 'yes'){
+          this.orderlistinfo.ordernum = res.data.order_num
+          this.orderlistinfo.ordersinfo = res.data.orders
+        }
+      })
+    },
+    searchzorders(gradevalue,classesvalue){
+      //获取待接单列表
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/orders/ordertotake/'+gradevalue+'/'+classesvalue+'/',
+        method:'get',
+        data: {
+        }
+      }).then(res => {
+        if(res.data.is_get == 'yes'){
+          this.orderlistinfo.ordernum = res.data.order_num
+          this.orderlistinfo.ordersinfo = res.data.orders
+        }
+      })
+
+    },
   },
   created() {
     //获取个人信息
@@ -323,6 +378,20 @@ export default {
     }).then(res => {
       this.highschool = res.data
       console.log(res.data);
+    })
+
+    //获取待接单列表
+    axios({
+      withCredentials : true,
+      url:'https://127.0.0.1:8081/orders/ordertotake/no/no/',
+      method:'get',
+      data: {
+      }
+    }).then(res => {
+      if(res.data.is_get == 'yes'){
+        this.orderlistinfo.ordernum = res.data.order_num
+        this.orderlistinfo.ordersinfo = res.data.orders
+      }
     })
   },
   watch:{

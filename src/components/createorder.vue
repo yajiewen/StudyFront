@@ -240,8 +240,16 @@ export default {
     },
     selectedclassString(){
       let class_info =''
+      let len = this.selectedclass.length
+      let i=0
       for(let classvalue of this.selectedclass){
-        class_info += classvalue +';'
+        if(i < len -1){
+          class_info += classvalue +';'
+          i+=1
+        }else{
+          class_info += classvalue
+          i+=1
+        }
       }
       return class_info
     }
@@ -338,6 +346,7 @@ export default {
         if(res.data.is_payed == 'yes'){
           //向home发送刷新订单请求
           this.$emit('refreshsorders')
+          this.$emit('refreshorderlist')
           //展示支付结果div
           this.show_pay_block = false //关闭支付block
           this.show_outcome_block = true //打开支付结果

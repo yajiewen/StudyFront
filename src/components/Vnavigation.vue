@@ -8,7 +8,7 @@
         <li>
           <a class="is-active" v-on:click="show_tutoring_business" >家 教 业 务</a>
           <ul v-show="isunfold_tutoring_business">
-            <li><a v-bind:class="{font1:changefontsize.tutor_order,font2:!changefontsize.tutor_order}">家教订单</a></li>
+            <li><a v-bind:class="{font1:changefontsize.tutor_order,font2:!changefontsize.tutor_order}" v-on:click="show_order_to_take_list">家教订单</a></li>
             <li><a v-bind:class="{font1:changefontsize.airecommend,font2:!changefontsize.airecommend}">智能推荐</a></li>
             <li><a v-bind:class="{font1:changefontsize.findteacher,font2:!changefontsize.findteacher}">找老师</a></li>
           </ul>
@@ -59,15 +59,15 @@ props:{
 data(){
   return{
     changefontsize:{
-      tutor_order:false,
-      airecommend:false,
-      findteacher:false,
-      person_info:false,
-      mytorder:false,
-      mysorder:false,
-      recharge:false,
-      withdrawal:false,
-      createorder:false,
+      tutor_order:true, //主页家教订单字体大小
+      airecommend:false, //智能推荐字体大小
+      findteacher:false, //找老师字体大小
+      person_info:false, //个人信息..
+      mytorder:false, //我接的单..
+      mysorder:false, //我发的单..
+      recharge:false, //充值
+      withdrawal:false, //提现
+      createorder:false, //创建订单
     }
   }
 },
@@ -136,7 +136,19 @@ methods:{
         }
       }
     }
-  }
+  },
+  show_order_to_take_list(){
+      this.$emit('showzorderlist')
+      //改变导航栏字大小
+      for(let keyvalue of Object.keys(this.changefontsize)){
+        if(keyvalue != "tutor_order"){
+          this.changefontsize[keyvalue] = false
+        }else {
+          this.changefontsize[keyvalue] = true
+        }
+      }
+  },
+
 }
 }
 </script>

@@ -9,7 +9,7 @@
         <a class="button is-small" @click="prepage" ><i class="fa fa-chevron-left"></i></a>
         <span class="font3">{{pageindex + 1}}</span>
         <a class="button is-small" @click="nextpage"><i class="fa fa-chevron-right"></i></a>
-        <span class="font3">共{{pagenum}}页</span>
+        <span class="font3">&nbsp&nbsp共{{pagenum}}页</span>
       </div>
     </div>
 
