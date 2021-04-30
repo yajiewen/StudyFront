@@ -1,5 +1,5 @@
 <template>
-  <div is="createorder" class="column is-5 is-offset-2">
+  <div is="createorder" class="column is-5 is-offset-2 blockbackground">
     <div v-show="show_create_block">
       <div class="field font2">
         <p class="help is-danger" v-if="show_danger.grade">
@@ -429,5 +429,8 @@ export default {
 }
 .font3{
   font-size: 0.5em
+}
+.blockbackground{
+  background-color: #F9F9F9;
 }
 </style>

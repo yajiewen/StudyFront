@@ -77,7 +77,7 @@
             <div class="column font2"><p class="font3">{{order.order_teaching_subjects}}</p></div>
             <div class="column font2"><p class="font3">{{order.order_total_money}} 元</p></div>
             <div class="column font2"><a class="font3" v-on:click="showdetailf(index)">详细信息</a></div>
-            <div class="column font2"><button v-on:click="takeorder(order.order_token,order.order_boss_email)">接 单</button></div>
+            <div class="column font2"><button class="button is-small" v-on:click="cshowtakemenu(index)">{{buttonmess}}</button></div>
 
           </div>
         <!--详细信息      -->
@@ -91,6 +91,32 @@
               <li>保证金: {{ order.order_worker_earnest_money }} 元</li>
               <li>其它要求: {{ order.order_boss_require }}</li>
             </ul>
+        </div>
+        <div v-show="showtakemenu == index" class="columns">
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">退款金额</label>
+              <div class="control">
+                <input class="input" type="number"  placeholder="退款金额" min="0"  v-model="refundmoney">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">退款原因</label>
+              <div class="control">
+                <textarea class="textarea" placeholder="请输入退款原因" maxlength="500" v-model="refundreason"></textarea>
+              </div>
+            </div>
+
+            <div class="field is-grouped">
+              <div class="control">
+                <button v-bind:class="{'is-loading':button_is_loading}" class="button is-link is-small" v-on:click="takeorder(order.order_token,order.order_boss_email)">接单</button>
+              </div>
+              <div class="control">
+                <button class="button is-link is-light is-small" v-on:click="showrefundbutton=true">取消</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -114,14 +140,17 @@ export default {
       eachpageitemnum:10, //每页显示数
       click_item_id : -1, //用于给item添加样式
       button_is_loading:false, //button 是否在载入状态
-      uname:'',
-      uwechat:'',
+      uname:'', //接单人名字
+      uwechat:'', //接单人wechat
+      uphone:'', //接单人电话
 
       selectedgrade:'',
       selectedclass:[], //选择的课程列表
 
       showfilter:false, //显示筛选
+      showtakemenu:-1, //显示接单菜单
       showdetailinfo:-1, //显示详细信息
+      buttonmess:'接 单', //按钮显示的内容,点击后改变
       showclasses:{  //展示对应年级的课程
         pclass:false,
         mclass:false,
@@ -208,6 +237,15 @@ export default {
         this.showdetailinfo = index
       }else {
         this.showdetailinfo = -1
+      }
+    },
+    cshowtakemenu(index){
+      if(this.showtakemenu !=index){
+        this.showtakemenu = index
+        this.buttonmess = '取 消'
+      }else {
+        this.showtakemenu = -1
+        this.buttonmess = '接 单'
       }
     },
     btshowfilter(){

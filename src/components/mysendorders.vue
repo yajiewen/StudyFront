@@ -289,7 +289,8 @@ export default {
 }
 .cardbackground{  /*选中后换的背景颜色*/
   /*background-color:ghostwhite;*/
-  background-color: rgb(10 10 10 / 10%);
+  /*background-color: rgb(10 10 10 / 3%);*/
+  background-color: #F5F5F5;
 }
 
 </style>
