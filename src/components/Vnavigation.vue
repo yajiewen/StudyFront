@@ -1,6 +1,6 @@
 <template>
-  <div id="Vnavigation">
-    <aside class="menu menubackground" >
+  <div id="Vnavigation" class="menubackground">
+    <aside class="menu" >
       <p class="menu-label">
         Tutoring business
       </p>

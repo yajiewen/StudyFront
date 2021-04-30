@@ -3,54 +3,60 @@
     <div class="notification is-link">
       家 教 订 单/ / / / / / / / / / / / /共 {{orderlistinfo.ordernum}} 单
     </div>
-    <div class="field font2">
-
-      <label class="label font1">年 级:</label>
-      <div >
-        <label class="radio" v-for="grade in pschoolinfo.grades" >
-          <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
-          {{grade+'&nbsp&nbsp'}}
-        </label>
-      </div>
-
-      <div >
-        <label class="radio" v-for="grade in mschoolinfo.grades">
-          <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
-          {{grade+'&nbsp&nbsp'}}
-        </label>
-      </div>
-
-      <div class="field">
-        <label class="radio" v-for="grade in hschoolinfo.grades">
-          <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
-          {{grade+'&nbsp&nbsp'}}
-        </label>
-      </div>
-
-      <div class="field">
-        <label class="label font1">学 科</label>
-        <div v-if="showclasses.pclass">
-          <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
-            <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
-            {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-          </label>
-        </div>
-
-        <div v-if="showclasses.mclass">
-          <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
-            <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
-            {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-          </label>
-        </div>
-
-        <div v-if="showclasses.hclass">
-          <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
-            <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
-            {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-          </label>
-        </div>
-      </div>
+    <div>
+      <a class="button is-small" @click="btshowfilter"><i class="fas fa-caret-down">筛选</i></a>
       <a class="button is-small" @click="searchorders"><i class="fas fa-search"></i></a>
+    </div>
+    <div class="columns" v-show="showfilter">
+      <div class="column is-offset-1">
+        <div class="field font2">
+          <label class="label font1">年 级:</label>
+          <div >
+            <label class="radio" v-for="grade in pschoolinfo.grades" >
+              <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+              {{grade+'&nbsp&nbsp'}}
+            </label>
+          </div>
+
+          <div >
+            <label class="radio" v-for="grade in mschoolinfo.grades">
+              <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+              {{grade+'&nbsp&nbsp'}}
+            </label>
+          </div>
+
+          <div class="field">
+            <label class="radio" v-for="grade in hschoolinfo.grades">
+              <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+              {{grade+'&nbsp&nbsp'}}
+            </label>
+          </div>
+
+          <div class="field">
+            <label class="label font1">学 科</label>
+            <div v-if="showclasses.pclass">
+              <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
+                <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
+                {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+              </label>
+            </div>
+
+            <div v-if="showclasses.mclass">
+              <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
+                <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+                {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+              </label>
+            </div>
+
+            <div v-if="showclasses.hclass">
+              <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
+                <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+                {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="action-buttons">
@@ -114,6 +120,7 @@ export default {
       selectedgrade:'',
       selectedclass:[], //选择的课程列表
 
+      showfilter:false, //显示筛选
       showdetailinfo:-1, //显示详细信息
       showclasses:{  //展示对应年级的课程
         pclass:false,
@@ -202,6 +209,9 @@ export default {
       }else {
         this.showdetailinfo = -1
       }
+    },
+    btshowfilter(){
+      this.showfilter = !this.showfilter
     },
     takeorder(ordertoken,bossemail){
       axios({
