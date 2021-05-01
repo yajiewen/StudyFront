@@ -72,6 +72,37 @@
      </div>
    </div>
 
+  <!--省市   -->
+   <div class="field is-horizontal">
+     <div class="field-label"></div>
+     <div class="field-body">
+       <div class="field is-expanded">
+         <div class="field has-addons">
+           <div class="select is-link is-small">
+             <select v-model="selectcity.province">
+               <option value="省.自治区.直辖市" selected>省.自治区.直辖市</option>
+               <option v-for="provincename in Object.keys(cityinfo)" v-bind:value="provincename">{{provincename}}</option>
+             </select>
+           </div>
+           <div class="select is-link is-small">
+             <select v-model="selectcity.city">
+               <option value="地级市.地区.自治州" selected>地级市.地区.自治州</option>
+               <option v-for="cityname in Object.keys(cityinfo[selectcity.province])" v-bind:value="cityname">{{cityname}}</option>
+             </select>
+           </div>
+           <div class="select is-link is-small">
+             <select v-model="selectcity.county">
+               <option value="市辖区.县级市.县" selected>市辖区.县级市.县</option>
+               <option v-for="countyname in cityinfo[selectcity.province][selectcity.city]" v-bind:value="countyname">{{countyname}}</option>
+             </select>
+         </div>
+         </div>
+       </div>
+
+     </div>
+
+   </div>
+
    <div class="field is-horizontal">
      <div class="field-label is-normal">
        <label class="label font2">就读学校</label>
@@ -188,6 +219,7 @@
 
 <script>
 import axios from 'axios'
+import cityjson from '../assets/cityinfo.json'  //导入中国省市县json文件
 
 export default {
 name: "changeinfo",
@@ -219,6 +251,12 @@ data(){
         selectedmclasses:[],
         selectedhclasses:[],
       },
+      cityinfo:cityjson, //中国省市县
+      selectcity:{   //城市下拉列表中选择的内容
+        province:'北京市',
+        city:'市辖区',
+        county:'东城区',
+      }
     }
 },
 watch:{
@@ -243,7 +281,6 @@ watch:{
 },
 methods:{
   uploadinfo(){
-
     const strs=['小学:','初中:','高中:']
     let idex = 0
     //根据选取设置执教年级
@@ -283,6 +320,8 @@ methods:{
         uexperience: this.usr_experience,
         umajor: this.usr_major,
         u_phone_number: this.usr_phone_number,
+        u_now_province: this.selectcity.province,
+        u_now_city_county: this.selectcity.city+this.selectcity.county
       }
     }).then(res => {
       console.log(res.data);

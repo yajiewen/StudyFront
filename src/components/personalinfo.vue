@@ -21,9 +21,10 @@
           <li class="font2"><span class="tag is-light">年 龄</span>{{ usr_info.uage}}</li>
           <li class="font2"><span class="tag is-light">学 校</span>{{ usr_info.uschool}}</li>
           <li class="font2"><span class="tag is-light">专 业</span>{{ usr_info.umajor}}</li>
-          <li class="font2"><span class="tag is-light">电 话</span>{{usr_info.uphone_number}}</li>
           <li class="font2"><span class="tag is-light">执 教 年 级</span>{{usr_info.uteaching_grade}}</li>
           <li class="font2"><span class="tag is-light">执 教 学 科</span>{{usr_info.uteaching_subjects}}</li>
+          <li class="font2"><span class="tag is-light">电 话</span>{{usr_info.uphone_number}}</li>
+          <li class="font2"><span class="tag is-light">所 在 地</span>{{usr_info.u_now_province}}{{usr_info.u_now_city_county}}</li>
         </ul>
 
         <br>
