@@ -15,7 +15,7 @@
 
       <div class="content">
         <h2><span class="tag is-light">个 人 经 历</span></h2>
-        <p>{{usr_info.uexperience}}</p>
+        <p class="font2">{{usr_info.uexperience}}</p>
         <ul>
           <li class="font2"><span class="tag is-light">性 别</span>{{ usr_info.usex}}</li>
           <li class="font2"><span class="tag is-light">年 龄</span>{{ usr_info.uage}}</li>

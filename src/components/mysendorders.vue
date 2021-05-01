@@ -190,6 +190,7 @@ export default {
           if(res.data.is_order_cancel == 'yes'){
             this.$emit('refreshsorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+            this.$emit('refreshorderlist') //刷新主页代接订单
             alert('退回金额:'+res.data.coin_refund)
           }
         }
