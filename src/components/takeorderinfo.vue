@@ -60,7 +60,7 @@
      <ul>
        <li><span class="tag is-light">年 级</span> {{order_info.order_teaching_grade}}</li>
        <li><span class="tag is-light">学 科</span> {{order_info.order_teaching_subjects}}</li>
-       <li><span class="tag is-light">金额/小时</span> {{order_info.order_hourly_money}} 元</li>
+       <li><span class="tag is-light">金额/小时</span> {{order_info.order_hourly_money}} 元/小时</li>
        <li><span class="tag is-light">教 学 时 长</span> {{order_info.order_teaching_time}} 小时</li>
        <li><span class="tag is-light">总 额</span> {{order_info.order_total_money}} 元</li>
        <li><span class="tag is-light">保 证 金</span> {{order_info.order_worker_earnest_money}} 元</li>
