@@ -21,7 +21,7 @@
          <div class="columns">
            <div class="column is-two-fifths">
              <p class="control  is-expanded has-icons-left">
-               <input class="input" type="number" placeholder="Age"  v-model="usr_age">
+               <input class="input font2" type="number" placeholder="Age"  v-model="usr_age">
                <span class="icon is-small is-left">
               <i class="fas fa-baby"></i>
               </span>
@@ -38,12 +38,12 @@
        <div class="field is-expanded">
          <div class="field has-addons">
            <p class="control">
-             <a class="button is-static">
+             <a class="button is-static font2">
                +86
              </a>
            </p>
            <p class="control is-expanded">
-             <input class="input" type="tel" placeholder="Your phone number" v-model="usr_phone_number">
+             <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number">
            </p>
          </div>
        </div>
@@ -78,21 +78,21 @@
      <div class="field-body">
        <div class="field is-expanded">
          <div class="field has-addons">
-           <div class="select is-link is-small">
-             <select v-model="selectcity.province">
-               <option value="省.自治区.直辖市" selected>省.自治区.直辖市</option>
+           <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.provincedanger}">
+             <select v-model="selectcity.province" >
+               <option value="a" disabled>省.自治区.直辖市</option>
                <option v-for="provincename in Object.keys(cityinfo)" v-bind:value="provincename">{{provincename}}</option>
              </select>
            </div>
-           <div class="select is-link is-small">
-             <select v-model="selectcity.city">
-               <option value="地级市.地区.自治州" selected>地级市.地区.自治州</option>
+           <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.citydanger}">
+             <select v-model="selectcity.city" >
+               <option value="b" disabled>地级市.地区.自治州</option>
                <option v-for="cityname in Object.keys(cityinfo[selectcity.province])" v-bind:value="cityname">{{cityname}}</option>
              </select>
            </div>
-           <div class="select is-link is-small">
-             <select v-model="selectcity.county">
-               <option value="市辖区.县级市.县" selected>市辖区.县级市.县</option>
+           <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.countydanger}">
+             <select v-model="selectcity.county" >
+               <option value="c" disabled>市辖区.县级市.县</option>
                <option v-for="countyname in cityinfo[selectcity.province][selectcity.city]" v-bind:value="countyname">{{countyname}}</option>
              </select>
          </div>
@@ -110,9 +110,8 @@
      <div class="field-body">
        <div class="field">
          <div class="control">
-           <input class="input is-link" type="text" placeholder="Your school" v-model="usr_school" v-bind:disabled="usr_is_certificate_verify">
+           <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school" v-bind:disabled="usr_is_certificate_verify">
          </div>
-
        </div>
      </div>
    </div>
@@ -125,7 +124,7 @@
      <div class="field-body">
        <div class="field">
          <div class="control">
-           <input class="input is-link" type="text" placeholder="Your major" v-model="usr_major" v-bind:disabled="usr_is_certificate_verify">
+           <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" v-bind:disabled="usr_is_certificate_verify">
          </div>
        </div>
      </div>
@@ -256,6 +255,11 @@ data(){
         province:'北京市',
         city:'市辖区',
         county:'东城区',
+      },
+      showselectdanger:{
+        provincedanger:false,
+        citydanger:false,
+        countydanger:false,
       }
     }
 },
@@ -270,6 +274,11 @@ watch:{
     this.usr_experience = this.usr_info.uexperience
     this.usr_phone_number = this.usr_info.uphone_number
     this.usr_is_certificate_verify = this.usr_info.is_certificate_verify
+    if(this.usr_info.u_now_city_county.split(' ')[0]!='' &&this.usr_info.u_now_city_county.split(' ')[1]!=''&&this.usr_info.u_now_province != ''){
+      this.selectcity.province = this.usr_info.u_now_province
+      this.selectcity.city = this.usr_info.u_now_city_county.split(' ')[0]
+      this.selectcity.county = this.usr_info.u_now_city_county.split(' ')[1]
+    }
   },
   usr_age(){
     if(this.usr_age <0 ){
@@ -281,56 +290,78 @@ watch:{
 },
 methods:{
   uploadinfo(){
-    const strs=['小学:','初中:','高中:']
-    let idex = 0
-    //根据选取设置执教年级
-    for(let keyvalue of Object.keys(this.selectedg)){
-      if(this.selectedg[keyvalue].length !=0){
-        this.usr_teaching_grade += strs[idex] + '('
-        idex +=1
-        for(let grade of this.selectedg[keyvalue]){
-          this.usr_teaching_grade += grade +' '
+    if(this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city) && this.cityinfo[this.selectcity.province][this.selectcity.city].includes(this.selectcity.county)){ //当城市都选择后才更新
+      const strs=['小学:','初中:','高中:']
+      let idex = 0
+      //根据选取设置执教年级
+      for(let keyvalue of Object.keys(this.selectedg)){
+        if(this.selectedg[keyvalue].length !=0){
+          this.usr_teaching_grade += strs[idex] + '('
+          idex +=1
+          for(let grade of this.selectedg[keyvalue]){
+            this.usr_teaching_grade += grade +' '
+          }
+          this.usr_teaching_grade += ') '
+        }else{
+          idex +=1
         }
-        this.usr_teaching_grade += ') '
       }
-    }
-    //根据选取设置执教学科
-    idex = 0
-    for(let keyvalue of Object.keys(this.selectedc)){
-      if(this.selectedc[keyvalue].length !=0){
-        this.usr_teaching_subjects += strs[idex] + '('
-        idex +=1
-        for(let classev of this.selectedc[keyvalue]){
-          this.usr_teaching_subjects += classev +' '
+      //根据选取设置执教学科
+      idex = 0
+      for(let keyvalue of Object.keys(this.selectedc)){
+        if(this.selectedc[keyvalue].length !=0){
+          this.usr_teaching_subjects += strs[idex] + '('
+          idex +=1
+          for(let classev of this.selectedc[keyvalue]){
+            this.usr_teaching_subjects += classev +' '
+          }
+          this.usr_teaching_subjects += ') '
+        }else{
+          idex +=1
         }
-        this.usr_teaching_subjects += ') '
       }
+      /*    console.log(this.usr_teaching_subjects);*/
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/account/upusrinfo/',
+        method:'post',
+        data: {
+          uage:this.usr_age,
+          usex:this.usr_sex,
+          uschool: this.usr_school,
+          uteaching_subjects: this.usr_teaching_subjects,
+          uteaching_grade: this.usr_teaching_grade,
+          uexperience: this.usr_experience,
+          umajor: this.usr_major,
+          u_phone_number: this.usr_phone_number,
+          u_now_province: this.selectcity.province,
+          u_now_city_county: this.selectcity.city+' '+this.selectcity.county
+        }
+      }).then(res => {
+        console.log(res.data);
+        //向home页发送一个emit 请求获取新的用户信息
+        this.$emit('getnewinfo')
+      })
+      //这里必须更新为空,否则再次更新会在上次的基础上继续加新内容
+      this.usr_teaching_grade =''
+      this.usr_teaching_subjects=''
+    }else{
+      if(!this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city))
+      {
+        this.showselectdanger.citydanger =true
+        this.showselectdanger.countydanger =true
+      }else{
+        if(!this.cityinfo[this.selectcity.province][this.selectcity.city].includes(this.selectcity.county))
+        {
+          this.showselectdanger.countydanger =true
+        }
+      }
+      setTimeout(()=>{
+        for(let keyvalue of Object.keys(this.showselectdanger)){
+          this.showselectdanger[keyvalue] = false
+        }
+      },3000)
     }
-/*    console.log(this.usr_teaching_subjects);*/
-    axios({
-      withCredentials : true,
-      url:'https://127.0.0.1:8081/account/upusrinfo/',
-      method:'post',
-      data: {
-        uage:this.usr_age,
-        usex:this.usr_sex,
-        uschool: this.usr_school,
-        uteaching_subjects: this.usr_teaching_subjects,
-        uteaching_grade: this.usr_teaching_grade,
-        uexperience: this.usr_experience,
-        umajor: this.usr_major,
-        u_phone_number: this.usr_phone_number,
-        u_now_province: this.selectcity.province,
-        u_now_city_county: this.selectcity.city+this.selectcity.county
-      }
-    }).then(res => {
-      console.log(res.data);
-      //向home页发送一个emit 请求获取新的用户信息
-      this.$emit('getnewinfo')
-    })
-    //这里必须更新为空,否则再次更新会在上次的基础上继续加新内容
-    this.usr_teaching_grade =''
-    this.usr_teaching_subjects=''
 
   },
   closecmyinfo(){

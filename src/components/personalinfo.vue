@@ -24,7 +24,7 @@
           <li class="font2"><span class="tag is-light">执 教 年 级</span>{{usr_info.uteaching_grade}}</li>
           <li class="font2"><span class="tag is-light">执 教 学 科</span>{{usr_info.uteaching_subjects}}</li>
           <li class="font2"><span class="tag is-light">电 话</span>{{usr_info.uphone_number}}</li>
-          <li class="font2"><span class="tag is-light">所 在 地</span>{{usr_info.u_now_province}}{{usr_info.u_now_city_county}}</li>
+          <li class="font2"><span class="tag is-light">所 在 地</span>{{usr_info.u_now_province}} {{usr_info.u_now_city_county}}</li>
         </ul>
 
         <br>

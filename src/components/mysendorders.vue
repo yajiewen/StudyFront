@@ -47,9 +47,9 @@
             <button class="button is-small" v-on:click="cancelorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0 ||order.order_status ==1">取消订单</button>
             <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="cancelrefund(order.order_token)" v-if="order.order_status == 4">取消退款</button>
             <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="agreecomplete(order.order_token)" v-if="order.order_status == 8">同意收货</button>
-            <button class="button is-small" v-on:click="showrefundbutton=false" v-if="(order.order_status == 8||order.order_status == 2)&&showrefundbutton">退款</button>
-            <div v-if="(order.order_status == 8||order.order_status == 2)&&!showrefundbutton">
-              <button class="delete is-small" v-on:click="showrefundbutton=true"></button>
+            <button class="button is-small" v-on:click="showrefundmenu(index)" v-if="(order.order_status == 8||order.order_status == 2)">退款</button>
+            <div v-if="(order.order_status == 8||order.order_status == 2)&&isshowrefundmenu == index">
+              <button class="delete is-small" v-on:click="showrefundmenu(index)"></button>
               <div class="field">
                 <label class="label">退款金额</label>
                 <div class="control">
@@ -69,7 +69,7 @@
                   <button v-bind:class="{'is-loading':button_is_loading}" class="button is-link is-small" v-on:click="dorefund(order.order_boss_email,order.order_token,order.order_total_money)">提交</button>
                 </div>
                 <div class="control">
-                  <button class="button is-link is-light is-small" v-on:click="showrefundbutton=true">取消</button>
+                  <button class="button is-link is-light is-small" v-on:click="isshowrefundmenu=true">取消</button>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ export default {
       eachpageitemnum:4, //每页显示数
       click_item_id : -1, //用于给item添加样式
 
-      showrefundbutton:true, //显示退款按钮
+      isshowrefundmenu:-1, //显示退款菜单
 
       refundmoney:0, //退款金额
       refundreason:'', //退款原因
@@ -127,6 +127,7 @@ export default {
       if(this.pageindex !=0){
         this.pageindex -=1
         this.click_item_id = -1 //初始化选中的itemid
+        this.isshowrefundmenu = -1 //关闭退款菜单
         this.$emit('closeorderinfo') //切换页面后关闭右边详细信息
       }
     },
@@ -134,6 +135,7 @@ export default {
       if(this.pageindex < this.pagenum-1){
         this.pageindex +=1
         this.click_item_id = -1 //初始化选中的itemid
+        this.isshowrefundmenu = -1 //关闭退款菜单
         this.$emit('closeorderinfo')
       }
     },
@@ -145,6 +147,14 @@ export default {
     refreshorders(){
       this.$emit('refreshsorders')
       this.$emit('closeorderinfo')
+      this.isshowrefundmenu = -1 //关闭退款菜单
+    },
+    showrefundmenu(index){
+      if(this.isshowrefundmenu !=index){
+        this.isshowrefundmenu = index
+      }else{
+        this.isshowrefundmenu = -1
+      }
     },
 
     payorder(order_token,order_boss_email){ //支付订单
@@ -249,16 +259,18 @@ export default {
               this.$emit('refreshsorders') //刷新订单
               this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
               this.button_is_loading = false
-              this.showrefundbutton = true  //要加这句话
+              this.isshowrefundmenu = true  //要加这句话
               this.refundmoney = 0
               this.refundreason=''
+              this.isshowrefundmenu = -1 //关闭退款菜单
             }else if(res.data.is_order_refund == 'yes'){  //被接后1小时内申请
               this.$emit('refreshsorders') //刷新订单
               this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
               this.button_is_loading = false
-              this.showrefundbutton = true
+              this.isshowrefundmenu = true
               this.refundmoney = 0
               this.refundreason=''
+              this.isshowrefundmenu = -1 //关闭退款菜单
               alert('退回金额:'+res.data.coin_refund)
             }
           }else {
