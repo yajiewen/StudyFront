@@ -8,7 +8,8 @@
       <a class="button is-small" @click="searchorders"><i class="fas fa-search"></i></a>
     </div>
     <div class="columns" v-show="showfilter">
-      <div class="column is-offset-1">
+
+      <div class="column">
         <div class="field font2">
           <label class="label font1">年 级:</label>
           <div >
@@ -71,59 +72,98 @@
     </div>
 
     <div class="inbox-messages" >
-      <div v-for="(order, index) in orderlistinfo.ordersinfo.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}" class="card" v-bind:id="index" v-on:click="showMessage(index)">
+      <div v-for="(order, index) in orderlistinfo.ordersinfo.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}"  v-bind:id="index" v-on:click="showMessage(index)">
           <div class="columns">
             <div class="column font2"><p class="font3">&nbsp{{order.order_teaching_grade}}</p></div>
             <div class="column font2"><p class="font3">{{order.order_teaching_subjects}}</p></div>
             <div class="column font2"><p class="font3">{{order.order_total_money}} 元</p></div>
             <div class="column font2"><a class="font3" v-on:click="showdetailf(index)">详细信息</a></div>
-            <div class="column font2"><button class="button is-small" v-on:click="cshowtakemenu(index)">{{buttonmess}}</button></div>
+            <div class="column font2"><button class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button></div>
 
           </div>
         <!--详细信息      -->
         <div v-if="index == showdetailinfo" class="content">
             <ul class="font3" v-if="index == showdetailinfo">
               <li>年级: {{ order.order_teaching_grade }}</li>
-              <li>学科: {{ order.order_teaching_subjects }}</li>
-              <li>单价: {{ order.order_hourly_money }} 元</li>
-              <li>时长: {{ order.order_teaching_time }}</li>
+              <li>科目: {{ order.order_teaching_subjects }}</li>
+              <li>单价: {{ order.order_hourly_money }} 元/小时</li>
+              <li>时长: {{ order.order_teaching_time }} 小时</li>
               <li>总额: {{ order.order_total_money }} 元</li>
               <li>保证金: {{ order.order_worker_earnest_money }} 元</li>
               <li>其它要求: {{ order.order_boss_require }}</li>
             </ul>
         </div>
         <div v-show="showtakemenu == index" class="columns">
-          <div class="column is-half">
+          <div class="column is-half is-offset-2">
 
-            <div class="field">
-              <label class="label font2">老师名字:</label>
-              <div class="control">
-                <input class="input" type="text">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label font2">名字</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <p class="control is-expanded has-icons-left">
+                    <input v-bind:class="{'is-danger':showdanger.dname}" class="input font2" type="text" placeholder="Name" v-model="uname">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="field">
-              <label class="label font2">微信:</label>
-              <div class="control">
-                <input type="text">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label font2">微信</label>
               </div>
-            </div>
-            <div class="field">
-              <label class="label font2">电话:</label>
-              <div class="control">
-                <input type="text">
+              <div class="field-body">
+                <div class="field">
+                  <p class="control is-expanded has-icons-left">
+                    <input v-bind:class="{'is-danger':showdanger.dwechat}" class="input font2" type="text" placeholder="Wechat" v-model="uwechat">
+                    <span class="icon is-small is-left">
+                      <i class="fab fa-weixin"></i>
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
 
-
-            <div class="field is-grouped">
-              <div class="control">
-                <button v-bind:class="{'is-loading':button_is_loading}" class="button is-link is-small" v-on:click="takeorder(order.order_token,order.order_boss_email)">接单</button>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label font2">电话</label>
               </div>
-              <div class="control">
-                <button class="button is-link is-light is-small" v-on:click="showrefundbutton=true">取消</button>
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static font2">
+                        +86
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model="uphone">
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <!-- Left empty for spacing -->
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button v-bind:class="{'is-loading':showisloading == index}" class="button is-primary is-small" v-on:click="takeorder(order.order_token,order.order_boss_email,index)">
+                      接 单
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
@@ -158,7 +198,13 @@ export default {
       showfilter:false, //显示筛选
       showtakemenu:-1, //显示接单菜单
       showdetailinfo:-1, //显示详细信息
-      buttonmess:'接 单', //按钮显示的内容,点击后改变
+      showisloading:-1, //按钮是否为loading 状态
+
+      showdanger:{
+        dname:false,
+        dwechat:false,
+        dphonenum:false,
+      },
       showclasses:{  //展示对应年级的课程
         pclass:false,
         mclass:false,
@@ -250,30 +296,69 @@ export default {
     cshowtakemenu(index){
       if(this.showtakemenu !=index){
         this.showtakemenu = index
-        this.buttonmess = '取 消'
       }else {
         this.showtakemenu = -1
-        this.buttonmess = '接 单'
       }
     },
     btshowfilter(){
       this.showfilter = !this.showfilter
     },
-    takeorder(ordertoken,bossemail){
-      axios({
-        withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/wtakeover/',
-        method:'post',
-        data: {
-          bemail:bossemail,
-          otoken:ordertoken,
-          wname:this.uname,
-          wphone_number:this.usr_info.uphone_number,
-          wwei_qq:this.uwechat,
+    takeorder(ordertoken,bossemail,index){
+      if(this.uname && this.uphone.length ==11 && this.uwechat && this.usr_info.uemail != bossemail){ //单这4个符合要求时候发送请求 这里就验证不可以自己接自己的单
+        this.showisloading = index
+        axios({
+          withCredentials : true,
+          url:'https://127.0.0.1:8081/orders/wtakeover/',
+          method:'post',
+          data: {
+            bemail:bossemail,
+            otoken:ordertoken,
+            wname:this.uname,
+            wphone_number:this.uphone,
+            wwei_qq:this.uwechat,
+          }
+        }).then(res => {
+          if(res.data.is_login == 'yes'){
+            if(res.data.is_take_over == 'yes'){
+              //刷新我接的单
+              this.$emit('refreshtorders')
+              //刷新主页订单
+              this.$emit('refreshorderlist')
+              this.showisloading = -1 //关闭loading 状态
+              this.showtakemenu = -1 //关闭接单menu
+            }else if(res.data.is_lack_eranest_money == 'yes'){
+              alert('金额不足无法支付保证金,请充值')
+              this.showisloading = -1
+            }else if(res.data.is_self_take == 'yes'){
+              alert('不可以自己接自己的订单!')
+              this.showisloading = -1
+            }
+          }else{
+            alert("请重新登录")
+          }
+        })
+      }else{
+        if(this.usr_info.uemail == bossemail){
+          alert('不可以自己接自己的订单!')
         }
-      }).then(res => {
 
-      })
+        if(!this.uname){
+          this.showdanger.dname = true
+        }
+        if(!this.uwechat){
+          this.showdanger.dwechat = true
+        }
+        if(this.uphone.length !=11){
+          this.showdanger.dphonenum = true
+        }
+        setTimeout(() => {
+          for(let keyvalue of Object.keys(this.showdanger)){
+            this.showdanger[keyvalue] = false
+          }
+        },1000)
+
+      }
+
     },
     searchorders(){
       let grade= this.selectedgrade
@@ -303,7 +388,7 @@ export default {
   font-size: 0.5em
 }
 .cardbackground{  /*选中后换的背景颜色*/
-  background-color:rgb(10 10 10 / 10%);
+  background-color:white;
 }
 
 </style>
