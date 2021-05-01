@@ -156,8 +156,9 @@
             <ul class="font2">
               <li>年级: {{selectedgrade}}</li>
               <li>学科: {{selectedclassString}}</li>
-              <li>单价: {{hourly_money}}</li>
-              <li>时长: {{teaching_time}}</li>
+              <li>单价: {{hourly_money}} /小时</li>
+              <li>时长: {{teaching_time}} 小时</li>
+              <li>总额: {{total_money}} 元</li>
               <li>名字: {{student_name}}</li>
               <li>联系方式</li>
               <ul>
@@ -168,8 +169,8 @@
             </ul>
           </div>
           <div class="columns">
-            <div class="column is-3">
-              <button class="button is-small" v-on:click="pay_order">确认并支付</button>
+            <div class="column is-4">
+              <button class="button is-small" v-on:click="pay_order">确认并支付 {{total_money}} 元</button>
             </div>
             <div class="column is-2">
               <button class="button is-small" v-on:click="cancelcorder">取消</button>
