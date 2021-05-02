@@ -320,6 +320,13 @@ methods:{
           idex +=1
         }
       }
+      //增加一个判断 (若选择的年级或执教学科为空,则不改变年级或执教学科,上传未变的信息)
+      if(this.usr_teaching_grade== ''){
+        this.usr_teaching_grade = this.usr_info.uteaching_grade
+      }
+      if(this.usr_teaching_subjects== ''){
+        this.usr_teaching_subjects= this.usr_info.uteaching_subjects
+      }
       /*    console.log(this.usr_teaching_subjects);*/
       axios({
         withCredentials : true,
