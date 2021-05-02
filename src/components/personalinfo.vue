@@ -8,8 +8,8 @@
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4">{{ usr_info.uname }}<span class="tag is-link is-light" v-if="usr_info.is_certificate_verify == 1">认 证 v</span><span class="tag is-light" v-else>未 认 证</span></p>
-          <p class="subtitle is-6 font2">{{ usr_info.uemail }}</p>
+          <p class="title is-4">{{ usr_info.uname }}<span class="tag is-link is-light" v-if="usr_info.is_certificate_verify == 1">学 籍 认 证 v</span><span class="tag is-light" v-else v-on:click="gotosverify">学 籍 未 认 证</span></p>
+          <p class="subtitle is-6 font2">{{ usr_info.uemail }}<span class="tag is-link is-light" v-if="usr_info.u_identity_verify == 1">身 份 认 证 v</span><span class="tag is-light" v-else v-on:click="gotoiverify">身 份 未 认 证</span></p>
         </div>
       </div>
 
@@ -52,6 +52,12 @@ props:{
 methods:{
   showchangeinfo(){
     this.$emit('showchangeinfo',true)
+  },
+  gotoiverify(){ //转到身份认证
+    this.$router.push({name:'identity', params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
+  },
+  gotosverify(){ //转到学籍认证
+    this.$router.push({name:'studentstatus',params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
   }
 }
 }

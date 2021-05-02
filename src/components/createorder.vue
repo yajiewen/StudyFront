@@ -62,7 +62,7 @@
               <div class="field">
                 <label class="label font2">单价/小时</label>
                 <div class="control has-icons-left">
-                  <input v-bind:class="{'is-danger':show_danger.hourlym}" class="input is-link" type="text" placeholder="" v-model="hourly_money">
+                  <input v-bind:class="{'is-danger':show_danger.hourlym}" class="input is-link" type="number" placeholder="" v-model.number="hourly_money" onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                   <span class="icon is-small is-left">
                   <i class="fas fa-yen-sign"></i>
                 </span>
@@ -72,7 +72,7 @@
               <div class="field">
                 <label class="label font2">时长(小时)</label>
                 <div class="control has-icons-left">
-                  <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="text" placeholder="Time" v-model="teaching_time">
+                  <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="number" placeholder="Time" v-model.number="teaching_time" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                   <span class="icon is-small is-left">
                   <i class="far fa-clock"></i>
                 </span>
@@ -237,7 +237,7 @@ export default {
   },
   computed:{
     total_money(){
-      return this.teaching_time * this.hourly_money
+      return (this.teaching_time * this.hourly_money).toFixed(2)
     },
     selectedclassString(){
       let class_info =''

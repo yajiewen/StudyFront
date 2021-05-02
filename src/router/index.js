@@ -6,7 +6,8 @@ const login = () => import('../views/login')
 const findpass = () => import('../views/findpass')
 const register = () => import('../views/register')
 const changepwd = () => import('../views/changepwd')
-
+const identity = () => import('../views/identityverify')
+const studentstatus = () => import('../views/studentstatusverify')
 
 const routes = [
   {
@@ -42,6 +43,16 @@ const routes = [
     name: 'changepwd',
     component: changepwd
   },
+  {
+    path: '/iverify/:email',
+    name: 'identity',
+    component: identity
+  },
+  {
+    path: '/sverify/:email',
+    name: 'studentstatus',
+    component: studentstatus
+  }
 
 ]
 
