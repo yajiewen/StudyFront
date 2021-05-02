@@ -23,7 +23,7 @@
              <p class="control  is-expanded has-icons-left">
                <input class="input font2" type="number" placeholder="Age"  v-model="usr_age">
                <span class="icon is-small is-left">
-              <i class="fas fa-baby"></i>
+                  <i class="fas fa-baby"></i>
               </span>
              </p>
            </div>

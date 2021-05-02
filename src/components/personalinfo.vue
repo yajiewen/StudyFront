@@ -28,6 +28,14 @@
         </ul>
 
         <br>
+        <div class="field">
+          <p class="font1">
+          <span class="icon is-small is-left">
+              <i class="fas fa-wallet"></i>
+          </span>
+            &nbsp{{usr_info.ucoin}}&nbsp元
+          </p>
+        </div>
         <button class=" button is-small is-rounded" @click="showchangeinfo">更新信息</button>
       </div>
     </div>

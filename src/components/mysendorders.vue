@@ -170,6 +170,7 @@ export default {
         if(res.data.is_payed == 'yes'){
             this.$emit('refreshsorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+          this.$emit('getnewinfo') //刷新个人信息中的钱包
         }else if(res.data.lack_money == 'yes'){
           alert('金额不足请充值后支付')
         }
@@ -191,6 +192,7 @@ export default {
             this.$emit('refreshsorders') //刷新订单
             this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
             this.$emit('refreshorderlist') //刷新主页代接订单
+            this.$emit('getnewinfo') //刷新个人信息中的钱包
             alert('退回金额:'+res.data.coin_refund)
           }
         }
@@ -267,6 +269,7 @@ export default {
             }else if(res.data.is_order_refund == 'yes'){  //被接后1小时内申请
               this.$emit('refreshsorders') //刷新订单
               this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+              this.$emit('getnewinfo') //刷新个人信息中的钱包
               this.button_is_loading = false
               this.isshowrefundmenu = true
               this.refundmoney = 0

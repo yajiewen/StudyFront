@@ -348,6 +348,7 @@ export default {
           //向home发送刷新订单请求
           this.$emit('refreshsorders')
           this.$emit('refreshorderlist')
+          this.$emit('getnewinfo') //刷新个人信息中的钱包
           //展示支付结果div
           this.show_pay_block = false //关闭支付block
           this.show_outcome_block = true //打开支付结果
