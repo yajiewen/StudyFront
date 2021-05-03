@@ -48,7 +48,7 @@
       </div>
       <div class="columns">
         <div class="column is-6 is-offset-3">
-          <button class="button font2" @click="upload">提交</button>
+          <button class="button font2" @click="upload" :class="{'is-loading':is_loading}">提交</button>
         </div>
       </div>
     </div>
@@ -84,6 +84,7 @@ export default {
       uemail: this.$route.params.email,
       uname: this.$route.params.usr_name,
       is_show_log_button: false,
+      is_loading:false,
       showupload:true,
       timer:0,
       filename1:'请选择文件',
@@ -136,11 +137,13 @@ export default {
       }
     },
     upload(){
+      this.is_loading = true
       this.formdata.append('uemail',this.uemail)
       upaxios.post('https://127.0.0.1:8081/verify/iverify/',this.formdata).then(res => {
         console.log(res.data);
         if(res.data.is_login == 'yes'){
           if(res.data.is_upload == 'yes'){
+            this.is_loading =false
             this.showupload = false
             this.timer = 6
             let tim = setInterval(()=>{
@@ -152,6 +155,7 @@ export default {
             },1000)
           }
         }else{
+          this.is_loading =false
           alert('请重新登录')
         }
       })
