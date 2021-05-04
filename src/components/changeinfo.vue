@@ -21,7 +21,7 @@
          <div class="columns">
            <div class="column is-two-fifths">
              <p class="control  is-expanded has-icons-left">
-               <input class="input font2" type="number" placeholder="Age"  v-model.number="usr_age" maxlength="3" onchange="if(!/(^0$)|(^100$)|(^\d{1,2}$)/.test(value)){value=1;}">
+               <input v-bind:class="{'is-danger':showselectdanger.agedanger}" class="input font2" type="number" placeholder="Age"  v-model.number="usr_age" maxlength="3">
                <span class="icon is-small is-left">
                   <i class="fas fa-baby"></i>
               </span>
@@ -260,6 +260,7 @@ data(){
         provincedanger:false,
         citydanger:false,
         countydanger:false,
+        agedanger:false,
       }
     }
 },
@@ -282,15 +283,15 @@ watch:{
   },
   usr_age(){
     if(this.usr_age <0 ){
-      this.usr_age = 1
+      this.usr_age = this.usr_info.uage
     }else if (this.usr_age > 100){
-      this.usr_age = 100
+      this.usr_age = this.usr_info.uage
     }
   }
 },
 methods:{
   uploadinfo(){
-    if(this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city) && this.cityinfo[this.selectcity.province][this.selectcity.city].includes(this.selectcity.county)){ //当城市都选择后才更新
+    if(parseInt(this.usr_age)==this.usr_age && this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city) && this.cityinfo[this.selectcity.province][this.selectcity.city].includes(this.selectcity.county)){ //当城市都选择后才更新
       const strs=['小学:','初中:','高中:']
       let idex = 0
       //根据选取设置执教年级
@@ -353,6 +354,9 @@ methods:{
       this.usr_teaching_grade =''
       this.usr_teaching_subjects=''
     }else{
+      if(parseInt(this.usr_age)!=this.usr_age){
+        this.showselectdanger.agedanger =true
+      }
       if(!this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city))
       {
         this.showselectdanger.citydanger =true
