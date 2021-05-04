@@ -9,7 +9,7 @@
         </div>
         <div class="media-content">
           <p class="title is-4">{{ usr_info.uname }}<span class="tag is-link is-light" v-if="usr_info.is_certificate_verify == 1">学 籍 认 证 v</span><span class="tag is-light" v-else v-on:click="gotosverify">学 籍 未 认 证</span></p>
-          <p class="subtitle is-6 font2">{{ usr_info.uemail }}<span class="tag is-link is-light" v-if="usr_info.u_identity_verify == 1">身 份 认 证 v</span><span class="tag is-light" v-else v-on:click="gotoiverify">身 份 未 认 证</span></p>
+          <p class="subtitle is-6 font2">{{ usr_info.uemail }}<span class="tag is-link is-light" v-if="usr_info.is_identity_verify == 1">身 份 认 证 v</span><span class="tag is-light" v-else v-on:click="gotoiverify">身 份 未 认 证</span></p>
         </div>
       </div>
 
