@@ -3,11 +3,12 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showteacherlist="showtlist" v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
         <tutororder v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
+        <fundteacher v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist" v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
@@ -39,6 +40,7 @@ import mysendorders from "../components/mysendorders";
 import sendorderinfo from "../components/sendorderinfo";
 import createorder from "../components/createorder";
 import tutororder from "../components/tutororder";
+import fundteacher from "../components/fundteacher";
 
 export default {
   name: 'Home',
@@ -54,6 +56,7 @@ export default {
     sendorderinfo,
     createorder,
     tutororder,
+    fundteacher,
   },
   data(){
     return{
@@ -77,6 +80,11 @@ export default {
         ordernum:0,//订单数
         ordersinfo:[],//订单信息
       },
+      //老师信息列表
+      teacherlistinfo:{
+        teachernum:0,
+        teacherinfolist:[],
+      },
 
       //界面展示
       show_personal_info:false,
@@ -93,6 +101,7 @@ export default {
         showmysendorders:false, //展示个人发单信息
         showmycorder:false, //展示创建订单
         showorderlist:true, //展示待接单列表
+        showfundteacher:false, //展示找老师列表
       },
       right_show:{
         showchangeinfo:false, //展示修改个人信息
@@ -193,6 +202,21 @@ export default {
       if(this.middle_show.showorderlist != true){
         for(let keyvalue of Object.keys(this.middle_show)){
           if(keyvalue != 'showorderlist'){
+            this.middle_show[keyvalue] = false
+          }else {
+            this.middle_show[keyvalue] = true
+          }
+        }
+        //所有右边信息关闭
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
+        }
+      }
+    },
+    showtlist(){ //展示老师列表
+      if(this.middle_show.showfundteacher != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+          if(keyvalue != 'showfundteacher'){
             this.middle_show[keyvalue] = false
           }else {
             this.middle_show[keyvalue] = true
@@ -306,6 +330,26 @@ export default {
         }
       })
     },
+    refreshteacherlist(subject,grade){
+      //获取老师信息列表
+      axios({
+        withCredentials : true,
+        url:'https://127.0.0.1:8081/account/getteacherlist/'+subject+'/'+grade+'/',
+        method:'get',
+        data: {
+        }
+      }).then(res => {
+        if(res.data.is_login == 'yes'){
+          if(res.data.is_identity_verify=='yes' && res.data.is_paid_fund_teacher_fuc == 'yes'){
+            this.teacherlistinfo.teachernum = res.data.teacher_num
+            this.teacherlistinfo.teacherinfolist = res.data.teacherinfo
+            console.log('已刷新');
+          }
+        }else{
+          this.is_show_log_button = true
+        }
+      })
+    },
     searchzorders(gradevalue,classesvalue){
       //获取待接单列表
       axios({
@@ -391,6 +435,24 @@ export default {
       if(res.data.is_get == 'yes'){
         this.orderlistinfo.ordernum = res.data.order_num
         this.orderlistinfo.ordersinfo = res.data.orders
+      }
+    })
+
+    //获取老师信息列表
+    axios({
+      withCredentials : true,
+      url:'https://127.0.0.1:8081/account/getteacherlist/no/no/',
+      method:'get',
+      data: {
+      }
+    }).then(res => {
+      if(res.data.is_login == 'yes'){
+        if(res.data.is_identity_verify=='yes' && res.data.is_paid_fund_teacher_fuc == 'yes'){
+          this.teacherlistinfo.teachernum = res.data.teacher_num
+          this.teacherlistinfo.teacherinfolist = res.data.teacherinfo
+        }
+      }else{
+        this.is_show_log_button = true
       }
     })
   },

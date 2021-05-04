@@ -21,7 +21,7 @@
          <div class="columns">
            <div class="column is-two-fifths">
              <p class="control  is-expanded has-icons-left">
-               <input class="input font2" type="number" placeholder="Age"  v-model="usr_age">
+               <input class="input font2" type="number" placeholder="Age"  v-model="usr_age" maxlength="3">
                <span class="icon is-small is-left">
                   <i class="fas fa-baby"></i>
               </span>
@@ -43,7 +43,7 @@
              </a>
            </p>
            <p class="control is-expanded">
-             <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number">
+             <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number" maxlength="11">
            </p>
          </div>
        </div>
@@ -110,7 +110,7 @@
      <div class="field-body">
        <div class="field">
          <div class="control">
-           <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school" v-bind:disabled="usr_is_certificate_verify">
+           <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school" v-bind:disabled="usr_is_certificate_verify" maxlength="20">
          </div>
        </div>
      </div>
@@ -124,7 +124,7 @@
      <div class="field-body">
        <div class="field">
          <div class="control">
-           <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" v-bind:disabled="usr_is_certificate_verify">
+           <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" v-bind:disabled="usr_is_certificate_verify" maxlength="20">
          </div>
        </div>
      </div>

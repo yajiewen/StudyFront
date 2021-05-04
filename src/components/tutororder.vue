@@ -103,7 +103,7 @@
               <div class="field-body">
                 <div class="field">
                   <p class="control is-expanded has-icons-left">
-                    <input v-bind:class="{'is-danger':showdanger.dname}" class="input font2" type="text" placeholder="Name" v-model="uname">
+                    <input v-bind:class="{'is-danger':showdanger.dname}" class="input font2" type="text" placeholder="Name" v-model="uname" maxlength="10">
                     <span class="icon is-small is-left">
                       <i class="fas fa-user"></i>
                     </span>
@@ -119,7 +119,7 @@
               <div class="field-body">
                 <div class="field">
                   <p class="control is-expanded has-icons-left">
-                    <input v-bind:class="{'is-danger':showdanger.dwechat}" class="input font2" type="text" placeholder="Wechat" v-model="uwechat">
+                    <input v-bind:class="{'is-danger':showdanger.dwechat}" class="input font2" type="text" placeholder="Wechat" v-model="uwechat" maxlength="16">
                     <span class="icon is-small is-left">
                       <i class="fab fa-weixin"></i>
                     </span>
@@ -141,7 +141,7 @@
                       </a>
                     </p>
                     <p class="control is-expanded">
-                      <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model="uphone">
+                      <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model="uphone" maxlength="11">
                     </p>
                   </div>
                 </div>

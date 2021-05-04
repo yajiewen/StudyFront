@@ -88,7 +88,7 @@
           <div class="field">
             <label class="label font2">名 字</label>
             <div class="control has-icons-left">
-              <input v-bind:class="{'is-danger':show_danger.sname}" class="input is-link" type="text" placeholder="Student's Name" v-model="student_name">
+              <input v-bind:class="{'is-danger':show_danger.sname}" class="input is-link" type="text" placeholder="Student's Name" v-model="student_name" maxlength="10">
               <span class="icon is-small is-left">
               <i class="fas fa-signature"></i>
             </span>
@@ -98,7 +98,7 @@
           <div class="field">
             <label class="label font2">微 信</label>
             <div class="control has-icons-left">
-              <input v-bind:class="{'is-danger':show_danger.swechat}" class="input is-success" type="text" placeholder="Wechat" v-model="student_wei">
+              <input v-bind:class="{'is-danger':show_danger.swechat}" class="input is-success" type="text" placeholder="Wechat" v-model="student_wei" maxlength="16">
               <span class="icon is-small is-left">
               <i class="fab fa-weixin"></i>
             </span>
@@ -117,7 +117,7 @@
                 </a>
               </p>
               <p class="control is-expanded">
-                <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model="student_phone_number">
+                <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model="student_phone_number" maxlength="11">
               </p>
             </div>
           </div>

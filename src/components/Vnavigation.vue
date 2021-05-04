@@ -10,7 +10,7 @@
           <ul v-show="isunfold_tutoring_business">
             <li><a v-bind:class="{font1:changefontsize.tutor_order,font2:!changefontsize.tutor_order}" v-on:click="show_order_to_take_list">家教订单</a></li>
             <li><a v-bind:class="{font1:changefontsize.airecommend,font2:!changefontsize.airecommend}">智能推荐</a></li>
-            <li><a v-bind:class="{font1:changefontsize.findteacher,font2:!changefontsize.findteacher}">找老师</a></li>
+            <li><a @click="show_teacher_list" v-bind:class="{font1:changefontsize.findteacher,font2:!changefontsize.findteacher}">找老师</a></li>
           </ul>
         </li>
       </ul>
@@ -148,8 +148,19 @@ methods:{
         }
       }
   },
+  show_teacher_list(){
+    this.$emit('showteacherlist')
+    //改变导航栏字大小
+    for(let keyvalue of Object.keys(this.changefontsize)){
+      if(keyvalue != "findteacher"){
+        this.changefontsize[keyvalue] = false
+      }else {
+        this.changefontsize[keyvalue] = true
+      }
+    }
+  },
 
-}
+ }
 }
 </script>
 
