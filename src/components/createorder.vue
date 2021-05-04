@@ -72,7 +72,7 @@
               <div class="field">
                 <label class="label font2">时长(小时)</label>
                 <div class="control has-icons-left">
-                  <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="number" placeholder="Time" v-model.number="teaching_time" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                  <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="number" placeholder="Time" v-model.number="teaching_time" onkeyup="this.value=this.value.replace(/\D/g,'')">
                   <span class="icon is-small is-left">
                   <i class="far fa-clock"></i>
                 </span>
@@ -117,7 +117,7 @@
                 </a>
               </p>
               <p class="control is-expanded">
-                <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model.trim="student_phone_number" maxlength="11">
+                <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model.trim="student_phone_number" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
               </p>
             </div>
           </div>

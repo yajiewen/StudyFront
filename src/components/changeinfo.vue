@@ -21,7 +21,7 @@
          <div class="columns">
            <div class="column is-two-fifths">
              <p class="control  is-expanded has-icons-left">
-               <input class="input font2" type="number" placeholder="Age"  v-model="usr_age" maxlength="3">
+               <input class="input font2" type="number" placeholder="Age"  v-model.number="usr_age" maxlength="3" onchange="if(!/(^0$)|(^100$)|(^\d{1,2}$)/.test(value)){value=1;}">
                <span class="icon is-small is-left">
                   <i class="fas fa-baby"></i>
               </span>
@@ -43,7 +43,7 @@
              </a>
            </p>
            <p class="control is-expanded">
-             <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number" maxlength="11">
+             <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
            </p>
          </div>
        </div>
@@ -282,7 +282,7 @@ watch:{
   },
   usr_age(){
     if(this.usr_age <0 ){
-      this.usr_age = 0
+      this.usr_age = 1
     }else if (this.usr_age > 100){
       this.usr_age = 100
     }

@@ -141,7 +141,7 @@
                       </a>
                     </p>
                     <p class="control is-expanded">
-                      <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model.trim="uphone" maxlength="11">
+                      <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model.trim="uphone" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
                     </p>
                   </div>
                 </div>
