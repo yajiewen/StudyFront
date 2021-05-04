@@ -327,12 +327,22 @@ export default {
               this.$emit('getnewinfo') //刷新个人信息中的钱包
               this.showisloading = -1 //关闭loading 状态
               this.showtakemenu = -1 //关闭接单menu
-            }else if(res.data.is_lack_eranest_money == 'yes'){
-              alert('金额不足无法支付保证金,请充值')
-              this.showisloading = -1
-            }else if(res.data.is_self_take == 'yes'){
-              alert('不可以自己接自己的订单!')
-              this.showisloading = -1
+            }else { //接单失败显示原因(这里逻辑不能错)
+              if(res.data.is_self_take == 'yes'){
+                alert('不可以自己接自己的订单!')
+                this.showisloading = -1
+              }else{
+                if(res.data.is_lack_eranest_money == 'yes'){
+                  alert('金额不足无法支付保证金,请充值')
+                  this.showisloading = -1
+                }
+                if(res.data.order_exist== 'no'){
+                  alert('订单已被其他人接手')
+                  //刷新主页订单
+                  this.$emit('refreshorderlist')
+                  this.showisloading = -1
+                }
+              }
             }
           }else{
             alert("请重新登录")
