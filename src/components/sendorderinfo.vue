@@ -59,6 +59,7 @@
              <li class="font2">年龄:{{workerinfo.usr_age}}</li>
              <li class="font2">性别:{{workerinfo.usr_sex}}</li>
              <li class="font2">毕业学校:{{workerinfo.usr_school}}</li>
+             <li class="font2">毕业学校:{{workerinfo.usr_major}}</li>
              <li class="font2">执教年级:{{workerinfo.usr_teaching_grade}}</li>
              <li class="font2">执教学科:{{workerinfo.usr_teaching_subjects}}</li>
              <li class="font2">个人经历:{{workerinfo.usr_experience}}</li>

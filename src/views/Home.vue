@@ -7,7 +7,7 @@
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
-        <tutororder v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
+        <tutororder v-on:getnewinfo="getnewmyinfo" v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
         <irecommend v-show="middle_show.showirecommend"></irecommend>
         <fundteacher v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>

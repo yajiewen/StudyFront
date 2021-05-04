@@ -324,6 +324,7 @@ export default {
               this.$emit('refreshtorders')
               //刷新主页订单
               this.$emit('refreshorderlist')
+              this.$emit('getnewinfo') //刷新个人信息中的钱包
               this.showisloading = -1 //关闭loading 状态
               this.showtakemenu = -1 //关闭接单menu
             }else if(res.data.is_lack_eranest_money == 'yes'){
