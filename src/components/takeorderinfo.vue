@@ -101,7 +101,7 @@
      <div class="column is-two-thirds">
        <div class="field">
          <div class="control">
-           <textarea v-bind:class="{'is-danger':is_emailcontentdanger}" class="textarea font2" :placeholder="textplaceholder" rows="5" maxlength="500" v-model="emailcontent"></textarea>
+           <textarea v-bind:class="{'is-danger':is_emailcontentdanger}" class="textarea font2" :placeholder="textplaceholder" rows="5" maxlength="500" v-model.trim="emailcontent"></textarea>
          </div>
            <div class="columns ">
              <span><div class="column"><button v-bind:disabled="bisdisable" v-bind:class="{'is-loading':bisloading}" @click="sendstudynote(order_info.order_boss_email)" class="button is-small font3 is-dark is-outlined">发 送</button></div></span>
