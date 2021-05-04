@@ -156,7 +156,7 @@
                 <div class="field">
                   <div class="control">
                     <button v-bind:class="{'is-loading':showisloading == index}" class="button is-primary is-small" v-on:click="takeorder(order.order_token,order.order_boss_email,index)">
-                      接 单
+                      接单并支付保证金
                     </button>
                   </div>
                 </div>
