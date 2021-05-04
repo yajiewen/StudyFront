@@ -63,7 +63,7 @@
        <li><span class="tag is-light">金额/小时</span> {{order_info.order_hourly_money}} 元/小时</li>
        <li><span class="tag is-light">教 学 时 长</span> {{order_info.order_teaching_time}} 小时</li>
        <li><span class="tag is-light">总 额</span> {{order_info.order_total_money}} 元</li>
-       <li><span class="tag is-light">保 证 金</span> {{order_info.order_worker_earnest_money}} 元</li>
+       <li><span class="tag is-light">保 证 金</span> {{order_info.order_worker_earnest_money}} 元 (中途取消订单保证金不退回)</li>
        <li>
          <div class="columns">
          <div class="column">
