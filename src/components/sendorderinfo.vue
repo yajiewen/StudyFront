@@ -32,7 +32,7 @@
 
    <div class="columns">
      <!--老师信息  -->
-     <div class="column is-half font2" v-if="order_info.order_worker_name">
+     <div class="column is-half font2" v-if="order_info.order_worker_email">
        <div class="card">
          <p>
            <span class="icon">

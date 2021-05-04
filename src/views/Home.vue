@@ -3,16 +3,18 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showteacherlist="showtlist" v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showrecharge="showrecharge" v-on:showirecommend="showitlist" v-on:showteacherlist="showtlist" v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
         <tutororder v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
+        <irecommend v-show="middle_show.showirecommend"></irecommend>
         <fundteacher v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
         <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist" v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
         <createorder v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist"  v-on:refreshsorders="refreshsendorders" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
+        <recharge v-show="middle_show.showrecharge"></recharge>
       </template>
 <!--右边部分      -->
       <template v-slot:right>
@@ -41,6 +43,11 @@ import sendorderinfo from "../components/sendorderinfo";
 import createorder from "../components/createorder";
 import tutororder from "../components/tutororder";
 import fundteacher from "../components/fundteacher";
+import irecommend from "../components/irecommend";
+import recharge from "../components/recharge";
+
+
+
 
 export default {
   name: 'Home',
@@ -57,6 +64,8 @@ export default {
     createorder,
     tutororder,
     fundteacher,
+    irecommend,
+    recharge,
   },
   data(){
     return{
@@ -103,6 +112,9 @@ export default {
         showmycorder:false, //展示创建订单
         showorderlist:true, //展示待接单列表
         showfundteacher:false, //展示找老师列表
+        showirecommend:false, //展示智能推荐
+        showrecharge:false, //展示充值
+        showwithdraw:false, //展示提现
       },
       right_show:{
         showchangeinfo:false, //展示修改个人信息
@@ -155,7 +167,7 @@ export default {
         }
       }
     },
-    showtakeorders(){  //个人接单信息展示
+    showtakeorders(){  //中间个人接单信息展示
       if(this.middle_show.showmytakeorders != true){
         for(let keyvalue of Object.keys(this.middle_show)){
             if(keyvalue != 'showmytakeorders'){
@@ -170,7 +182,7 @@ export default {
         }
       }
     },
-    showsendorders(){ //展示我发的单
+    showsendorders(){ //中间展示我发的单
        if(this.middle_show.showmysendorders != true){
          for(let keyvalue of Object.keys(this.middle_show)){
            if(keyvalue != 'showmysendorders'){
@@ -185,7 +197,7 @@ export default {
          }
        }
     },
-    showcorder(){ //展示创建订单
+    showcorder(){ //中间展示创建订单
       if(this.middle_show.showmycorder != true){
         for(let keyvalue of Object.keys(this.middle_show)){
           if(keyvalue != 'showmycorder'){
@@ -200,7 +212,7 @@ export default {
         }
       }
     },
-    showturtorlist(){ //展示家教订单
+    showturtorlist(){ //中间展示家教订单
       if(this.middle_show.showorderlist != true){
         for(let keyvalue of Object.keys(this.middle_show)){
           if(keyvalue != 'showorderlist'){
@@ -215,7 +227,7 @@ export default {
         }
       }
     },
-    showtlist(){ //展示老师列表
+    showtlist(){ //中间展示找老师模块
       if(this.middle_show.showfundteacher != true){
         for(let keyvalue of Object.keys(this.middle_show)){
           if(keyvalue != 'showfundteacher'){
@@ -230,7 +242,37 @@ export default {
         }
       }
     },
-
+    showitlist(){ //中间展示智能推荐
+      if(this.middle_show.showirecommend != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+          if(keyvalue != 'showirecommend'){
+            this.middle_show[keyvalue] = false
+          }else {
+            this.middle_show[keyvalue] = true
+          }
+        }
+        //所有右边信息关闭
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
+        }
+      }
+    },
+    showrecharge(){
+      if(this.middle_show.showrecharge != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+          if(keyvalue != 'showrecharge'){
+            this.middle_show[keyvalue] = false
+          }else {
+            this.middle_show[keyvalue] = true
+          }
+        }
+        //所有右边信息关闭
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
+        }
+      }
+    },
+////////////////////////////
     showcmyinfo(mess){
       this.right_show.showchangeinfo = mess
     },
@@ -517,7 +559,6 @@ export default {
             console.log(this.user_send_orders)
           }
         })
-
       }
     }
   }

@@ -53,14 +53,14 @@
               <div class="field">
                 <label class="label">退款金额</label>
                 <div class="control">
-                  <input class="input" type="number"  placeholder="退款金额" min="0"  v-model="refundmoney">
+                  <input class="input" type="number"  placeholder="退款金额" min="0"  v-model.trim="refundmoney">
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">退款原因</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="请输入退款原因" maxlength="500" v-model="refundreason"></textarea>
+                  <textarea class="textarea" placeholder="请输入退款原因" maxlength="500" v-model.trim="refundreason"></textarea>
                 </div>
               </div>
 

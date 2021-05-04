@@ -9,7 +9,7 @@
           <a class="is-active" v-on:click="show_tutoring_business" >家 教 业 务</a>
           <ul v-show="isunfold_tutoring_business">
             <li><a v-bind:class="{font1:changefontsize.tutor_order,font2:!changefontsize.tutor_order}" v-on:click="show_order_to_take_list">家教订单</a></li>
-            <li><a v-bind:class="{font1:changefontsize.airecommend,font2:!changefontsize.airecommend}">智能推荐</a></li>
+            <li><a @click="show_intell_recommend" v-bind:class="{font1:changefontsize.airecommend,font2:!changefontsize.airecommend}">智能推荐</a></li>
             <li><a @click="show_teacher_list" v-bind:class="{font1:changefontsize.findteacher,font2:!changefontsize.findteacher}">找老师</a></li>
           </ul>
         </li>
@@ -37,7 +37,7 @@
         <li>
           <a class="is-active" v-on:click="show_paid_business">充 值 业 务</a>
           <ul v-show="isunfold_paid_business">
-            <li><a v-bind:class="{font1:changefontsize.recharge, font2:!changefontsize.recharge}">充 值</a></li>
+            <li><a @click="show_recharge" v-bind:class="{font1:changefontsize.recharge, font2:!changefontsize.recharge}">充 值</a></li>
             <li><a v-bind:class="{font1:changefontsize.withdrawal, font2:!changefontsize.withdrawal}">提 现</a></li>
           </ul>
         </li>
@@ -153,6 +153,28 @@ methods:{
     //改变导航栏字大小
     for(let keyvalue of Object.keys(this.changefontsize)){
       if(keyvalue != "findteacher"){
+        this.changefontsize[keyvalue] = false
+      }else {
+        this.changefontsize[keyvalue] = true
+      }
+    }
+  },
+  show_intell_recommend(){
+    this.$emit('showirecommend')
+    //改变导航栏字大小
+    for(let keyvalue of Object.keys(this.changefontsize)){
+      if(keyvalue != "airecommend"){
+        this.changefontsize[keyvalue] = false
+      }else {
+        this.changefontsize[keyvalue] = true
+      }
+    }
+  },
+  show_recharge(){
+    this.$emit('showrecharge')
+    //改变导航栏字大小
+    for(let keyvalue of Object.keys(this.changefontsize)){
+      if(keyvalue != "recharge"){
         this.changefontsize[keyvalue] = false
       }else {
         this.changefontsize[keyvalue] = true
