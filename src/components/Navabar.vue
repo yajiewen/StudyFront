@@ -65,10 +65,10 @@
               {{uname}}
             </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item">
+<!--              <a class="navbar-item">
                 个人中心
               </a>
-              <hr class="navbar-divider">
+              <hr class="navbar-divider">-->
               <a class="navbar-item" v-on:click="logout" v-if="!issee">
                 登 出
               </a>
