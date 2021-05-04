@@ -15,22 +15,22 @@
     <slot name="right">这里是右边</slot>
   </div>
 
-  <div class="columns">
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>
-          <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-          is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-        </p>
-      </div>
-    </footer>
+  <div class="columns blockbackground">
+    <div class="column">
+      <footer class="footer">
+        <div class="content has-text-centered font2">
+          <p>
+            <strong>红 树 林 家 教 </strong>线上线下大学生家教平台
+          </p>
+        </div>
+      </footer>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-name: "bodycontent"
+  name: "bodycontent"
 }
 </script>
 
@@ -41,5 +41,13 @@ div{
 .blockbackground{
   background-color: #F9F9F9;
 }
-
+.font1{   /*发单者字体大小*/
+  font-size: 1.1em
+}
+.font2{  /*年级 学科 ...字体大小*/
+  font-size: 0.875em
+}
+.font3{
+  font-size: 0.5em
+}
 </style>
