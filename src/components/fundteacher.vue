@@ -40,6 +40,8 @@
              <ul>
                <li class="font2">执 教 年 级: {{teacher.usr_teaching_grade}}</li>
                <li class="font2">执 教 学 科: {{teacher.usr_teaching_subjects}}</li>
+               <li><span class="tag is-link is-light" v-if="teacher.usr_identity_verify == 1">身 份 已 认 证 v</span><span class="tag is-light" v-else >身 份 未 认 证</span></li>
+               <li><span class="tag is-link is-light" v-if="teacher.use_certificate_verify == 1">学 籍 已 认 证 v</span><span class="tag is-light" v-else >学 籍 未 认 证</span></li>
              </ul>
            </div>
          </div>

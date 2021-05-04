@@ -18,7 +18,7 @@
       <template v-slot:right>
         <changeinfo v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-bind:pschool="primaryschool" v-bind:mschool="middleschool" v-bind:hschool="highschool" v-show="right_show.showchangeinfo" v-on:closecmyinfo="showcmyinfo"></changeinfo>
         <takeorderinfo v-show="right_show.showtakeorderinfo" v-bind:order_info="take_order_info" ></takeorderinfo>
-        <sendorderinfo v-bind:order_info="send_order_info" v-show="right_show.showsendorderinfo"></sendorderinfo>
+        <sendorderinfo v-bind:workerinfo="teacherinfo" v-on:gettinfo="getteacherinfo" v-bind:is_show_winfo="right_show.showteacherinfo" v-bind:order_info="send_order_info" v-show="right_show.showsendorderinfo"></sendorderinfo>
       </template>
 
     </bodycontent>
@@ -85,6 +85,7 @@ export default {
         teachernum:0,
         teacherinfolist:[],
       },
+      teacherinfo:{},// send订单中的老师详细信息
 
       //界面展示
       show_personal_info:false,
@@ -107,6 +108,7 @@ export default {
         showchangeinfo:false, //展示修改个人信息
         showtakeorderinfo:false, //展示接的订单的详细信息
         showsendorderinfo:false, //展示发的订单的详细信息
+        showteacherinfo:false,//老师详细信息
       }
     }
   },
@@ -255,6 +257,27 @@ export default {
         }
       })
     },
+    //获取老师信息
+    getteacherinfo(worker_email){
+      if(this.right_show.showteacherinfo == false){
+        axios({
+          withCredentials:true,
+          url:'https://127.0.0.1:8081/account/getteacherinfo/'+worker_email+'/',
+          method:'get',
+        }).then(res => {
+          if(res.data.is_login == 'yes'){
+            if(res.data.is_get_info == 'yes'){
+              this.teacherinfo = res.data.worker_info
+              this.right_show.showteacherinfo = true //获取老师信息后可以展示老师信息
+            }
+          }else{
+            alert('请重新登录')
+          }
+        })
+      }else{
+        this.right_show.showteacherinfo = false //若已经打开则关闭
+      }
+    },
     //获取takeorder信息
     gettorderinfo(torderinfo){
       this.take_order_info = torderinfo
@@ -265,6 +288,7 @@ export default {
     //获取sendorder信息
     getsorderinfo(sorderinfo){
       this.send_order_info = sorderinfo
+      this.right_show.showteacherinfo = false //关闭老师信息
       if(this.right_show.showsendorderinfo == false){
         this.right_show.showsendorderinfo = true
       }

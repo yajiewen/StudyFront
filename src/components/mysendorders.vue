@@ -141,7 +141,6 @@ export default {
     },
     showMessage(index,order) {
       this.click_item_id = index
-      console.log(order)
       this.$emit('sorderinfo',order)
     },
     refreshorders(){

@@ -6,7 +6,7 @@
    <br>
    <div class="columns">
      <!--学生信息   -->
-     <div class="column font2">
+     <div class="column font2 is-half">
        <div class="card">
          <p>
            <span class="icon">
@@ -28,8 +28,11 @@
          </p>
        </div>
      </div>
+   </div>
+
+   <div class="columns">
      <!--老师信息  -->
-     <div class="column font2">
+     <div class="column is-half font2" v-if="order_info.order_worker_name">
        <div class="card">
          <p>
            <span class="icon">
@@ -50,9 +53,23 @@
            </span>
            {{order_info.order_worker_qq_wei}}
          </p>
+         <button class="button is-fullwidth is-small is-left" @click="showtinfo"><i class="fas fa-chevron-down"></i></button>
+         <div class="content" v-show="is_show_winfo">
+           <ul>
+             <li class="font2">年龄:{{workerinfo.usr_age}}</li>
+             <li class="font2">性别:{{workerinfo.usr_sex}}</li>
+             <li class="font2">毕业学校:{{workerinfo.usr_school}}</li>
+             <li class="font2">执教年级:{{workerinfo.usr_teaching_grade}}</li>
+             <li class="font2">执教学科:{{workerinfo.usr_teaching_subjects}}</li>
+             <li class="font2">个人经历:{{workerinfo.usr_experience}}</li>
+             <li class="font2">联系电话:{{workerinfo.usr_phone_number}}</li>
+             <li class="font2"><span class="tag is-link is-light" v-if="workerinfo.usr_identity_verify == 1">身 份 已 认 证 v</span><span class="tag is-light" v-else>身 份 未 认 证</span></li>
+             <li class="font2"><span class="tag is-link is-light" v-if="workerinfo.use_certificate_verify == 1">学 籍 已 认 证 v</span><span class="tag is-light" v-else >学 籍 未 认 证</span></li>
+           </ul>
+         </div>
        </div>
-     </div>
 
+     </div>
    </div>
 
    <!--  订单信息 -->
@@ -96,10 +113,34 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "sendorderinfo",
   props:{
     order_info:Object,
+    is_show_winfo:Boolean,
+    workerinfo:Object,
+  },
+  data(){
+    return{
+/*      workerinfo:{
+        usr_age:0,
+        usr_sex:'',
+        usr_school:'',
+        usr_teaching_subjects:'',
+        usr_teaching_grade : '',
+        usr_experience : '',
+        usr_credit: '',
+        usr_phone_number: '',
+        usr_identity_verify: 0,
+        use_certificate_verify: 0,
+      }*/
+    }
+  },
+  methods:{
+    showtinfo(){
+      this.$emit('gettinfo',this.order_info.order_worker_email)
+    }
   }
 }
 </script>
