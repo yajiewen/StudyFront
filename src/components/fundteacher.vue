@@ -99,7 +99,7 @@ export default {
         this.click_item_id = -1 //初始化选中的itemid
       }
     },
-    showMessage(inde) {
+    showMessage(index) {
       this.click_item_id = index
     },
     showdetailinfo(index){
