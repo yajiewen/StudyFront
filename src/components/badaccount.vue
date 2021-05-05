@@ -43,7 +43,7 @@ export default {
     return{
       badinfo2:this.badinfo,  //为了不删除后请求刷新增加一个副本
       pageindex:0,   //页码
-      eachpageitemnum:3, //每页显示数
+      eachpageitemnum:10, //每页显示数
     }
   },
   computed:{
@@ -53,8 +53,8 @@ export default {
     },
     //切片结束位置
     sliceend(){
-      if (this.slicestart + this.eachpageitemnum > this.badinfo.num){
-        return this.badinfo.num
+      if (this.slicestart + this.eachpageitemnum > this.badinfo2.num){
+        return this.badinfo2.num
       }else{
         return this.slicestart + this.eachpageitemnum
       }

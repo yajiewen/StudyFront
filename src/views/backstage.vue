@@ -38,7 +38,7 @@
      <backnavbar @showcusinterveneblock="showcusinterv" @showstudentblock="showstudent" @showidentityblock="showinden" @showaccountblock="showacc"></backnavbar>
       <!--  body内容-->
       <badaccount @refresha="getbadaccountlist" :badinfo="badainfo" v-show="blockshow.account_v"></badaccount>
-      <identityv :identinfo="ideninfo" v-show="blockshow.identity_v"></identityv>
+      <identityv @refreshi="getidentitylist" :identinfo="ideninfo" v-show="blockshow.identity_v"></identityv>
       <studentv :stuinfo="stuinfo" v-show="blockshow.student_v"></studentv>
       <cintervene v-show="blockshow.cusinter_v"></cintervene>
    </div>
