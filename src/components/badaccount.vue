@@ -1,7 +1,7 @@
 <template>
   <div id="badaccount" class="columns">
     <div class="column is-6 is-offset-3">
-      <p class="font2">待处理账号数: {{itemnum}}</p>
+      <p class="font2">待处理账号数: {{badinfo2.num}}</p>
       <div class="action-buttons">
         <div class="control is-grouped">
           <a class="button is-small" @click="refreshaccount"><i class="fa fa-refresh"></i></a>
@@ -42,9 +42,8 @@ export default {
   data(){
     return{
       badinfo2:this.badinfo,  //为了不删除后请求刷新增加一个副本
-      itemnum:this.badinfo.num, //待处理账号数
       pageindex:0,   //页码
-      eachpageitemnum:10, //每页显示数
+      eachpageitemnum:3, //每页显示数
     }
   },
   computed:{
@@ -62,7 +61,7 @@ export default {
     },
     //页数
     pagenum(){
-      return Math.ceil(this.badinfo.num/this.eachpageitemnum)
+      return Math.ceil(this.badinfo2.num/this.eachpageitemnum)
     }
   },
   methods:{
@@ -82,8 +81,8 @@ export default {
     delaccount(delemial,index){
       axios({
         withCredentials:true,
-        method:'get',
-        url:'https://127.0.0.1:8081/backstage/badaccountlist/',
+        method:'post',
+        url:'https://127.0.0.1:8081/backstage/deljunkmail/',
         data:{
           uemail:delemial,
         }
@@ -92,8 +91,9 @@ export default {
           if(res.data.is_delet == 'yes'){
             //应为每次切片下标都从0 开始所以要重新求删除元素在原来数组中的下标
             let itemindex = this.pageindex * this.eachpageitemnum + index
-            //删除元素
+            //删除元素使它不显示
             this.badinfo2.infolist.splice(itemindex,1)
+            this.badinfo2.num -=1
           }
         }else{
           alert('请重新登录')
