@@ -55,6 +55,7 @@ export default {
             alert('邮件发送成功!')
             this.$router.push('/login')
           }else{
+            this.buttonstyle = 'button is-link is-fullwidth'
             alert('邮箱不存在')
           }
         })
@@ -62,7 +63,6 @@ export default {
       {
         alert('请输入邮箱')
       }
-      this.buttonstyle = 'button is-link is-fullwidth'
     },
     tochangepwd(){
       this.$router.push('/changepwd')

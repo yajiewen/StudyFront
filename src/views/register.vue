@@ -114,7 +114,6 @@ export default {
          this.buttonstyle = 'button is-link is-fullwidth '
          alert('输入不合法,请重新输入!')
        }
-       this.buttonstyle = 'button is-link is-fullwidth '
      },
     tologin(){
        this.$router.push("/login")

@@ -37,7 +37,7 @@
      <!-- 导航栏-->
      <backnavbar @showcusinterveneblock="showcusinterv" @showstudentblock="showstudent" @showidentityblock="showinden" @showaccountblock="showacc"></backnavbar>
       <!--  body内容-->
-      <badaccount :badinfo="badainfo" v-show="blockshow.account_v"></badaccount>
+      <badaccount @refresha="getbadaccountlist" :badinfo="badainfo" v-show="blockshow.account_v"></badaccount>
       <identityv :identinfo="ideninfo" v-show="blockshow.identity_v"></identityv>
       <studentv :stuinfo="stuinfo" v-show="blockshow.student_v"></studentv>
       <cintervene v-show="blockshow.cusinter_v"></cintervene>
@@ -93,6 +93,50 @@ export default {
       }
     }
   },
+  created() {
+    //请求垃圾账号信息
+    axios({
+      withCredentials:true,
+      method:'get',
+      url:'https://127.0.0.1:8081/backstage/badaccountlist/'
+    }).then(res => {
+      if(res.data.is_login=='yes'){
+        this.badainfo.num = res.data.account_num
+        this.badainfo.infolist = res.data.bad_account_list
+      }else{
+        alert('请重新登录')
+      }
+    })
+
+    //请求身份审核列表
+    axios({
+      withCredentials:true,
+      method:'get',
+      url:'https://127.0.0.1:8081/backstage/ilist/'
+    }).then(res => {
+      if(res.data.is_login=='yes'){
+        this.shownavbar = true
+        this.ideninfo.num = res.data.identity_num
+        this.ideninfo.infolist = res.data.identity_list
+      }else{
+        alert('请重新登录')
+      }
+    })
+
+    //请求学籍审核列表
+    axios({
+      withCredentials:true,
+      method:'get',
+      url:'https://127.0.0.1:8081/backstage/slist/'
+    }).then(res => {
+      if(res.data.is_login=='yes'){
+        this.stuinfo.num = res.data.student_num
+        this.stuinfo.infolist = res.data.student_list
+      }else{
+        alert('请重新登录')
+      }
+    })
+  },
   methods:{
     showacc(){ //显示垃圾账号模块
       for(let keyvalue of Object.keys(this.blockshow)){
@@ -129,6 +173,57 @@ export default {
           this.blockshow[keyvalue]= false
         }
       }
+    },
+    //请求垃圾账号信息
+    getbadaccountlist(){
+      //请求垃圾账号信息
+      axios({
+        withCredentials:true,
+        method:'get',
+        url:'https://127.0.0.1:8081/backstage/badaccountlist/'
+      }).then(res => {
+        if(res.data.is_login=='yes'){
+          console.log("获取bad");
+          this.badainfo.num = res.data.account_num
+          this.badainfo.infolist = res.data.bad_account_list
+        }else{
+          alert('请重新登录')
+        }
+      })
+    },
+    //请求身份审核列表
+    getidentitylist(){
+      //请求身份审核列表
+      axios({
+        withCredentials:true,
+        method:'get',
+        url:'https://127.0.0.1:8081/backstage/ilist/'
+      }).then(res => {
+        if(res.data.is_login=='yes'){
+          console.log("获取i");
+          this.ideninfo.num = res.data.identity_num
+          this.ideninfo.infolist = res.data.identity_list
+        }else{
+          alert('请重新登录')
+        }
+      })
+    },
+    //请求学籍审核列表
+    getstudetlist(){
+      //请求学籍审核列表
+      axios({
+        withCredentials:true,
+        method:'get',
+        url:'https://127.0.0.1:8081/backstage/slist/'
+      }).then(res => {
+        if(res.data.is_login=='yes'){
+          console.log("获取s");
+          this.stuinfo.num = res.data.student_num
+          this.stuinfo.infolist = res.data.student_list
+        }else{
+          alert('请重新登录')
+        }
+      })
     },
     sendlogin(){
       if (this.uaccount == '' || this.upassword == '')
