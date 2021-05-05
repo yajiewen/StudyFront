@@ -8,6 +8,7 @@ const register = () => import('../views/register')
 const changepwd = () => import('../views/changepwd')
 const identity = () => import('../views/identityverify')
 const studentstatus = () => import('../views/studentstatusverify')
+const backstage = () => import('../views/backstage')
 
 const routes = [
   {
@@ -52,6 +53,11 @@ const routes = [
     path: '/sverify/:email',
     name: 'studentstatus',
     component: studentstatus
+  },
+  {
+    path: '/backstage',
+    name: 'backstage',
+    component: backstage
   }
 
 ]
