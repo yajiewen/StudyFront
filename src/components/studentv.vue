@@ -1,10 +1,10 @@
 <template>
   <div id="studentv" class="columns">
-    <div class="column is-6 is-offset-3">
+    <div class="column is-offset-3">
       <p class="font2">待学籍审核数: {{stuinfo2.num}}</p>
       <div class="action-buttons">
         <div class="control is-grouped">
-          <a class="button is-small" @click="refreshiden"><i class="fa fa-refresh"></i></a>
+          <a class="button is-small" @click="refreshstu"><i class="fa fa-refresh"></i></a>
           <a class="button is-small" @click="prepage" ><i class="fa fa-chevron-left"></i></a>
           <span class="font3">{{pageindex + 1}}</span>
           <a class="button is-small" @click="nextpage"><i class="fa fa-chevron-right"></i></a>
@@ -16,6 +16,8 @@
         <table class="table font2">
           <tr>
             <td>用户</td>
+            <td>学校</td>
+            <td>专业</td>
             <td>图一</td>
             <td>图二</td>
             <td>处理1</td>
@@ -23,10 +25,12 @@
           </tr>
           <tr v-for="(info,index) in stuinfo2.infolist.slice(slicestart,sliceend)">
             <td>{{info.usr_email}}</td>
+            <td>{{info.school}}</td>
+            <td>{{info.major}}</td>
             <td><a :href="info.usr_student_imgurl1" target="_blank"><img :src="info.usr_student_imgurl1" alt=""></a></td>
             <td><a :href="info.usr_student_imgurl2" target="_blank"><img :src="info.usr_student_imgurl2" alt=""></a></td>
-            <td><button @click="upload_result(info.usr_email,index,1)">通过</button></td>
-            <td><button @click="upload_result(info.usr_email,index,2)">拒绝</button></td>
+            <td><button @click="upload_result(info.usr_email,index,1)">一致</button></td>
+            <td><button @click="upload_result(info.usr_email,index,2)">不一致</button></td>
           </tr>
         </table>
       </div>
@@ -78,8 +82,8 @@ export default {
         this.pageindex +=1
       }
     },
-    refreshiden(){
-      this.$emit('refreshi')
+    refreshstu(){
+      this.$emit('refreshs')
     },
     upload_result(emial,index,status){
       axios({
