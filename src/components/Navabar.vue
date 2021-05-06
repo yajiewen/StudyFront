@@ -110,7 +110,7 @@ methods:{
   logout(){
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/account/logout/',
+      url:'account/logout/',
       method:'post',
       data: {
       }

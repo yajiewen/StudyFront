@@ -277,7 +277,7 @@ export default {
       if(this.selectedgrade && this.selectedclassString && this.hourly_money>0 && this.teaching_time >=1 && this.student_name && this.student_wei && this.student_phone_number.length==11){
         axios({
           withCredentials : true,
-          url:'https://127.0.0.1:8081/orders/creatorder/',
+          url:'orders/creatorder/',
           method:'post',
           data: {
             uemail:this.usr_email,
@@ -337,7 +337,7 @@ export default {
     pay_order(){
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/payorder/',
+        url:'orders/payorder/',
         method:'post',
         data:{
           uemail:this.usr_email,
@@ -385,7 +385,7 @@ export default {
     cancelcorder(){
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/bcancelorder/',
+        url:'orders/bcancelorder/',
         method:'post',
         data:{
           uemail:this.usr_email,

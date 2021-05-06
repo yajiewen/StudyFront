@@ -85,7 +85,7 @@ export default {
        if(this.mname =='√' && this.memail == '√' && this.mpass == '√' && this.mpass1 == '√'){
           axios({
             withCredentials : true,
-            url:'https://127.0.0.1:8081/account/add/',
+            url:'account/add/',
             method:'post',
             data: {
               uname: this.uname,

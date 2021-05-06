@@ -138,7 +138,7 @@ methods:{
       this.bisloading = true,
           axios({
             withCredentials:true,
-            url:'https://127.0.0.1:8081/orders/sendclassreminder/',
+            url:'orders/sendclassreminder/',
             method:"post",
             data:{
               bemail:studentemail,

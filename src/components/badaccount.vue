@@ -82,7 +82,7 @@ export default {
       axios({
         withCredentials:true,
         method:'post',
-        url:'https://127.0.0.1:8081/backstage/deljunkmail/',
+        url:'backstage/deljunkmail/',
         data:{
           uemail:delemial,
         }

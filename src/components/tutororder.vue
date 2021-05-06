@@ -308,7 +308,7 @@ export default {
         this.showisloading = index
         axios({
           withCredentials : true,
-          url:'https://127.0.0.1:8081/orders/wtakeover/',
+          url:'orders/wtakeover/',
           method:'post',
           data: {
             bemail:bossemail,

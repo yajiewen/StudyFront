@@ -68,7 +68,7 @@ export default {
        if (this.mpass == '√' && this.memail =='√' && this.mpass1 =='√'){
          axios({
            withCredentials: true,
-           url: 'https://127.0.0.1:8081/account/newpassword/',
+           url: 'account/newpassword/',
            method: 'post',
            data: {
              uemail: this.uemail,

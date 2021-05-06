@@ -139,7 +139,7 @@ export default {
     upload(){
       this.is_loading = true
       this.formdata.append('uemail',this.uemail)
-      upaxios.post('https://127.0.0.1:8081/verify/iverify/',this.formdata).then(res => {
+      upaxios.post('verify/iverify/',this.formdata).then(res => {
         console.log(res.data);
         if(res.data.is_login == 'yes'){
           if(res.data.is_upload == 'yes'){

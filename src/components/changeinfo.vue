@@ -331,7 +331,7 @@ methods:{
       /*    console.log(this.usr_teaching_subjects);*/
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/account/upusrinfo/',
+        url:'account/upusrinfo/',
         method:'post',
         data: {
           uage:this.usr_age,

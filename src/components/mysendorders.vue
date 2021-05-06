@@ -159,7 +159,7 @@ export default {
     payorder(order_token,order_boss_email){ //支付订单
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/payorder/',
+        url:'orders/payorder/',
         method:"post",
         data:{
           otoken:order_token,
@@ -179,7 +179,7 @@ export default {
     cancelorder(order_token,order_boss_email){ //取消订单
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/bcancelorder/',
+        url:'orders/bcancelorder/',
         method:"post",
         data:{
           otoken:order_token,
@@ -201,7 +201,7 @@ export default {
       this.button_is_loading = true
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/bcancelrefund/',
+        url:'orders/bcancelrefund/',
         method:"post",
         data:{
           otoken:order_token,
@@ -224,7 +224,7 @@ export default {
       this.button_is_loading = true
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/bagreeok/',
+        url:'orders/bagreeok/',
         method:"post",
         data:{
           otoken:order_token,
@@ -247,7 +247,7 @@ export default {
       if(this.refundmoney > 0 && this.refundmoney <= totalmoney){
         axios({
           withCredentials:true,
-          url:'https://127.0.0.1:8081/orders/brefundorder/',
+          url:'orders/brefundorder/',
           method:"post",
           data:{
             otoken:order_token,

@@ -280,7 +280,7 @@ export default {
       //获取个人信息
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/account/getusrinfo/',
+        url:'account/getusrinfo/',
         method:'get',
         data: {
         }
@@ -304,7 +304,7 @@ export default {
       if(this.right_show.showteacherinfo == false){
         axios({
           withCredentials:true,
-          url:'https://127.0.0.1:8081/account/getteacherinfo/'+worker_email+'/',
+          url:'account/getteacherinfo/'+worker_email+'/',
           method:'get',
         }).then(res => {
           if(res.data.is_login == 'yes'){
@@ -347,7 +347,7 @@ export default {
       //获取用户接单信息
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/wtakelist/'+this.user_email+'/',
+        url:'orders/wtakelist/'+this.user_email+'/',
         method:'get',
         data: {
         }
@@ -366,7 +366,7 @@ export default {
       //获取用户发单信息
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/breleaselist/'+this.user_email+'/',
+        url:'orders/breleaselist/'+this.user_email+'/',
         method:'get',
         data: {
         }
@@ -385,7 +385,7 @@ export default {
       //获取待接单列表
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/ordertotake/no/no/',
+        url:'orders/ordertotake/no/no/',
         method:'get',
         data: {
         }
@@ -400,7 +400,7 @@ export default {
       //获取老师信息列表
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/account/getteacherlist/'+subject+'/'+grade+'/',
+        url:'account/getteacherlist/'+subject+'/'+grade+'/',
         method:'get',
         data: {
         }
@@ -420,7 +420,7 @@ export default {
       //获取待接单列表
       axios({
         withCredentials : true,
-        url:'https://127.0.0.1:8081/orders/ordertotake/'+gradevalue+'/'+classesvalue+'/',
+        url:'orders/ordertotake/'+gradevalue+'/'+classesvalue+'/',
         method:'get',
         data: {
         }
@@ -437,7 +437,7 @@ export default {
     //获取个人信息
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/account/getusrinfo/',
+      url:'account/getusrinfo/',
       method:'get',
       data: {
       }
@@ -459,7 +459,7 @@ export default {
     //获取小学年级课程信息
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/classinfo/primaryschool/',
+      url:'classinfo/primaryschool/',
       method:'get',
       data: {
       }
@@ -470,7 +470,7 @@ export default {
     //获取初中年级课程信息
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/classinfo/juniorschool/',
+      url:'classinfo/juniorschool/',
       method:'get',
       data: {
       }
@@ -481,7 +481,7 @@ export default {
     //获取高中年级课程信息
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/classinfo/highschool/',
+      url:'classinfo/highschool/',
       method:'get',
       data: {
       }
@@ -493,7 +493,7 @@ export default {
     //获取待接单列表
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/orders/ordertotake/no/no/',
+      url:'orders/ordertotake/no/no/',
       method:'get',
       data: {
       }
@@ -507,7 +507,7 @@ export default {
     //获取老师信息列表
     axios({
       withCredentials : true,
-      url:'https://127.0.0.1:8081/account/getteacherlist/no/no/',
+      url:'account/getteacherlist/no/no/',
       method:'get',
       data: {
       }
@@ -529,7 +529,7 @@ export default {
         //获取用户接单信息
         axios({
           withCredentials : true,
-          url:'https://127.0.0.1:8081/orders/wtakelist/'+this.user_email+'/',
+          url:'orders/wtakelist/'+this.user_email+'/',
           method:'get',
           data: {
           }
@@ -546,7 +546,7 @@ export default {
         //获取用户发单信息
         axios({
           withCredentials : true,
-          url:'https://127.0.0.1:8081/orders/breleaselist/'+this.user_email+'/',
+          url:'orders/breleaselist/'+this.user_email+'/',
           method:'get',
           data: {
           }

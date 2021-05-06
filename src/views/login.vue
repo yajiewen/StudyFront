@@ -68,7 +68,7 @@
         {
           axios({
             withCredentials : true,
-            url:'https://127.0.0.1:8081/account/login/',
+            url:'account/login/',
             method:'post',
             data: {
               uemail: this.uemail,

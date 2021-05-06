@@ -116,7 +116,7 @@ export default {
       this.button_is_loading = true
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/waskok/',
+        url:'orders/waskok/',
         method:"post",
         data:{
           otoken:otoken,
@@ -138,7 +138,7 @@ export default {
       this.button_is_loading = true
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/wcancelorder/',
+        url:'orders/wcancelorder/',
         method:"post",
         data:{
           otoken:otoken,
@@ -160,7 +160,7 @@ export default {
       this.button_is_loading = true
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/wagreerefund/',
+        url:'orders/wagreerefund/',
         method:"post",
         data:{
           otoken:otoken,
@@ -181,7 +181,7 @@ export default {
     disagreerefund(otoken){ //拒绝退款
       axios({
         withCredentials:true,
-        url:'https://127.0.0.1:8081/orders/wdenyrefund/',
+        url:'orders/wdenyrefund/',
         method:"post",
         data:{
           otoken:otoken,

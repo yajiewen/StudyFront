@@ -98,7 +98,7 @@ export default {
     axios({
       withCredentials:true,
       method:'get',
-      url:'https://127.0.0.1:8081/backstage/badaccountlist/'
+      url:'backstage/badaccountlist/'
     }).then(res => {
       if(res.data.is_login=='yes'){
         this.badainfo.num = res.data.account_num
@@ -112,7 +112,7 @@ export default {
     axios({
       withCredentials:true,
       method:'get',
-      url:'https://127.0.0.1:8081/backstage/ilist/'
+      url:'backstage/ilist/'
     }).then(res => {
       if(res.data.is_login=='yes'){
         this.shownavbar = true
@@ -127,7 +127,7 @@ export default {
     axios({
       withCredentials:true,
       method:'get',
-      url:'https://127.0.0.1:8081/backstage/slist/'
+      url:'backstage/slist/'
     }).then(res => {
       if(res.data.is_login=='yes'){
         this.stuinfo.num = res.data.student_num
@@ -180,7 +180,7 @@ export default {
       axios({
         withCredentials:true,
         method:'get',
-        url:'https://127.0.0.1:8081/backstage/badaccountlist/'
+        url:'backstage/badaccountlist/'
       }).then(res => {
         if(res.data.is_login=='yes'){
           console.log("获取bad");
@@ -197,7 +197,7 @@ export default {
       axios({
         withCredentials:true,
         method:'get',
-        url:'https://127.0.0.1:8081/backstage/ilist/'
+        url:'backstage/ilist/'
       }).then(res => {
         if(res.data.is_login=='yes'){
           console.log("获取i");
@@ -214,7 +214,7 @@ export default {
       axios({
         withCredentials:true,
         method:'get',
-        url:'https://127.0.0.1:8081/backstage/slist/'
+        url:'backstage/slist/'
       }).then(res => {
         if(res.data.is_login=='yes'){
           console.log("获取s");
@@ -235,7 +235,7 @@ export default {
       {
         axios({
           withCredentials : true,
-          url:'https://127.0.0.1:8081/backstage/login/',
+          url:'backstage/login/',
           method:'post',
           data: {
             account: this.uaccount,
@@ -251,7 +251,7 @@ export default {
             axios({
               withCredentials:true,
               method:'get',
-              url:'https://127.0.0.1:8081/backstage/badaccountlist/'
+              url:'backstage/badaccountlist/'
             }).then(res => {
               if(res.data.is_login=='yes'){
                 this.badainfo.num = res.data.account_num
@@ -265,7 +265,7 @@ export default {
             axios({
               withCredentials:true,
               method:'get',
-              url:'https://127.0.0.1:8081/backstage/ilist/'
+              url:'backstage/ilist/'
             }).then(res => {
               if(res.data.is_login=='yes'){
                 this.ideninfo.num = res.data.identity_num
@@ -279,7 +279,7 @@ export default {
             axios({
               withCredentials:true,
               method:'get',
-              url:'https://127.0.0.1:8081/backstage/slist/'
+              url:'backstage/slist/'
             }).then(res => {
               if(res.data.is_login=='yes'){
                 this.stuinfo.num = res.data.student_num
