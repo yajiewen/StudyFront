@@ -103,8 +103,6 @@ export default {
       if(res.data.is_login=='yes'){
         this.badainfo.num = res.data.account_num
         this.badainfo.infolist = res.data.bad_account_list
-      }else{
-        alert('请重新登录')
       }
     })
 
@@ -118,8 +116,6 @@ export default {
         this.shownavbar = true
         this.ideninfo.num = res.data.identity_num
         this.ideninfo.infolist = res.data.identity_list
-      }else{
-        alert('请重新登录')
       }
     })
 
@@ -132,8 +128,6 @@ export default {
       if(res.data.is_login=='yes'){
         this.stuinfo.num = res.data.student_num
         this.stuinfo.infolist = res.data.student_list
-      }else{
-        alert('请重新登录')
       }
     })
   },
