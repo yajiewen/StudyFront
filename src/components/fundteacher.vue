@@ -2,7 +2,7 @@
  <div id="fundteacher" class="column is-half">
 <!-- 实名认证模块  -->
    <div v-if="usr_info.is_identity_verify == 0">
-      <h2>该功能需实名认证,请前往实名认证</h2>
+      <h2 class="font3">该功能需实名认证,请前往实名认证</h2>
      <button class="button is-small" v-on:click="gotoiverify">前往</button>
    </div>
 <!--  购买找老师模块-->

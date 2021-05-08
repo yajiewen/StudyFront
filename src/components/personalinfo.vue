@@ -53,9 +53,9 @@ name: "personalinfo",
   computed:{
    buttonmess(){
      if(this.usr_info.is_certificate_verify ==1 && this.usr_info.is_identity_verify ==1){
-       return '老师已注册'
+       return '老师已认证'
      }else{
-       return '老师注册'
+       return '老师认证'
      }
    }
   },

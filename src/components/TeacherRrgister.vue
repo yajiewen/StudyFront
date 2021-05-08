@@ -147,10 +147,10 @@
   </div>
 </div>
 
-
  <div class="columns">
    <div class="column is-offset-1">
      <button class="button font2" @click="upload" :class="{'is-loading':is_loading}">提交</button>
+     <p class="font3">请保证以上信息和图片内容一致</p>
    </div>
  </div>
  </div>
@@ -158,16 +158,7 @@
 
 <script>
 import axios from 'axios'
-//自定义axios 否则会使用全局default 配置的axios
-let upaxios = axios.create({
-  headers:{
-    'Content-Type': 'multipart/form-data'
-  },
-  withCredentials : true,
-  transformRequest:[function (data){
-    return data
-  }]
-})
+
 
 export default {
   name: "TeacherRrgister",
@@ -190,6 +181,7 @@ export default {
       },
       usr_info:this.usrinfo, //获取用户信息
       is_loading: false,
+      is_loading_2:0,
       timer:0,
       iformdata: new FormData, //保存文件
       sformdata: new FormData, //保存文件
@@ -284,10 +276,19 @@ export default {
         alert('文件格式不正确')
       }
     },
-
     //上传
     upload(){
-    if(this.usr_sex && this.usr_school && this.usr_major && this.imgurl.iimgurl1 && this.imgurl.iimgurl2 && this.imgurl.simgurl1 && this.imgurl.simgurl2){
+      //自定义axios 否则会使用全局default 配置的axios 这个定义在函数里面放外面会404
+      let upaxios = axios.create({
+        headers:{
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials : true,
+        transformRequest:[function (data){
+          return data
+        }]
+      })
+      if(this.usr_sex && this.usr_school && this.usr_major && this.imgurl.iimgurl1 && this.imgurl.iimgurl2 && this.imgurl.simgurl1 && this.imgurl.simgurl2){
       this.is_loading = true
       //上传身份证
       this.iformdata.append('uemail',this.usrinfo.uemail)
@@ -295,7 +296,11 @@ export default {
         console.log(res.data);
         if(res.data.is_login == 'yes'){
           if(res.data.is_upload == 'yes'){
-            this.is_loading =false
+            this.is_loading_2+=1
+            if(this.is_loading_2 == 2){
+              this.is_loading =false
+              alert('上传成功请耐心等待审核')
+            }
           }
         }else{
           this.is_loading =false
@@ -308,8 +313,12 @@ export default {
         console.log(res.data);
         if(res.data.is_login == 'yes'){
           if(res.data.is_upload == 'yes'){
-            this.is_loading =false
-            alert('上传成功')
+            this.is_loading_2+=1
+            if(this.is_loading_2 == 2){
+              this.is_loading =false
+              alert('上传成功请耐心等待审核')
+            }
+
             this.$emit('showtregister',false)
           }
         }else{

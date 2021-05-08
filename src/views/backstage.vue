@@ -238,7 +238,6 @@ export default {
 
         }).then(res => {
           if (res.data.is_login == 'yes'){
-            alert('yes')
             this.shownavbar = true
             //登录成功后进行数据请求
             //请求垃圾账号信息
