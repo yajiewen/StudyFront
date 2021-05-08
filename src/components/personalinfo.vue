@@ -37,6 +37,7 @@
           </p>
         </div>
         <button class=" button is-small is-rounded" @click="showchangeinfo">更新信息</button>
+        <button class=" button is-small is-rounded" @click="showtregister" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">{{buttonmess}}</button>
       </div>
     </div>
 
@@ -46,20 +47,32 @@
 <script>
 export default {
 name: "personalinfo",
-props:{
-  usr_info:Object,
-},
-methods:{
-  showchangeinfo(){
-    this.$emit('showchangeinfo',true)
+  props:{
+    usr_info:Object,
   },
-  gotoiverify(){ //转到身份认证
-    this.$router.push({name:'identity', params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
+  computed:{
+   buttonmess(){
+     if(this.usr_info.is_certificate_verify ==1 && this.usr_info.is_identity_verify ==1){
+       return '老师已注册'
+     }else{
+       return '老师注册'
+     }
+   }
   },
-  gotosverify(){ //转到学籍认证
-    this.$router.push({name:'studentstatus',params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
+  methods:{
+    showchangeinfo(){
+      this.$emit('showchangeinfo',true)
+    },
+    showtregister(){
+      this.$emit('showtregister',true)
+    },
+    gotoiverify(){ //转到身份认证
+      this.$router.push({name:'identity', params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
+    },
+    gotosverify(){ //转到学籍认证
+      this.$router.push({name:'studentstatus',params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
+    }
   }
-}
 }
 </script>
 

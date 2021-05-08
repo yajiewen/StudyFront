@@ -113,6 +113,7 @@ export default {
       {
         this.formdata.append('img1',files[0])
       }else{
+        this.imgurl1 = ''
         this.filename1='请选择文件'
         alert('文件格式不正确')
       }
@@ -132,33 +133,38 @@ export default {
       {
         this.formdata.append('img2',files[0])
       }else{
+        this.imgurl2 = ''
         this.filename2='请选择文件'
         alert('文件格式不正确')
       }
     },
     upload(){
-      this.is_loading = true
-      this.formdata.append('uemail',this.uemail)
-      upaxios.post('verify/iverify/',this.formdata).then(res => {
-        console.log(res.data);
-        if(res.data.is_login == 'yes'){
-          if(res.data.is_upload == 'yes'){
+      if(this.imgurl1 && this.imgurl2){
+        this.is_loading = true
+        this.formdata.append('uemail',this.uemail)
+        upaxios.post('verify/iverify/',this.formdata).then(res => {
+          console.log(res.data);
+          if(res.data.is_login == 'yes'){
+            if(res.data.is_upload == 'yes'){
+              this.is_loading =false
+              this.showupload = false
+              this.timer = 6
+              let tim = setInterval(()=>{
+                this.timer -=1
+                if(this.timer == 0){
+                  this.$router.replace('/')
+                  clearInterval(tim)
+                }
+              },1000)
+            }
+          }else{
             this.is_loading =false
-            this.showupload = false
-            this.timer = 6
-            let tim = setInterval(()=>{
-              this.timer -=1
-              if(this.timer == 0){
-                this.$router.replace('/')
-                clearInterval(tim)
-              }
-            },1000)
+            alert('请重新登录')
           }
-        }else{
-          this.is_loading =false
-          alert('请重新登录')
-        }
-      })
+        })
+      }else{
+        alert('请选择文件')
+      }
     },
   }
 }

@@ -4,7 +4,8 @@ import router from './router'
 
 import axios from 'axios'
 axios.defaults.withCredentials = true // 让ajax携带cookie
-axios.defaults.baseURL = 'https://124.70.87.28:8000/';
+//axios.defaults.baseURL = 'https://124.70.87.28:8000/';
+axios.defaults.baseURL = 'https://127.0.0.1:8081/';  //后端url
 //设置全局axios为form-data
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -15,8 +16,6 @@ axios.defaults.transformRequest = [function (data) {   //解决前端发送数�
   }
   return ret
 }]
-
-
 
 createApp(App).use(router).mount('#app')
 

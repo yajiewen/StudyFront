@@ -10,7 +10,7 @@
         <tutororder v-on:getnewinfo="getnewmyinfo" v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
         <irecommend v-show="middle_show.showirecommend"></irecommend>
         <fundteacher v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
-        <personalinfo v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
+        <personalinfo v-on:showtregister="showtregisterblock" v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist" v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
         <createorder v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist"  v-on:refreshsorders="refreshsendorders" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
@@ -21,6 +21,7 @@
         <changeinfo v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-bind:pschool="primaryschool" v-bind:mschool="middleschool" v-bind:hschool="highschool" v-show="right_show.showchangeinfo" v-on:closecmyinfo="showcmyinfo"></changeinfo>
         <takeorderinfo v-show="right_show.showtakeorderinfo" v-bind:order_info="take_order_info" ></takeorderinfo>
         <sendorderinfo v-bind:workerinfo="teacherinfo" v-on:gettinfo="getteacherinfo" v-bind:is_show_winfo="right_show.showteacherinfo" v-bind:order_info="send_order_info" v-show="right_show.showsendorderinfo"></sendorderinfo>
+        <TeacherRrgister v-on:getnewinfo="getnewmyinfo" v-bind:usrinfo="user_info" v-on:showtregister="showtregisterblock" v-show="right_show.showtregiste"></TeacherRrgister>
       </template>
 
     </bodycontent>
@@ -45,7 +46,7 @@ import tutororder from "../components/tutororder";
 import fundteacher from "../components/fundteacher";
 import irecommend from "../components/irecommend";
 import recharge from "../components/recharge";
-
+import TeacherRrgister from "../components/TeacherRrgister";
 
 
 
@@ -66,13 +67,14 @@ export default {
     fundteacher,
     irecommend,
     recharge,
+    TeacherRrgister,
   },
   data(){
     return{
       //个人信息
       user_name:'',
       user_email:'',
-      user_info:{},
+      user_info:{},//用户信息
       //订单信息
       user_take_orders:[],
       user_take_orders_num:0,
@@ -121,6 +123,7 @@ export default {
         showtakeorderinfo:false, //展示接的订单的详细信息
         showsendorderinfo:false, //展示发的订单的详细信息
         showteacherinfo:false,//老师详细信息
+        showtregiste:false, //老师注册板块
       }
     }
   },
@@ -274,7 +277,22 @@ export default {
     },
 ////////////////////////////
     showcmyinfo(mess){
-      this.right_show.showchangeinfo = mess
+      for(let keyvalu of Object.keys(this.right_show)){
+        if(keyvalu == 'showchangeinfo'){
+          this.right_show[keyvalu] = mess
+        }else{
+          this.right_show[keyvalu] =false
+        }
+      }
+    },
+    showtregisterblock(mess){
+      for(let keyvalu of Object.keys(this.right_show)){
+        if(keyvalu == 'showtregiste'){
+          this.right_show[keyvalu] = mess
+        }else{
+          this.right_show[keyvalu] =false
+        }
+      }
     },
     getnewmyinfo(){
       //获取个人信息

@@ -60,11 +60,11 @@
        <div class="field is-narrow">
          <div class="control">
            <label class="radio font2">
-             <input type="radio" name="member" v-model="usr_sex" value="男">
+             <input type="radio" name="member" v-model="usr_sex" value="男" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">
              男
            </label>
            <label class="radio font2">
-             <input type="radio" name="member" v-model="usr_sex" value="女">
+             <input type="radio" name="member" v-model="usr_sex" value="女" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">
              女
            </label>
          </div>
@@ -230,6 +230,7 @@ props:{
 },
 data(){
     return {
+      usrinfo:this.usr_info,
       usr_age: 0,
       usr_sex: '',
       usr_teaching_subjects: '',
