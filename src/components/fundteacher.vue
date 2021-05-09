@@ -1,5 +1,8 @@
 <template>
  <div id="fundteacher" class="column is-half">
+   <div v-if="usr_info.is_login !='yes'">
+     <button class="button is-small is-rounded" v-on:click="gotologin">前往登录</button>
+   </div>
 <!-- 实名认证模块  -->
    <div v-if="usr_info.is_identity_verify == 0">
       <h2 class="font3">该功能需实名认证,请前往实名认证</h2>
@@ -132,7 +135,10 @@ export default {
           alert('购买成功')
         }
       })
-    }
+    },
+    gotologin(){
+      this.$router.push('/login')
+    },
   }
 
 }
