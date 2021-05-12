@@ -142,7 +142,7 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button class="button " v-on:click="create_a_order">提 交</button>
+          <button class="button" v-on:click="create_a_order">提 交</button>
         </div>
       </div>
     </div>
@@ -433,6 +433,6 @@ export default {
   font-size: 0.5em
 }
 .blockbackground{
-  background-color: #F9F9F9;
+  /*background-color: #F9F9F9;*/
 }
 </style>
