@@ -1,6 +1,6 @@
 <template>
   <Navabar v-bind:issee='is_show_log_button'></Navabar>
-  <div class="column is-one-quarter" id="findpass">
+  <div class="column is-one-quarter is-offset-7" id="findpass">
     <div class="control has-icons-left has-icons-right">
       <input class="input" type="email" placeholder="Email" v-model.trim="uemail" onKeyUp="value=value.replace(/[^\d|chun]/g,'')" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
       <span class="icon is-small is-left">

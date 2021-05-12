@@ -1,6 +1,6 @@
 <template>
   <Navabar v-bind:issee='is_show_log_button'></Navabar>
-  <div class="column is-one-quarter">
+  <div class="column is-one-quarter is-offset-7">
     <div class="box" id="changepwd">
       <div class="field" >
         <label class="label">邮箱&nbsp;&nbsp;{{memail}}</label>
