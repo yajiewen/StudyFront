@@ -18,6 +18,89 @@
      <div class="notification is-link">
        老 师 信 息 列 表 / / / / / / / / / / / / /共 {{teacherinfo.teachernum}} 位 老 师
      </div>
+     <div>
+       <a class="button is-small" @click="showfilte"><i class="fas fa-caret-down">筛选</i></a>
+       <a class="button is-small" @click="searchteachers"><i class="fas fa-search"></i></a>
+     </div>
+         <!--省市   -->
+         <div class="field is-horizontal" v-show="isshowfilter">
+           <div class="field-body">
+             <div class="field is-expanded">
+               <div class="field has-addons">
+                 <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.provincedanger}">
+                   <select v-model="selectcity.province" >
+                     <option value="a" disabled>省.自治区.直辖市</option>
+                     <option v-for="provincename in Object.keys(cityinfo)" v-bind:value="provincename">{{provincename}}</option>
+                   </select>
+                 </div>
+                 <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.citydanger}">
+                   <select v-model="selectcity.city" >
+                     <option value="b" disabled>地级市.地区.自治州</option>
+                     <option v-for="cityname in Object.keys(cityinfo[selectcity.province])" v-bind:value="cityname">{{cityname}}</option>
+                   </select>
+                 </div>
+                 <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.countydanger}">
+                   <select v-model="selectcity.county" >
+                     <option value="c" disabled>市辖区.县级市.县</option>
+                     <option v-for="countyname in cityinfo[selectcity.province][selectcity.city]" v-bind:value="countyname">{{countyname}}</option>
+                   </select>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+     <div class="columns" v-show="isshowfilter">
+
+       <div class="column">
+         <div class="field font2">
+           <label class="label font1">年 级:</label>
+           <div >
+             <label class="radio" v-for="grade in pschoolinfo.grades" >
+               <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+               {{grade+'&nbsp&nbsp'}}
+             </label>
+           </div>
+
+           <div >
+             <label class="radio" v-for="grade in mschoolinfo.grades">
+               <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+               {{grade+'&nbsp&nbsp'}}
+             </label>
+           </div>
+
+           <div class="field">
+             <label class="radio" v-for="grade in hschoolinfo.grades">
+               <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+               {{grade+'&nbsp&nbsp'}}
+             </label>
+           </div>
+
+           <div class="field">
+             <label class="label font1">学 科</label>
+             <div v-if="showclasses.pclass">
+               <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
+                 <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
+                 {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+               </label>
+             </div>
+
+             <div v-if="showclasses.mclass">
+               <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
+                 <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+                 {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+               </label>
+             </div>
+
+             <div v-if="showclasses.hclass">
+               <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
+                 <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+                 {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+               </label>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
      <div class="action-buttons">
        <div class="control is-grouped">
          <a class="button is-small" @click="refreshlist"><i class="fa fa-refresh"></i></a>
@@ -58,11 +141,15 @@
 
 <script>
 import axios from 'axios'
+import cityjson from '../assets/cityinfo.json'  //导入中国省市县json文件
 export default {
   name: "fundteacher",
   props:{
     usr_info:Object,
     teacherinfo:Object,
+    pschoolinfo: Object,
+    mschoolinfo: Object,
+    hschoolinfo: Object,
   },
   data(){
     return{
@@ -71,7 +158,50 @@ export default {
       click_item_id : -1, //用于给item添加样式
 
       showdetail :-1, //显示详细信息
+      isshowfilter:false, //展示过滤框
+      showclasses:{  //展示对应年级的课程
+        pclass:false,
+        mclass:false,
+        hclass:false,
+      },
+      selectedgrade:'',
+      selectedclass:[], //选择的课程列表
+      cityinfo:cityjson, //中国省市县
+      selectcity:{   //城市下拉列表中选择的内容
+        province:'北京市',
+        city:'市辖区',
+        county:'东城区',
+      },
+      showselectdanger:{
+        provincedanger:false,
+        citydanger:false,
+        countydanger:false,
+      }
     }
+  },
+  watch:{
+    selectedgrade(){ //选中的年级是哪个阶段的就显示那个阶段学生的课程
+      if(this.pschoolinfo.grades.includes(this.selectedgrade)){
+        this.showclasses.pclass = true
+        this.showclasses.mclass = false
+        this.showclasses.hclass = false
+      }else if(this.mschoolinfo.grades.includes(this.selectedgrade)){
+        this.showclasses.pclass = false
+        this.showclasses.mclass = true
+        this.showclasses.hclass = false
+      }else if(this.hschoolinfo.grades.includes(this.selectedgrade)){
+        this.showclasses.pclass = false
+        this.showclasses.mclass = false
+        this.showclasses.hclass = true
+      }
+    },
+    usr_info(){
+      if(this.usr_info.u_now_city_county.split(' ')[0]!='' &&this.usr_info.u_now_city_county.split(' ')[1]!=''&&this.usr_info.u_now_province != ''){
+        this.selectcity.province = this.usr_info.u_now_province
+        this.selectcity.city = this.usr_info.u_now_city_county.split(' ')[0]
+        this.selectcity.county = this.usr_info.u_now_city_county.split(' ')[1]
+      }
+    },
   },
   computed:{
     //切片开始位置
@@ -89,6 +219,21 @@ export default {
     //页数
     pagenum(){
       return Math.ceil(this.teacherinfo.teachernum/this.eachpageitemnum)
+    },
+    selectedclassString(){
+      let class_info =''
+      let len = this.selectedclass.length
+      let i=0
+      for(let classvalue of this.selectedclass){
+        if(i < len -1){
+          class_info += classvalue +';'
+          i+=1
+        }else{
+          class_info += classvalue
+          i+=1
+        }
+      }
+      return class_info
     }
   },
   methods:{
@@ -115,7 +260,37 @@ export default {
       }
     },
     refreshlist(){
-      this.$emit('refreshteacherlist','no','no') //后面两个参数位学科和年级
+      this.$emit('refreshteacherlist','no','no','no') //后面两个参数位学科和年级
+    },
+    searchteachers(){
+      let grade= this.selectedgrade
+      let classev= this.selectedclassString
+      if(this.selectedgrade == '' && this.selectedclassString ==''){
+        grade = 'no'
+        classev = 'no'
+      }
+      if(this.selectedclassString == ''){
+        classev = 'no'
+      }
+      if(!(this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city) && this.cityinfo[this.selectcity.province][this.selectcity.city].includes(this.selectcity.county))){
+        if(!this.cityinfo[this.selectcity.province].hasOwnProperty(this.selectcity.city))
+        {
+          this.showselectdanger.citydanger =true
+          this.showselectdanger.countydanger =true
+        }else{
+          if(!this.cityinfo[this.selectcity.province][this.selectcity.city].includes(this.selectcity.county))
+          {
+            this.showselectdanger.countydanger =true
+          }
+        }
+        setTimeout(()=>{
+          for(let keyvalue of Object.keys(this.showselectdanger)){
+            this.showselectdanger[keyvalue] = false
+          }
+        },3000)
+      }else{
+        this.$emit('refreshteacherlist',classev,grade,this.selectcity.city+' '+this.selectcity.county)
+      }
     },
     gotoiverify(){
       this.$router.push({name:'identity', params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
@@ -139,6 +314,9 @@ export default {
     gotologin(){
       this.$router.push('/login')
     },
+    showfilte(){
+      this.isshowfilter =! this.isshowfilter
+    }
   }
 
 }

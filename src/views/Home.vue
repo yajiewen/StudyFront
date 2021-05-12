@@ -9,7 +9,7 @@
       <template v-slot:middle>
         <tutororder v-on:getnewinfo="getnewmyinfo" v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
         <irecommend v-show="middle_show.showirecommend"></irecommend>
-        <fundteacher v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
+        <fundteacher v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
         <personalinfo v-on:showtregister="showtregisterblock" v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist" v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
@@ -414,11 +414,11 @@ export default {
         }
       })
     },
-    refreshteacherlist(subject,grade){
+    refreshteacherlist(subject,grade,city){
       //获取老师信息列表
       axios({
         withCredentials : true,
-        url:'account/getteacherlist/'+subject+'/'+grade+'/',
+        url:'account/getteacherlist/'+subject+'/'+grade+'/'+city+'/',
         method:'get',
         data: {
         }
@@ -525,7 +525,7 @@ export default {
     //获取老师信息列表
     axios({
       withCredentials : true,
-      url:'account/getteacherlist/no/no/',
+      url:'account/getteacherlist/no/no/no/',
       method:'get',
       data: {
       }
