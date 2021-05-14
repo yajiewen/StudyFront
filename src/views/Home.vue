@@ -20,7 +20,7 @@
       <template v-slot:right>
         <changeinfo v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-bind:pschool="primaryschool" v-bind:mschool="middleschool" v-bind:hschool="highschool" v-show="right_show.showchangeinfo" v-on:closecmyinfo="showcmyinfo"></changeinfo>
         <takeorderinfo v-show="right_show.showtakeorderinfo" v-bind:order_info="take_order_info" ></takeorderinfo>
-        <sendorderinfo v-bind:workerinfo="teacherinfo" v-on:gettinfo="getteacherinfo" v-bind:is_show_winfo="right_show.showteacherinfo" v-bind:order_info="send_order_info" v-show="right_show.showsendorderinfo"></sendorderinfo>
+        <sendorderinfo v-on:refreshsorders="refreshsendorders" v-bind:workerinfo="teacherinfo" v-on:gettinfo="getteacherinfo" v-bind:is_show_winfo="right_show.showteacherinfo" v-bind:order_info="send_order_info" v-show="right_show.showsendorderinfo"></sendorderinfo>
         <TeacherRrgister v-on:getnewinfo="getnewmyinfo" v-bind:usrinfo="user_info" v-on:showtregister="showtregisterblock" v-show="right_show.showtregiste"></TeacherRrgister>
       </template>
 

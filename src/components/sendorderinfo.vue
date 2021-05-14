@@ -91,6 +91,7 @@
                <span class="tag is-black " v-if="order_info.order_status == 1">待接单1</span>
                <span class="tag is-link " v-if="order_info.order_status == 2">待完成2</span>
                <span class="tag is-success " v-if="order_info.order_status == 3">已完成3</span>
+               <span class="tag is-success " v-if="order_info.order_status == 3 && order_info.order_is_evalute == 1">已评价</span>
                <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中4</span>
                <span class="tag is-info " v-if="order_info.order_status == 5">已退款5</span>
                <span class="tag is-primary " v-if="order_info.order_status == 6">已取消6</span>
@@ -110,6 +111,37 @@
      </ul>
    </div>
    <br>
+   <div v-if="order_info.order_status == 3 && order_info.order_is_evalute == 0">
+     <div class="columns">
+       <div class="column">
+         <nav class="level is-mobile">
+           <div class="level-left">
+             <a class="level-item" aria-label="like" v-for="(keyvalue,keyname) in heartcolors" v-on:click="changecolor(keyname)">
+              <span class="icon is-small" v-bind:class="{'has-text-grey-lighter':!keyvalue,'has-text-link':keyvalue}">
+                <i class="fas fa-heart" aria-hidden="true"></i>
+              </span>
+             </a>
+             <span class="font3">{{heartcontent}}</span>
+           </div>
+         </nav>
+       </div>
+     </div>
+   <div class="columns">
+     <div class="column is-three-quarters">
+       <div class="field">
+         <div class="control">
+           <textarea class="textarea is-link font2" placeholder="对此单进行评价" maxlength="290" v-model="econtent"></textarea>
+         </div>
+       </div>
+       <div class="field">
+         <div class="control">
+           <button class="button is-small" v-on:click="sendevaluate">评价</button> <span class="has-text-success">{{successmess}}</span>
+         </div>
+       </div>
+     </div>
+   </div>
+   </div>
+
  </div>
 </template>
 
@@ -136,11 +168,82 @@ export default {
         usr_identity_verify: 0,
         use_certificate_verify: 0,
       }*/
+      heartcolors:{
+        heart1:true,
+        heart2:true,
+        heart3:true,
+        heart4:true,
+        heart5:true,
+      },
+      escore:5,
+      econtent:'',
+      successmess:'',
+
     }
   },
   methods:{
     showtinfo(){
       this.$emit('gettinfo',this.order_info.order_worker_email)
+    },
+    changecolor(keyname){
+      let i = 0
+      for(let keyv of Object.keys(this.heartcolors)){
+        if(keyv != keyname && i ==0){
+          this.heartcolors[keyv] = true
+        }else{
+          i = 1
+          this.heartcolors[keyv] = false
+        }
+      }
+      this.heartcolors[keyname] = true
+    },
+    sendevaluate(){
+      axios({
+        withCredentials:true,
+        url:'https://127.0.0.1:8081/evaluate/evaluateworker/',
+        method:'post',
+        data:{
+          otoken:this.order_info.order_token,
+          worker_email:this.order_info.order_worker_email,
+          content:this.econtent,
+          score:this.escore
+        }
+      }).then(res => {
+        if(res.data.is_login == 'yes'){
+            if(res.data.evalu_success =='yes'){
+              this.successmess = '评价成功!'
+              setTimeout(()=>{this.$emit('refreshsorders')},1000)
+            }
+        }else{
+          alert('请重新登录')
+        }
+      })
+    }
+  },
+  computed:{
+    heartcontent(){
+      let mess = ''
+      if(this.heartcolors.heart1 && !this.heartcolors.heart2){
+        mess = '非常不满意 ヽ(｀Д´)ﾉ 1分'
+        this.escore =1
+      }
+      if(this.heartcolors.heart2 && !this.heartcolors.heart3){
+        mess = '不满意 (๑`^´๑) 2分'
+        this.escore =2
+      }
+      if(this.heartcolors.heart3 && !this.heartcolors.heart4){
+        mess = '一般 …(﹂_﹂)… 3分'
+        this.escore =3
+      }
+      if(this.heartcolors.heart4 && !this.heartcolors.heart5){
+        mess = '满意 (*^-^*) 4分'
+        this.escore =4
+      }
+      if(this.heartcolors.heart5){
+        mess = '非常满意 (*^▽^*) 5分'
+        this.escore =5
+      }
+      return mess
     }
   }
 }
@@ -155,5 +258,8 @@ export default {
 }
 .font3{
   font-size: 0.5em
+}
+.heartcolor{
+  background-color: red;
 }
 </style>
