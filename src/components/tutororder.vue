@@ -298,6 +298,7 @@ export default {
             uemail:this.usr_info.uemail,
             grade:teaching_grade,
             subjects:teaching_subjects,
+            takeorder:'no',
           }
         }).then(res => {
           if(res.data.is_ok == 'yes'){
@@ -372,6 +373,7 @@ export default {
             uemail:this.usr_info.uemail,
             grade:teaching_grade,
             subjects:teaching_subjects,
+            takeorder:'yes',
           }
         }).then(res => {
           if(res.data.is_ok == 'yes'){
