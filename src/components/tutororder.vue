@@ -77,7 +77,7 @@
             <div class="column font2"><p class="font3">&nbsp{{order.order_teaching_grade}}</p></div>
             <div class="column font2"><p class="font3">{{order.order_teaching_subjects}}</p></div>
             <div class="column font2"><p class="font3">{{order.order_total_money}} 元</p></div>
-            <div class="column font2"><a class="font3" v-on:click="showdetailf(index)">详细信息</a></div>
+            <div class="column font2"><a class="font3" v-on:click="showdetailf(index,order.order_teaching_grade,order.order_teaching_subjects)">详细信息</a></div>
             <div class="column font2"><button class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button></div>
 
           </div>
@@ -286,9 +286,24 @@ export default {
     showMessage(index) {
       this.click_item_id = index
     },
-    showdetailf(index){
+    showdetailf(index,teaching_grade,teaching_subjects){
       if(this.showdetailinfo != index){
         this.showdetailinfo = index
+        //记录用户行为
+        axios({
+          withCredentials:true,
+          url:'advertize/upmaps/',
+          method:'post',
+          data:{
+            uemail:this.usr_info.uemail,
+            grade:teaching_grade,
+            subjects:teaching_subjects,
+          }
+        }).then(res => {
+          if(res.data.is_ok == 'yes'){
+            console.log('upmap ok');
+          }
+        })
       }else {
         this.showdetailinfo = -1
       }
