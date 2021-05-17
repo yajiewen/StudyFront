@@ -155,7 +155,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <button v-bind:class="{'is-loading':showisloading == index}" class="button is-primary is-small" v-on:click="takeorder(order.order_token,order.order_boss_email,index)">
+                    <button v-bind:class="{'is-loading':showisloading == index}" class="button is-primary is-small" v-on:click="takeorder(order.order_token,order.order_boss_email,index,order.order_teaching_grade,order.order_teaching_subjects)">
                       接单并支付保证金
                     </button>
                   </div>
@@ -318,7 +318,7 @@ export default {
     btshowfilter(){
       this.showfilter = !this.showfilter
     },
-    takeorder(ordertoken,bossemail,index){
+    takeorder(ordertoken,bossemail,index,teaching_grade,teaching_subjects){
       if(this.uname && this.uphone.length ==11 && this.uwechat && this.usr_info.uemail != bossemail){ //单这4个符合要求时候发送请求 这里就验证不可以自己接自己的单
         this.showisloading = index
         axios({
@@ -361,6 +361,21 @@ export default {
             }
           }else{
             alert("请重新登录")
+          }
+        })
+        //记录用户行为
+        axios({
+          withCredentials:true,
+          url:'advertize/upmaps/',
+          method:'post',
+          data:{
+            uemail:this.usr_info.uemail,
+            grade:teaching_grade,
+            subjects:teaching_subjects,
+          }
+        }).then(res => {
+          if(res.data.is_ok == 'yes'){
+            console.log('upmap ok');
           }
         })
       }else{
