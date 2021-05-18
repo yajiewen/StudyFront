@@ -8,7 +8,7 @@
 <!--中间部分      -->
       <template v-slot:middle>
         <tutororder v-on:getnewinfo="getnewmyinfo" v-on:refreshtorders="refreshtakeorders" v-on:searchorders="searchzorders" v-bind:usr_info="user_info" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool"  v-on:refreshorderlist="refreshzorderlist" v-bind:orderlistinfo="orderlistinfo" v-show="middle_show.showorderlist"></tutororder>
-        <irecommend v-show="middle_show.showirecommend"></irecommend>
+        <irecommend v-on:refreshaiorderlist="refreshaiorders" v-bind:usr_info="user_info" v-bind:orderlistinfo="aiorderlistinfo" v-show="middle_show.showirecommend"></irecommend>
         <fundteacher v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-on:refreshteacherlist="refreshteacherlist" v-bind:teacherinfo="teacherlistinfo" v-on:getnewinfo="getnewmyinfo" v-bind:usr_info="user_info" v-show="middle_show.showfundteacher"></fundteacher>
         <personalinfo v-on:showtregister="showtregisterblock" v-bind:usr_info="user_info" v-show="middle_show.showinfo" v-on:showchangeinfo="showcmyinfo"></personalinfo>
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
@@ -86,8 +86,13 @@ export default {
       primaryschool:{},
       middleschool: {},
       highschool: {},
-      //主页待结单列表信息
+      //主页待接单列表信息
       orderlistinfo:{
+        ordernum:0,//订单数
+        ordersinfo:[],//订单信息
+      },
+      //智能推荐待接单列表信息
+      aiorderlistinfo:{
         ordernum:0,//订单数
         ordersinfo:[],//订单信息
       },
@@ -414,6 +419,22 @@ export default {
         }
       })
     },
+    //刷新智能推荐订单
+    refreshaiorders(){
+      //获取智能推荐待接单列表
+      axios({
+        withCredentials : true,
+        url:'advertize/adverlist/',
+        method:'get',
+        data: {
+        }
+      }).then(res => {
+        if(res.data.is_get == 'yes'){
+          this.aiorderlistinfo.ordernum = res.data.order_num
+          this.aiorderlistinfo.ordersinfo = res.data.orders
+        }
+      })
+    },
     refreshteacherlist(subject,grade,city){
       //获取老师信息列表
       axios({
@@ -519,6 +540,19 @@ export default {
       if(res.data.is_get == 'yes'){
         this.orderlistinfo.ordernum = res.data.order_num
         this.orderlistinfo.ordersinfo = res.data.orders
+      }
+    })
+    //获取智能推荐待接单列表
+    axios({
+      withCredentials : true,
+      url:'advertize/adverlist/',
+      method:'get',
+      data: {
+      }
+    }).then(res => {
+      if(res.data.is_get == 'yes'){
+        this.aiorderlistinfo.ordernum = res.data.order_num
+        this.aiorderlistinfo.ordersinfo = res.data.orders
       }
     })
 

@@ -188,7 +188,7 @@ export default {
   data(){
     return{
       pageindex:0,   //页码
-      eachpageitemnum:10, //每页显示数
+      eachpageitemnum:9, //每页显示数
       click_item_id : -1, //用于给item添加样式
       button_is_loading:false, //button 是否在载入状态
       uname:'', //接单人名字
@@ -365,6 +365,7 @@ export default {
             }
           }else{
             alert("请重新登录")
+            this.showisloading = -1
           }
         })
         //记录用户行为
