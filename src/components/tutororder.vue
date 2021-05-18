@@ -78,7 +78,10 @@
             <div class="column font2"><p class="font3">{{order.order_teaching_subjects}}</p></div>
             <div class="column font2"><p class="font3">{{order.order_total_money}} 元</p></div>
             <div class="column font2"><a class="font3" v-on:click="showdetailf(index,order.order_teaching_grade,order.order_teaching_subjects)">详细信息</a></div>
-            <div class="column font2"><button class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button></div>
+            <div class="column font2">
+              <button v-if="usr_info.uemail !=order.order_boss_email " class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button>
+              <button v-else class="button is-small" disabled="usr_info.uemail == order.order_boss_email " title="我发的定单!"><i class="fas fa-user-alt"></i></button>
+            </div>
 
           </div>
         <!--详细信息      -->
