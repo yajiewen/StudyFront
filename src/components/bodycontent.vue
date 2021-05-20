@@ -20,7 +20,7 @@
       <footer class="footer">
         <div class="content has-text-centered font2">
           <p>
-            <strong>红 树 林 家 教 </strong>线上线下大学生家教平台
+            <strong>思 达 迪  </strong>线上 线下大学生家教平台
           </p>
         </div>
       </footer>

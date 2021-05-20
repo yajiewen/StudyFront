@@ -432,6 +432,7 @@ export default {
         if(res.data.is_get == 'yes'){
           this.aiorderlistinfo.ordernum = res.data.order_num
           this.aiorderlistinfo.ordersinfo = res.data.orders
+          console.log('refreash ai order');
         }
       })
     },

@@ -17,7 +17,7 @@
       <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{'is-active': isactive}" >
         <div class="navbar-start">
           <a class="navbar-item" v-on:click="tohome">
-            红 树 林 家 教
+            思 达 迪 家 教
           </a>
 
 
@@ -27,22 +27,22 @@
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              More
+              更多
             </a>
 
             <div class="navbar-dropdown">
               <a class="navbar-item">
-                About
+                (功能待扩展)
               </a>
               <a class="navbar-item">
-                Jobs
+                (功能待扩展)
               </a>
               <a class="navbar-item">
-                Contact
+                (功能待扩展)
               </a>
               <hr class="navbar-divider">
               <a class="navbar-item">
-                Report an issue
+                (功能待扩展)
               </a>
             </div>
           </div>
