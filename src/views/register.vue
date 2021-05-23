@@ -97,18 +97,17 @@ export default {
             if(res.data.is_add == 'no'){
               if(res.data.uemail_exist =='yes'){
                 this.emaildanger = true
-              }else if(res.data.uname_exist == 'yes'){
+              }
+              if(res.data.uname_exist == 'yes'){
                 this.namedanger = true
               }
             }else{
-              for(let i =0;i<=100;i++){
-                this.processvalue++
-              }
               alert('注册成功!请前往邮箱激活后登录!')
               this.buttonstyle = 'button is-link is-fullwidth '
               this.$router.push('/login')
             }
             setTimeout(() => {this.emaildanger = false,this.namedanger = false},5000)
+            this.buttonstyle = 'button is-link is-fullwidth '
           })
        }else{
          this.buttonstyle = 'button is-link is-fullwidth '

@@ -308,6 +308,9 @@ export default {
           //刷新个人信息(主要是钱包)
           this.$emit('getnewinfo')
           alert('购买成功')
+        }else if(res.data.is_lack_money == 'yes')
+        {
+          alert('金额不足,请充值!')
         }
       })
     },
