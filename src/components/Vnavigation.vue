@@ -2,7 +2,7 @@
   <div id="Vnavigation" class="menubackground">
     <aside class="menu" >
       <p class="menu-label">
-        Tutoring business
+<!--        Tutoring business-->
       </p>
       <ul class="menu-list">
         <li>
@@ -16,7 +16,7 @@
       </ul>
 
       <p class="menu-label">
-        Personal business
+<!--        Personal business-->
       </p>
       <ul class="menu-list">
         <li>
@@ -31,14 +31,14 @@
       </ul>
 
       <p class="menu-label">
-        Transactions
+<!--        Transactions-->
       </p>
       <ul class="menu-list">
         <li>
           <a class="is-active" v-on:click="show_paid_business">充 值 业 务</a>
           <ul v-show="isunfold_paid_business">
             <li><a @click="show_recharge" v-bind:class="{font1:changefontsize.recharge, font2:!changefontsize.recharge}">充 值</a></li>
-            <li><a v-bind:class="{font1:changefontsize.withdrawal, font2:!changefontsize.withdrawal}">提 现</a></li>
+            <li><a @click="show_withdraw" v-bind:class="{font1:changefontsize.withdrawal, font2:!changefontsize.withdrawal}">提 现</a></li>
           </ul>
         </li>
       </ul>
@@ -175,6 +175,17 @@ methods:{
     //改变导航栏字大小
     for(let keyvalue of Object.keys(this.changefontsize)){
       if(keyvalue != "recharge"){
+        this.changefontsize[keyvalue] = false
+      }else {
+        this.changefontsize[keyvalue] = true
+      }
+    }
+  },
+  show_withdraw(){
+    this.$emit('showwithdraw')
+    //改变导航栏字大小
+    for(let keyvalue of Object.keys(this.changefontsize)){
+      if(keyvalue != "withdrawal"){
         this.changefontsize[keyvalue] = false
       }else {
         this.changefontsize[keyvalue] = true

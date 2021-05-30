@@ -3,7 +3,7 @@
     <bodycontent>
 <!-- 左边部分     -->
       <template v-slot:left>
-        <Vnavigation v-on:showrecharge="showrecharge" v-on:showirecommend="showitlist" v-on:showteacherlist="showtlist" v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
+        <Vnavigation v-on:showwithdraw="showdrawwith" v-on:showrecharge="showrecharge" v-on:showirecommend="showitlist" v-on:showteacherlist="showtlist" v-on:showzorderlist="showturtorlist" v-on:showcorder="showcorder" v-on:showsorders="showsendorders" v-on:showtorders="showtakeorders" v-on:showmyinfo="showmyinfo" :isunfold_tutoring_business="isunfold_tutoring_b" :isunfold_personal_center="isunfold_personal_c" :isunfold_paid_business="isunfold_paid_b" :is_login="is_login" v-on:changstatetb="changetb" v-on:changestatepc="changepc" v-on:changestatepb="changepb"></Vnavigation>
       </template>
 <!--中间部分      -->
       <template v-slot:middle>
@@ -15,6 +15,8 @@
         <mysendorders v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist" v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
         <createorder v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist"  v-on:refreshsorders="refreshsendorders" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
         <recharge v-show="middle_show.showrecharge"></recharge>
+        <withdraw v-show="middle_show.showwithdraw"></withdraw>
+
       </template>
 <!--右边部分      -->
       <template v-slot:right>
@@ -47,7 +49,7 @@ import fundteacher from "../components/fundteacher";
 import irecommend from "../components/irecommend";
 import recharge from "../components/recharge";
 import TeacherRrgister from "../components/TeacherRrgister";
-
+import withdraw from "../components/withdraw";
 
 
 export default {
@@ -68,6 +70,8 @@ export default {
     irecommend,
     recharge,
     TeacherRrgister,
+    withdraw,
+
   },
   data(){
     return{
@@ -269,6 +273,21 @@ export default {
       if(this.middle_show.showrecharge != true){
         for(let keyvalue of Object.keys(this.middle_show)){
           if(keyvalue != 'showrecharge'){
+            this.middle_show[keyvalue] = false
+          }else {
+            this.middle_show[keyvalue] = true
+          }
+        }
+        //所有右边信息关闭
+        for(let keyvalue of Object.keys(this.right_show)){
+          this.right_show[keyvalue] = false
+        }
+      }
+    },
+    showdrawwith(){
+      if(this.middle_show.showwithdraw != true){
+        for(let keyvalue of Object.keys(this.middle_show)){
+          if(keyvalue != 'showwithdraw'){
             this.middle_show[keyvalue] = false
           }else {
             this.middle_show[keyvalue] = true
