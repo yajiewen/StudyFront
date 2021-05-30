@@ -1,7 +1,8 @@
 <template>
   <div id="irecommend" class="column is-half" >
     <div class="notification is-link">
-     你可能感兴趣的订单/ / / / / / / / / / / / /共 {{orderlistinfo.ordernum}} 单
+     你可能感兴趣的订单
+      <span class="sunposition">共 {{orderlistinfo.ordernum}} 单</span>
     </div>
     <div class="action-buttons">
       <div class="control is-grouped">
@@ -352,6 +353,10 @@ export default {
 }
 .cardbackground{  /*选中后换的背景颜色*/
   background-color:white;
+}
+.sunposition{
+  position: absolute;
+  right: 10%;
 }
 
 </style>

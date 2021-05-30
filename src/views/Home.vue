@@ -14,8 +14,8 @@
         <mytakeorders v-on:refreshtorders="refreshtakeorders" v-on:closeorderinfo="closetinfo" v-on:torderinfo="gettorderinfo" v-bind:mytakeorders="user_take_orders" v-bind:mytakeordersnum="user_take_orders_num" v-show="middle_show.showmytakeorders"></mytakeorders>
         <mysendorders v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist" v-on:refreshsorders="refreshsendorders" v-on:closeorderinfo="closesinfo" v-on:sorderinfo="getsorderinfo" v-bind:mysendordersnum="user_send_orders_num" v-bind:mysendorders="user_send_orders" v-show="middle_show.showmysendorders"></mysendorders>
         <createorder v-on:getnewinfo="getnewmyinfo" v-on:refreshorderlist="refreshzorderlist"  v-on:refreshsorders="refreshsendorders" v-bind:pschoolinfo="primaryschool" v-bind:mschoolinfo="middleschool" v-bind:hschoolinfo="highschool" v-bind:usr_email="user_email" v-show="middle_show.showmycorder"></createorder>
-        <recharge v-show="middle_show.showrecharge"></recharge>
-        <withdraw v-show="middle_show.showwithdraw"></withdraw>
+<!--        <recharge v-show="middle_show.showrecharge"></recharge>-->
+<!--        <withdraw v-show="middle_show.showwithdraw"></withdraw>-->
 
       </template>
 <!--右边部分      -->

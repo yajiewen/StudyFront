@@ -1,7 +1,8 @@
 <template>
   <div id="tutororder" class="column is-half">
     <div class="notification is-link">
-      家 教 订 单/ / / / / / / / / / / / /共 {{orderlistinfo.ordernum}} 单
+      家 教 订 单
+      <span class="sunposition">共 {{orderlistinfo.ordernum}} 单</span>
     </div>
     <div>
       <a class="button is-small" @click="btshowfilter"><i class="fas fa-caret-down">筛选</i></a>
@@ -437,5 +438,10 @@ export default {
 .cardbackground{  /*选中后换的背景颜色*/
   background-color:white;
 }
+.sunposition{
+  position: absolute;
+  right: 10%;
+}
+
 
 </style>

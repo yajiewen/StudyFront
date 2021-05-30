@@ -24,7 +24,7 @@
             关 于 我 们
           </a>
 
-          <div class="navbar-item has-dropdown is-hoverable">
+<!--          <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               更多
             </a>
@@ -44,7 +44,7 @@
                 (功能待扩展)
               </a>
             </div>
-          </div>
+          </div>-->
 
         </div>
 
