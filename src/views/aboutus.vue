@@ -30,6 +30,7 @@ export default {
 .pdiv{
   position: absolute;
   top: 30%;
+  width: 100%;
 }
 .imgp{
   position: relative;
