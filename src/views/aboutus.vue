@@ -1,7 +1,7 @@
 <template>
   <div id="aboutus" class="pdiv">
 <!--    <div class="imgp">
-      <img src="../assets/nav.jpg" width="200" >
+      <img src="../assets/nav.png" width="200" >
     </div>-->
     <div class="columns">
     <div class="column is-half is-offset-3">
