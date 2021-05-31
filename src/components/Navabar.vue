@@ -15,12 +15,12 @@
 
       <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{'is-active': isactive}" >
         <div class="navbar-start">
-          <a class="navbar-item" v-on:click="tohome">
+<!--          <a class="navbar-item" v-on:click="tohome">
             思 达 迪 家 教
-          </a>
+          </a>-->
 
 
-          <a class="navbar-item">
+          <a class="navbar-item" v-on:click="toaboutus">
             关 于 我 们
           </a>
 
@@ -105,6 +105,9 @@ methods:{
   },
   tohome(){
     this.$router.push('/')
+  },
+  toaboutus(){
+    this.$router.push("/about")
   },
   logout(){
     axios({
