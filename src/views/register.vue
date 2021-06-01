@@ -16,7 +16,7 @@
       <div class="field" >
         <label class="label">邮箱&nbsp;&nbsp;{{memail}}</label>
         <div class="control  has-icons-left" >
-          <input class="input" type="email" v-bind:class="{'is-danger':emaildanger}" placeholder="User Email" v-model.trim="uemail"  onKeyUp="value=value.replace(/[^\d|chun]/g,'')" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
+          <input class="input" type="email" v-bind:class="{'is-danger':emaildanger}" placeholder="User Email" v-model.trim="uemail"  onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -27,7 +27,7 @@
       <div class="field">
         <label class="label">密码&nbsp;&nbsp;{{mpass}}</label>
         <div class="control has-icons-left" >
-          <input class="input" type="password" placeholder="******** len(8~16)" v-model.trim="upassword" key="pwd1" onKeyUp="value=value.replace(/[^\d|chun]/g,'')" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16">
+          <input class="input" type="password" placeholder="******** len(8~16)" v-model.trim="upassword" key="pwd1"  onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16">
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -36,7 +36,7 @@
       <div class="field">
         <label class="label">确认密码&nbsp;&nbsp;{{mpass1}}</label>
         <div class="control has-icons-left" >
-          <input class="input" type="password" placeholder="******** len(8~16)" v-model.trim="upassword1" key="pwd2" onKeyUp="value=value.replace(/[^\d|chun]/g,'')" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16">
+          <input class="input" type="password" placeholder="******** len(8~16)" v-model.trim="upassword1" key="pwd2"  onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16">
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
