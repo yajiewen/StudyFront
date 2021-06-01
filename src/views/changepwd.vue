@@ -5,7 +5,7 @@
       <div class="field" >
         <label class="label">邮箱&nbsp;&nbsp;{{memail}}</label>
         <div class="control  has-icons-left" >
-          <input class="input" type="email" placeholder="User Email" v-model.trim="uemail"   onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
+          <input class="input" type="email" placeholder="User Email" v-model.trim="uemail" maxlength="30">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>

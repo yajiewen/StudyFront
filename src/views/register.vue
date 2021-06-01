@@ -5,7 +5,7 @@
       <div class="field" >
         <label class="label">用户名&nbsp;&nbsp;{{mname}}</label>
         <div class="control  has-icons-left" >
-          <input class="input" type="text" v-bind:class="{'is-danger':namedanger}" placeholder="User Name len(6~16)" v-model.trim="uname" onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')" maxlength="16">
+          <input class="input" type="text" v-bind:class="{'is-danger':namedanger}" placeholder="User Name len(6~16)" v-model.trim="uname"   maxlength="16">
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -16,7 +16,7 @@
       <div class="field" >
         <label class="label">邮箱&nbsp;&nbsp;{{memail}}</label>
         <div class="control  has-icons-left" >
-          <input class="input" type="email" v-bind:class="{'is-danger':emaildanger}" placeholder="User Email" v-model.trim="uemail"  onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
+          <input class="input" type="email" v-bind:class="{'is-danger':emaildanger}" placeholder="User Email" v-model.trim="uemail"  maxlength="30">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>

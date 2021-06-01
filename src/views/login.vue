@@ -5,7 +5,7 @@
       <div class="field" >
         <label class="label">邮箱</label>
         <div class="control  has-icons-left has-icons-right" >
-          <input class="input" type="email" placeholder="User Email" v-model.trim="uemail"  onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="30">
+          <input class="input" type="email" placeholder="User Email" v-model.trim="uemail" maxlength="30">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -18,7 +18,7 @@
       <div class="field">
         <label class="label">密码</label>
         <div class="control has-icons-left" >
-          <input class="input" type="password" v-on:keyup.enter="sendlogin"  placeholder="********" v-model.trim="upassword" key="pwd"  onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16">
+          <input class="input" type="password" v-on:keyup.enter="sendlogin"  placeholder="********" v-model.trim="upassword" key="pwd" maxlength="16">
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
