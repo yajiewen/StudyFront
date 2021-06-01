@@ -76,16 +76,21 @@ export default {
              unewpassword: this.upassword1,
            }
          }).then(res => {
-           if (res.data.is_update_password == 'no'){
-             if (res.data.is_matching == 'no') {
-               this.mpass = '原密码不正确'
-               setTimeout(() => {
-                 this.mpass = ''
-               }, 1000)
-             }
-           }else{
-             alert('修改密码成功!')
-           }
+          if(res.data.is_verified == 'yes'){
+            if (res.data.is_update_password == 'no'){
+              if (res.data.is_matching == 'no') {
+                this.mpass = '原密码不正确'
+                setTimeout(() => {
+                  this.mpass = ''
+                }, 1000)
+              }
+            }else{
+              alert('修改密码成功!')
+            }
+          }else{
+            this.buttonstyle = 'button is-link is-fullwidth'
+            alert('邮箱未验证,请前往邮箱点击链接完成验证!')
+          }
          })
        }else{
          alert('输入不合法,请重新输入!')

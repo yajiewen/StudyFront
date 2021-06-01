@@ -50,13 +50,18 @@ export default {
             uemail: this.uemail,
           }
         }).then(res => {
-          if (res.data.is_send_password == 'yes'){
-            this.buttonstyle = 'button is-link is-fullwidth'
-            alert('邮件发送成功!')
-            this.$router.push('/login')
+          if(res.data.is_verified =='yes'){
+            if (res.data.is_send_password == 'yes'){
+              this.buttonstyle = 'button is-link is-fullwidth'
+              alert('邮件发送成功!')
+              this.$router.push('/login')
+            }else{
+              this.buttonstyle = 'button is-link is-fullwidth'
+              alert('邮箱不存在')
+            }
           }else{
             this.buttonstyle = 'button is-link is-fullwidth'
-            alert('邮箱不存在')
+            alert('邮箱未验证,请前往邮箱点击链接完成验证!')
           }
         })
       }else

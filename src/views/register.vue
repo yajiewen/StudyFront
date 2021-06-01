@@ -102,7 +102,7 @@ export default {
                 this.namedanger = true
               }
             }else{
-              alert('注册成功!请前往邮箱激活后登录!')
+              alert('请前往邮箱点击验证链接完成邮箱验证!')
               this.buttonstyle = 'button is-link is-fullwidth '
               this.$router.push('/login')
             }
