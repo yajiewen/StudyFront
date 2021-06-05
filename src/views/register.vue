@@ -2,6 +2,9 @@
   <Navabar v-bind:issee='is_show_log_button'></Navabar>
   <div class="column is-one-quarter is-offset-7">
     <div class="box" id="register">
+      <div class="field">
+        <img src="../assets/login.png" >
+      </div>
       <div class="field" >
         <label class="label">用户名&nbsp;&nbsp;{{mname}}</label>
         <div class="control  has-icons-left" >

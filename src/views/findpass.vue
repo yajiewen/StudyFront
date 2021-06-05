@@ -1,22 +1,27 @@
 <template>
   <Navabar v-bind:issee='is_show_log_button'></Navabar>
   <div class="column is-one-quarter is-offset-7" id="findpass">
-    <div class="control has-icons-left has-icons-right">
-      <input class="input" type="email" placeholder="Email" v-model.trim="uemail" maxlength="30">
-      <span class="icon is-small is-left">
+    <div class="box">
+      <div class="field">
+        <img src="../assets/login.png" >
+      </div>
+      <div class="control has-icons-left has-icons-right">
+        <input class="input" type="email" placeholder="Email" v-model.trim="uemail" maxlength="30">
+        <span class="icon is-small is-left">
     <i class="fas fa-envelope"></i>
     </span>
         <span class="icon is-small is-right">
       <i class="fas fa-check"></i>
     </span>
-    </div>
-    <hr>
-    <div class="field">
-      <button v-bind:class="buttonstyle" v-on:click="getpassword" ><strong>找&nbsp;回&nbsp;密&nbsp;码</strong></button>
-    </div>
+      </div>
+      <hr>
+      <div class="field">
+        <button v-bind:class="buttonstyle" v-on:click="getpassword" ><strong>找&nbsp;回&nbsp;密&nbsp;码</strong></button>
+      </div>
 
-    <div class="field">
-      <button class="button is-primary is-outlined is-fullwidth " v-on:click="tochangepwd" ><strong>修&nbsp;改&nbsp;密&nbsp;码</strong></button>
+      <div class="field">
+        <button class="button is-primary is-outlined is-fullwidth " v-on:click="tochangepwd" ><strong>修&nbsp;改&nbsp;密&nbsp;码</strong></button>
+      </div>
     </div>
 
   </div>
