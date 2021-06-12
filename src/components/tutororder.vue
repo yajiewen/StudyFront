@@ -338,6 +338,7 @@ export default {
             wwei_qq:this.uwechat,
           }
         }).then(res => {
+          console.log(res.data);
           if(res.data.is_login == 'yes'){
             if(res.data.is_take_over == 'yes'){
               //刷新我接的单
@@ -365,7 +366,8 @@ export default {
               }
             }
           }else{
-            alert("请重新登录")
+            alert("请先登录!")
+            this.$router.push("/login")
             this.showisloading = -1
           }
         })
