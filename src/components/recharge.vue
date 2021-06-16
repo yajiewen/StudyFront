@@ -1,35 +1,35 @@
 <template>
-  <div id="recharge" class="column is-half">
-    <div class="field has-addons " v-show="!is_show.show_wechatpay">
-      <p class="control">
-    <span class="select">
-      <select>
-        <option>¥</option>
-      </select>
-    </span>
-      </p>
-      <p class="control">
-        <input class="input" type="number" placeholder="Amount of money" v-model.number="money" onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
-      </p>
-      <p class="control">
-        <a class="button" v-on:click="buycoin">
-          充 值
-        </a>
-      </p>
-    </div>
-    <div class="field" v-show="is_show.show_wechatpay">
-      <h4 class="title is-4">思达迪 收银台</h4>
-      <img src="../assets/WePayLogo.png" width="130">
-      <div class="has-text-centered">
-        <p class="font2">充值金额 : {{money}} 元</p>
-        <div id="codeimg" class="qrcode_content">
+<!--  <div id="recharge" class="column is-half">-->
+<!--    <div class="field has-addons " v-show="!is_show.show_wechatpay">-->
+<!--      <p class="control">-->
+<!--    <span class="select">-->
+<!--      <select>-->
+<!--        <option>¥</option>-->
+<!--      </select>-->
+<!--    </span>-->
+<!--      </p>-->
+<!--      <p class="control">-->
+<!--        <input class="input" type="number" placeholder="Amount of money" v-model.number="money" onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">-->
+<!--      </p>-->
+<!--      <p class="control">-->
+<!--        <a class="button" v-on:click="buycoin">-->
+<!--          充 值-->
+<!--        </a>-->
+<!--      </p>-->
+<!--    </div>-->
+<!--    <div class="field" v-show="is_show.show_wechatpay">-->
+<!--      <h4 class="title is-4">思达迪 收银台</h4>-->
+<!--      <img src="../assets/WePayLogo.png" width="130">-->
+<!--      <div class="has-text-centered">-->
+<!--        <p class="font2">充值金额 : {{money}} 元</p>-->
+<!--        <div id="codeimg" class="qrcode_content">-->
 
-        </div>
-        <br>
-        <img src="../assets/subwords.png" width="170">
-      </div>
-    </div>
-  </div>
+<!--        </div>-->
+<!--        <br>-->
+<!--        <img src="../assets/subwords.png" width="170">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
 </template>
 
