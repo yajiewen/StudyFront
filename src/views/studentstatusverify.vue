@@ -63,6 +63,7 @@
 <script>
 import Navabar from "../components/Navabar";
 import axios from 'axios'
+import * as imageConversion from "image-conversion";
 //自定义axios 否则会使用全局default 配置的axios
 let upaxios = axios.create({
   headers:{
@@ -111,7 +112,12 @@ export default {
 
       if(this.imgstyle.includes(this.filename1.split('.').pop()))
       {
-        this.formdata.append('img1',files[0])
+        // 开始压缩图片
+        //console.log(files[0]);
+        imageConversion.compress(files[0],0.6).then(res=>{
+          //console.log(res);
+          this.formdata.append('img1',res)
+        })
       }else{
         this.imgurl1 = ''
         this.filename1='请选择文件'
@@ -131,7 +137,12 @@ export default {
 
       if(this.imgstyle.includes(this.filename2.split('.').pop()))
       {
-        this.formdata.append('img2',files[0])
+        // 开始压缩图片
+        //console.log(files[0]);
+        imageConversion.compress(files[0],0.6).then(res=>{
+          //console.log(res);
+          this.formdata.append('img2',res)
+        })
       }else{
         this.imgurl2 = ''
         this.filename2='请选择文件'

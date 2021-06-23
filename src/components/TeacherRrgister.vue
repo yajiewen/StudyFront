@@ -158,6 +158,7 @@
 
 <script>
 import axios from 'axios'
+import * as imageConversion from "image-conversion";
 
 
 export default {
@@ -209,7 +210,12 @@ export default {
 
       if(this.imgstyle.includes(this.placeholderr.ifilename1.split('.').pop()))
       {
-        this.iformdata.append('img1',files[0])
+        // 开始压缩图片
+        //console.log(files[0]);
+        imageConversion.compress(files[0],0.6).then(res=>{
+          //console.log(res);
+          this.iformdata.append('img1',res)
+        })
       }else{
         this.imgurl.iimgurl1 = ''
         this.placeholderr.ifilename1='请选择文件'
@@ -229,7 +235,12 @@ export default {
 
       if(this.imgstyle.includes(this.placeholderr.ifilename2.split('.').pop()))
       {
-        this.iformdata.append('img2',files[0])
+        // 开始压缩图片
+        //console.log(files[0]);
+        imageConversion.compress(files[0],0.6).then(res=>{
+          //console.log(res);
+          this.iformdata.append('img2',res)
+        })
       }else{
         this.imgurl.iimgurl2 =''
         this.placeholderr.ifilename2='请选择文件'
@@ -249,7 +260,12 @@ export default {
 
       if(this.imgstyle.includes(this.placeholderr.sfilename1.split('.').pop()))
       {
-        this.sformdata.append('img1',files[0])
+        // 开始压缩图片
+        //console.log(files[0]);
+        imageConversion.compress(files[0],0.6).then(res=>{
+          //console.log(res);
+          this.sformdata.append('img1',res)
+        })
       }else{
         this.imgurl.simgurl1 =''
         this.placeholderr.sfilename1='请选择文件'
@@ -269,7 +285,12 @@ export default {
 
       if(this.imgstyle.includes(this.placeholderr.sfilename2.split('.').pop()))
       {
-        this.sformdata.append('img2',files[0])
+        // 开始压缩图片
+        //console.log(files[0]);
+        imageConversion.compress(files[0],0.6).then(res=>{
+          //console.log(res);
+          this.sformdata.append('img2',res)
+        })
       }else{
         this.imgurl.simgurl2 =''
         this.placeholderr.sfilename2='请选择文件'
