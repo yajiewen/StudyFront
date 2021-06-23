@@ -4,7 +4,10 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+            <input type="file" style="display:none;" id="upload" accept="image/gif,image/jpeg,image/png,image/jpg" v-on:change="uploadImg" />
+            <div @click="showUploadImg">
+              <img :src="Headimgurl" alt="Placeholder image">
+            </div>
           </figure>
         </div>
         <div class="media-content">
@@ -45,10 +48,19 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
 name: "personalinfo",
   props:{
     usr_info:Object,
+  },
+  data(){
+    return {
+      Headimgurl: 'https://bulma.io/images/placeholders/96x96.png', //未上传的用户的默认头像
+      ImgFormData: new FormData, //保存文件
+      imgstyle:['jpg','jpeg','png',] //可上传的图片格式
+    }
   },
   computed:{
    buttonmess(){
@@ -56,6 +68,13 @@ name: "personalinfo",
        return '老师已认证'
      }else{
        return '老师认证'
+     }
+   }
+  },
+  watch:{
+   usr_info(){
+     if(this.usr_info.head_img_url != ''){
+       this.Headimgurl = this.usr_info.head_img_url
      }
    }
   },
@@ -71,6 +90,50 @@ name: "personalinfo",
     },
     gotosverify(){ //转到学籍认证
       this.$router.push({name:'studentstatus',params:{email:this.usr_info.uemail,usr_name:this.usr_info.uname}})
+    },
+    showUploadImg(){ //打开上传头像窗口
+      document.getElementById('upload').click();
+    },
+    uploadImg(imgobj){ // 开始上传文件
+      //自定义axios 否则会使用全局default 配置的axios
+      let upaxios1 = axios.create({
+        headers:{
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials : true,
+        transformRequest:[function (data){
+          return data
+        }]
+      })
+      let files = imgobj.target.files
+      let filename = files[0].name //获取文件名字
+
+      let reader = new FileReader()//获取文件地址(地址是加密的没法看)
+      reader.readAsDataURL(files[0])
+      reader.onload = ()=>{
+        this.Headimgurl = reader.result
+      }
+
+      if(this.imgstyle.includes(filename.split('.').pop()))
+      {
+        this.ImgFormData.append('headimg',files[0])
+      }else{
+        this.Headimgurl = 'https://bulma.io/images/placeholders/96x96.png'
+        alert('文件格式不正确')
+      }
+
+      // 开始上传
+      this.ImgFormData.append('uemail',this.usr_info.uemail) //添加uemial参数
+      upaxios1.post('account/uploadheadimg/',this.ImgFormData).then(res => {
+        console.log(res.data);
+        if(res.data.is_login == 'yes'){
+          if(res.data.is_upload == 'yes'){
+            alert('头像上传成功!')
+          }
+        }else{
+          alert('头像上传失败,请重新登录!')
+        }
+      })
     }
   }
 }

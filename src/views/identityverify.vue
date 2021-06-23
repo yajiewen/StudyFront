@@ -63,16 +63,6 @@
 <script>
 import Navabar from "../components/Navabar";
 import axios from 'axios'
-//自定义axios 否则会使用全局default 配置的axios
-let upaxios = axios.create({
-  headers:{
-    'Content-Type': 'multipart/form-data'
-  },
-  withCredentials : true,
-  transformRequest:[function (data){
-    return data
-  }]
-})
 
 export default {
   name: "identityverify",
@@ -139,6 +129,16 @@ export default {
       }
     },
     upload(){
+      //自定义axios 否则会使用全局default 配置的axios
+      let upaxios = axios.create({
+        headers:{
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials : true,
+        transformRequest:[function (data){
+          return data
+        }]
+      })
       if(this.imgurl1 && this.imgurl2){
         this.is_loading = true
         this.formdata.append('uemail',this.uemail)

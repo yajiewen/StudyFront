@@ -4,7 +4,7 @@ import router from './router'
 
 import axios from 'axios'
 axios.defaults.withCredentials = true // 让ajax携带cookie
-//axios.defaults.baseURL = 'https://www.redtreetest.com/';
+//axios.defaults.baseURL = 'https://127.0.0.1:8081/'
 axios.defaults.baseURL = 'https://www.kidtut.net/'
 //设置全局axios为form-data
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
