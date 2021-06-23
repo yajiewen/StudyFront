@@ -52,7 +52,7 @@
 
 <div class="columns">
 <!-- 身份认证 -->
-  <div class="column is-offset-1">
+  <div class="column is-offset-2 is-one-third">
     <div class="columns">
       <div class="column">
 
@@ -148,7 +148,7 @@
 </div>
 
  <div class="columns">
-   <div class="column is-offset-1">
+   <div class="column is-offset-2">
      <button class="button font2" @click="upload" :class="{'is-loading':is_loading}">提交</button>
      <p class="font3">请保证以上信息和图片内容一致</p>
    </div>

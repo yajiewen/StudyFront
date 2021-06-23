@@ -64,6 +64,8 @@
 import Navabar from "../components/Navabar";
 import axios from 'axios'
 import * as imageConversion from 'image-conversion'
+import idcard1 from '../assets/idcard1.png'
+import idcard2 from '../assets/idcard2.png' //动态绑定本地图片需要这样写
 
 export default {
   name: "identityverify",
@@ -79,9 +81,9 @@ export default {
       showupload:true,
       timer:0,
       filename1:'请选择文件',
-      imgurl1:'',
+      imgurl1: idcard1,
       filename2:'请选择文件',
-      imgurl2:'',
+      imgurl2: idcard2,
       formdata: new FormData, //保存文件
       imgstyle:['jpg','jpeg','png',] //可上传的图片格式
     }
