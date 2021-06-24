@@ -85,7 +85,11 @@ export default {
       filename2:'请选择文件',
       imgurl2: idcard2,
       formdata: new FormData, //保存文件
-      imgstyle:['jpg','jpeg','png',] //可上传的图片格式
+      imgstyle:['jpg','jpeg','png',], //可上传的图片格式
+      isgetfile:{
+        img1: false,
+        img2: false,
+      }
     }
   },
   methods: {
@@ -109,6 +113,7 @@ export default {
         imageConversion.compress(files[0],0.6).then(res=>{
           //console.log(res);
           this.formdata.append('img1',res)
+          this.isgetfile.img1 = true
         })
       }else{
         this.imgurl1 = ''
@@ -132,8 +137,9 @@ export default {
         // 开始压缩图片
         //console.log(files[0]);
         imageConversion.compress(files[0],0.6).then(res=>{
-          //console.log(res);
+          console.log(res);
           this.formdata.append('img2',res)
+          this.isgetfile.img2 = true
         })
       }else{
         this.imgurl2 = ''
@@ -152,7 +158,7 @@ export default {
           return data
         }]
       })
-      if(this.imgurl1 && this.imgurl2){
+      if(this.isgetfile.img1 && this.isgetfile.img2){ // 判断表单数据是否为空
         this.is_loading = true
         this.formdata.append('uemail',this.uemail)
         upaxios.post('verify/iverify/',this.formdata).then(res => {

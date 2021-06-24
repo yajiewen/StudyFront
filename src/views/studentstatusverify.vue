@@ -94,6 +94,10 @@ export default {
       imgurl2:'',
       formdata: new FormData, //保存文件
       imgstyle:['jpg','jpeg','png',], //可上传的图片格式
+      isgetfile:{
+        img1: false,
+        img2: false,
+      }
     }
   },
   methods: {
@@ -117,6 +121,7 @@ export default {
         imageConversion.compress(files[0],0.6).then(res=>{
           //console.log(res);
           this.formdata.append('img1',res)
+          this.isgetfile.img1 = true
         })
       }else{
         this.imgurl1 = ''
@@ -142,6 +147,7 @@ export default {
         imageConversion.compress(files[0],0.6).then(res=>{
           //console.log(res);
           this.formdata.append('img2',res)
+          this.isgetfile.img2 = true
         })
       }else{
         this.imgurl2 = ''
@@ -150,7 +156,7 @@ export default {
       }
     },
     upload(){
-      if(this.imgurl1 && this.imgurl2){
+      if(this.isgetfile.img1 && this.isgetfile.img2){
         this.is_loading = true
         this.formdata.append('uemail',this.uemail)
         upaxios.post('verify/sverify/',this.formdata).then(res => {

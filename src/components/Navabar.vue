@@ -96,6 +96,7 @@ data(){
     isactive:false,
   }
 },
+emits:["getlogout"], // 解决emit waring
 methods:{
   tologin(){
     this.$router.push("/login")

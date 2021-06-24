@@ -196,6 +196,12 @@ export default {
         simgurl1: '',
         simgurl2: '',
       },
+      isgetfile:{
+        iimg1: false,
+        iimg2: false,
+        simg1: false,
+        simg2: false,
+      },
       usr_info: this.usrinfo, //获取用户信息
       is_loading: false,
       is_loading_2: 0,
@@ -230,6 +236,7 @@ export default {
         imageConversion.compress(files[0], 0.6).then(res => {
           //console.log(res);
           this.iformdata.append('img1', res)
+          this.isgetfile.iimg1 = true
         })
       } else {
         this.imgurl.iimgurl1 = ''
@@ -254,6 +261,7 @@ export default {
         imageConversion.compress(files[0], 0.6).then(res => {
           //console.log(res);
           this.iformdata.append('img2', res)
+          this.isgetfile.iimg2 = true
         })
       } else {
         this.imgurl.iimgurl2 = ''
@@ -278,6 +286,7 @@ export default {
         imageConversion.compress(files[0], 0.6).then(res => {
           //console.log(res);
           this.sformdata.append('img1', res)
+          this.isgetfile.simg1 = true
         })
       } else {
         this.imgurl.simgurl1 = ''
@@ -302,6 +311,7 @@ export default {
         imageConversion.compress(files[0], 0.6).then(res => {
           //console.log(res);
           this.sformdata.append('img2', res)
+          this.isgetfile.simg2 = true
         })
       } else {
         this.imgurl.simgurl2 = ''
@@ -321,7 +331,7 @@ export default {
           return data
         }]
       })
-      if (this.usr_sex && this.usr_school && this.usr_major && this.imgurl.iimgurl1 && this.imgurl.iimgurl2 && this.imgurl.simgurl1 && this.imgurl.simgurl2) {
+      if (this.isgetfile.iimg1 && this.isgetfile.iimg2 && this.isgetfile.simg1 && this.isgetfile.simg2 && this.usr_sex != '' && this.usr_major != '' && this.usr_school != '') {
         this.is_loading = true
         //上传身份证
         this.iformdata.append('uemail', this.usrinfo.uemail)
@@ -332,6 +342,10 @@ export default {
               this.is_loading_2 += 1
               if (this.is_loading_2 == 2) {
                 this.is_loading = false
+                // 初始化isgetfile
+                for(let keyvalue of Object.keys(this.isgetfile)){
+                  this.isgetfile[keyvalue] = false
+                }
                 alert('上传成功请耐心等待审核')
               }
             }
@@ -392,7 +406,7 @@ export default {
         if (this.usr_school == '') {
           this.imessage += '学校 '
         }
-        if (this.imgurl.iimgurl1 == '' || this.imgurl.iimgurl2 == '' || this.imgurl.simgurl2 == '' || this.imgurl.simgurl1 == '') {
+        if (!this.isgetfile.iimg1 || !this.isgetfile.iimg2 || !this.isgetfile.simg1 || !this.isgetfile.simg2) {
           this.imessage += '图片信息 '
         }
         alert(this.imessage)
