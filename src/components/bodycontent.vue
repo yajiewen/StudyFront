@@ -1,6 +1,6 @@
 <template>
   <div class="columns">
-    <div class="column is-one-fifth blockbackground">
+    <div class="column is-one-fifth ">
       <slot name="left">这里是左边</slot>
     </div>
 <!--    is-two-fifths-->
@@ -35,9 +35,7 @@ export default {
 </script>
 
 <style scoped>
-div{
-  border-style: solid;
-}
+
 .blockbackground{
   background-color: #F9F9F9;
 }

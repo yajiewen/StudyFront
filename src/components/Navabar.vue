@@ -1,6 +1,6 @@
 <template>
-  <div class="container block">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+<!--  <div class="container block">-->
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item">
           <img src="../assets/nav.png" width="112" height="28">
@@ -77,7 +77,7 @@
       </div>
     </nav>
     <hr class="navbar-divider">
-  </div>
+<!--  </div>-->
 </template>
 
 <script>

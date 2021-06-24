@@ -198,9 +198,6 @@ methods:{
 </script>
 
 <style scoped>
-.vnavfontcolor{
-  color: skyblue;
-}
 .font1{
   font-size: 1em
 }
@@ -211,6 +208,6 @@ methods:{
   font-size: 0.5em
 }
 .menubackground{
-  background-color: #F9F9F9;
+  /*background-color: #F9F9F9;*/
 }
 </style>
