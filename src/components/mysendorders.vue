@@ -29,15 +29,15 @@
             <div class="column font2">金 额 <p class="font3">{{order.order_total_money}} 元</p></div>
             <div class="column font2">状 态
               <div class="tags are-small">
-                <span class="tag is-dark " v-if="order.order_status == 0">待付款0</span>
-                <span class="tag is-black " v-if="order.order_status == 1">待接单1</span>
-                <span class="tag is-link " v-if="order.order_status == 2">进行中2</span>
-                <span class="tag is-success " v-if="order.order_status == 3">已完成3</span>
-                <span class="tag is-danger " v-if="order.order_status == 4">申请退款中4</span>
-                <span class="tag is-info " v-if="order.order_status == 5">已退款5</span>
-                <span class="tag is-primary " v-if="order.order_status == 6">已取消6</span>
-                <span class="tag is-warning " v-if="order.order_status == 7">客服处理中7</span>
-                <span class="tag is-light " v-if="order.order_status == 8">待确认8</span>
+                <span class="tag is-dark " v-if="order.order_status == 0">待付款</span>
+                <span class="tag is-black " v-if="order.order_status == 1">待接单</span>
+                <span class="tag is-link " v-if="order.order_status == 2">进行中</span>
+                <span class="tag is-success " v-if="order.order_status == 3">已完成</span>
+                <span class="tag is-danger " v-if="order.order_status == 4">申请退款中</span>
+                <span class="tag is-info " v-if="order.order_status == 5">已退款</span>
+                <span class="tag is-primary " v-if="order.order_status == 6">已取消</span>
+                <span class="tag is-warning " v-if="order.order_status == 7">客服处理中</span>
+                <span class="tag is-light " v-if="order.order_status == 8">待确认</span>
               </div>
             </div>
           </div>

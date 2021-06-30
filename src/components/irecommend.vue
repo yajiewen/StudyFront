@@ -11,10 +11,9 @@
         <span class="font3">{{pageindex + 1}}</span>
         <a class="button is-small" @click="nextpage"><i class="fa fa-chevron-right"></i></a>
         <span class="font3">&nbsp&nbsp共{{pagenum}}页</span>
-
       </div>
     </div>
-
+    <div class="card-content">
     <div class="inbox-messages" >
       <div v-for="(order, index) in orderlistinfo.ordersinfo.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}"  v-bind:id="index" v-on:click="showMessage(index)">
         <div class="columns">
@@ -114,6 +113,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>

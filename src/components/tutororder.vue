@@ -9,7 +9,6 @@
       <a class="button is-small" @click="searchorders"><i class="fas fa-search"></i></a>
     </div>
     <div class="columns" v-show="showfilter">
-
       <div class="column">
         <div class="field font2">
           <label class="label font1">年 级:</label>
@@ -72,106 +71,108 @@
       </div>
     </div>
 
-    <div class="inbox-messages" >
-      <div v-for="(order, index) in orderlistinfo.ordersinfo.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}"  v-bind:id="index" v-on:click="showMessage(index)">
-          <div class="columns">
-            <div class="column font2"><p class="font3">&nbsp{{order.order_teaching_grade}}</p></div>
-            <div class="column font2"><p class="font3">{{order.order_teaching_subjects}}</p></div>
-            <div class="column font2"><p class="font3">{{order.order_total_money}} 元</p></div>
-            <div class="column font2"><a class="font3" v-on:click="showdetailf(index,order.order_teaching_grade,order.order_teaching_subjects)">详细信息</a></div>
-            <div class="column font2">
-              <button v-if="usr_info.uemail !=order.order_boss_email " class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button>
-              <button v-else class="button is-small" disabled="usr_info.uemail == order.order_boss_email " title="我发的定单!"><i class="fas fa-user-alt"></i></button>
-            </div>
-
-          </div>
-        <!--详细信息      -->
-        <div v-if="index == showdetailinfo" class="content">
-            <ul class="font3" v-if="index == showdetailinfo">
-              <li>年级: {{ order.order_teaching_grade }}</li>
-              <li>科目: {{ order.order_teaching_subjects }}</li>
-              <li>单价: {{ order.order_hourly_money }} 元/小时</li>
-              <li>时长: {{ order.order_teaching_time }} 小时</li>
-              <li>总额: {{ order.order_total_money }} 元</li>
-              <li>保证金: {{ order.order_worker_earnest_money }} 元</li>
-              <li>其它要求: {{ order.order_boss_require }}</li>
-            </ul>
-        </div>
-        <div v-show="showtakemenu == index" class="columns">
-          <div class="column is-half is-offset-2">
-
-            <div class="field is-horizontal">
-              <div class="field-label is-normal">
-                <label class="label font2">名字</label>
+      <div class="card-content">
+        <div class="inbox-messages" >
+          <div v-for="(order, index) in orderlistinfo.ordersinfo.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}"  v-bind:id="index" v-on:click="showMessage(index)">
+            <div class="columns">
+              <div class="column font2"><p class="font3">&nbsp{{order.order_teaching_grade}}</p></div>
+              <div class="column font2"><p class="font3">{{order.order_teaching_subjects}}</p></div>
+              <div class="column font2"><p class="font3">{{order.order_total_money}} 元</p></div>
+              <div class="column font2"><a class="font3" v-on:click="showdetailf(index,order.order_teaching_grade,order.order_teaching_subjects)">详细信息</a></div>
+              <div class="column font2">
+                <button v-if="usr_info.uemail !=order.order_boss_email " class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button>
+                <button v-else class="button is-small" disabled="usr_info.uemail == order.order_boss_email " title="我发的定单!"><i class="fas fa-user-alt"></i></button>
               </div>
-              <div class="field-body">
-                <div class="field">
-                  <p class="control is-expanded has-icons-left">
-                    <input v-bind:class="{'is-danger':showdanger.dname}" class="input font2" type="text" placeholder="Name" v-model.trim="uname" maxlength="10">
-                    <span class="icon is-small is-left">
+
+            </div>
+            <!--详细信息      -->
+            <div v-if="index == showdetailinfo" class="content">
+              <ul class="font3" v-if="index == showdetailinfo">
+                <li>年级: {{ order.order_teaching_grade }}</li>
+                <li>科目: {{ order.order_teaching_subjects }}</li>
+                <li>单价: {{ order.order_hourly_money }} 元/小时</li>
+                <li>时长: {{ order.order_teaching_time }} 小时</li>
+                <li>总额: {{ order.order_total_money }} 元</li>
+                <li>保证金: {{ order.order_worker_earnest_money }} 元</li>
+                <li>其它要求: {{ order.order_boss_require }}</li>
+              </ul>
+            </div>
+            <div v-show="showtakemenu == index" class="columns">
+              <div class="column is-half is-offset-2">
+
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label font2">名字</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded has-icons-left">
+                        <input v-bind:class="{'is-danger':showdanger.dname}" class="input font2" type="text" placeholder="Name" v-model.trim="uname" maxlength="10">
+                        <span class="icon is-small is-left">
                       <i class="fas fa-user"></i>
                     </span>
-                  </p>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div class="field is-horizontal">
-              <div class="field-label is-normal">
-                <label class="label font2">微信</label>
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <p class="control is-expanded has-icons-left">
-                    <input v-bind:class="{'is-danger':showdanger.dwechat}" class="input font2" type="text" placeholder="Wechat" v-model.trim="uwechat" maxlength="16">
-                    <span class="icon is-small is-left">
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label font2">微信</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded has-icons-left">
+                        <input v-bind:class="{'is-danger':showdanger.dwechat}" class="input font2" type="text" placeholder="Wechat" v-model.trim="uwechat" maxlength="16">
+                        <span class="icon is-small is-left">
                       <i class="fab fa-weixin"></i>
                     </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="field is-horizontal">
-              <div class="field-label is-normal">
-                <label class="label font2">电话</label>
-              </div>
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-static font2">
-                        +86
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model.trim="uphone" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
-                    </p>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div class="field is-horizontal">
-              <div class="field-label">
-                <!-- Left empty for spacing -->
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <button v-bind:class="{'is-loading':showisloading == index}" class="button is-primary is-small" v-on:click="takeorder(order.order_token,order.order_boss_email,index,order.order_teaching_grade,order.order_teaching_subjects)">
-                      接单并支付保证金
-                    </button>
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label font2">电话</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-expanded">
+                      <div class="field has-addons">
+                        <p class="control">
+                          <a class="button is-static font2">
+                            +86
+                          </a>
+                        </p>
+                        <p class="control is-expanded">
+                          <input v-bind:class="{'is-danger':showdanger.dphonenum}"  class="input font2" type="tel" placeholder="Your phone number" v-model.trim="uphone" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label">
+                    <!-- Left empty for spacing -->
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <div class="control">
+                        <button v-bind:class="{'is-loading':showisloading == index}" class="button is-primary is-small" v-on:click="takeorder(order.order_token,order.order_boss_email,index,order.order_teaching_grade,order.order_teaching_subjects)">
+                          接单并支付保证金
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 

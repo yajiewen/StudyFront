@@ -10,8 +10,8 @@
    </div>
 <!--  购买找老师模块-->
    <div v-if="usr_info.is_identity_verify==1 && usr_info.can_fund_teacher==0">
-      <h2>花10元开通找老师模块</h2>
-      <button class="button is-small" v-on:click="buyfundteacher">开通</button>
+<!--      <h2>花10元开通找老师模块</h2>-->
+      <button class="button is-small" v-on:click="buyfundteacher">花10元开通找老师模块</button>
    </div>
 <!--老师信息列表   -->
    <div v-if="usr_info.is_identity_verify==1 && usr_info.can_fund_teacher==1">

@@ -69,13 +69,13 @@
          <div class="column">
            <p class="font2">
              <span class="tag is-light">订 单 状 态</span>
-             <span class="tag is-link " v-if="order_info.order_status == 2">待完成2</span>
-             <span class="tag is-success " v-if="order_info.order_status == 3">已完成3</span>
-             <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中4</span>
-             <span class="tag is-info " v-if="order_info.order_status == 5">已退款5</span>
-             <span class="tag is-primary " v-if="order_info.order_status == 6">已取消6</span>
-             <span class="tag is-warning " v-if="order_info.order_status == 7">客服处理中7</span>
-             <span class="tag is-light " v-if="order_info.order_status == 8">待确认8</span>
+             <span class="tag is-link " v-if="order_info.order_status == 2">待完成</span>
+             <span class="tag is-success " v-if="order_info.order_status == 3">已完成</span>
+             <span class="tag is-danger " v-if="order_info.order_status == 4">申请退款中</span>
+             <span class="tag is-info " v-if="order_info.order_status == 5">已退款</span>
+             <span class="tag is-primary " v-if="order_info.order_status == 6">已取消</span>
+             <span class="tag is-warning " v-if="order_info.order_status == 7">客服处理中</span>
+             <span class="tag is-light " v-if="order_info.order_status == 8">待确认</span>
            </p>
          </div>
          <div class="column">
