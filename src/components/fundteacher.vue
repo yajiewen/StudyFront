@@ -17,6 +17,7 @@
    <div v-if="usr_info.is_identity_verify==1 && usr_info.can_fund_teacher==1">
      <div class="notification is-link">
        老 师 信 息 列 表 / / / / / / / / / / / / /共 {{teacherinfo.teachernum}} 位 老 师
+<!--       <span class="sunposition">共 {{teacherinfo.teachernum}} 位 老 师</span>-->
      </div>
      <div>
        <a class="button is-small" @click="showfilte"><i class="fas fa-caret-down">筛选</i></a>
@@ -339,5 +340,9 @@ export default {
   /*background-color:ghostwhite;*/
   /*background-color: rgb(10 10 10 / 10%);*/
   background-color: #F5F5F5;
+}
+.sunposition{
+  position: absolute;
+  right: 10%;
 }
 </style>
