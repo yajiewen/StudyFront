@@ -1,67 +1,68 @@
 <template>
   <div id="TeacherRrgister" class="card column">
-    <button class="delete is-small" v-on:click="closetregister"></button>
+    <div class="card-content">
+      <button class="delete is-small" v-on:click="closetregister"></button>
 
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label font2">性别</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-narrow">
-          <div class="control">
-            <label class="radio font2">
-              <input type="radio" name="member" v-model="usr_sex" value="男">
-              男
-            </label>
-            <label class="radio font2">
-              <input type="radio" name="member" v-model="usr_sex" value="女">
-              女
-            </label>
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label font2">性别</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-narrow">
+            <div class="control">
+              <label class="radio font2">
+                <input type="radio" name="member" v-model="usr_sex" value="男">
+                男
+              </label>
+              <label class="radio font2">
+                <input type="radio" name="member" v-model="usr_sex" value="女">
+                女
+              </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label font2">就读学校</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school"
-                   maxlength="20">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label font2">就读学校</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school"
+                     maxlength="20">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label font2">所学专业</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" maxlength="20">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label font2">所学专业</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" maxlength="20">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label font2">身份证</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <img v-bind:src="imgurl.iimgurl1" alt="">
-            <div class="file has-name font2">
-              <label class="file-label">
-                <input class="file-input" type="file" multiple name="files" v-on:change="getiimg1">
-                <span class="file-cta">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label font2">身份证</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <img v-bind:src="imgurl.iimgurl1" alt="">
+              <div class="file has-name font2">
+                <label class="file-label">
+                  <input class="file-input" type="file" multiple name="files" v-on:change="getiimg1">
+                  <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
@@ -69,21 +70,21 @@
                   身份证正面
                 </span>
                 </span>
-                <span class="file-name">
+                  <span class="file-name">
                   {{ placeholderr.ifilename1 }}
                 </span>
-              </label>
+                </label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="field">
-          <div class="control">
-            <img v-bind:src="imgurl.iimgurl2" alt="">
-            <div class="file has-name font2">
-              <label class="file-label">
-                <input class="file-input" type="file" multiple name="files" v-on:change="getiimg2">
-                <span class="file-cta">
+          <div class="field">
+            <div class="control">
+              <img v-bind:src="imgurl.iimgurl2" alt="">
+              <div class="file has-name font2">
+                <label class="file-label">
+                  <input class="file-input" type="file" multiple name="files" v-on:change="getiimg2">
+                  <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
@@ -91,30 +92,30 @@
                   身份证背面
                   </span>
                 </span>
-                <span class="file-name">
+                  <span class="file-name">
                   {{ placeholderr.ifilename2 }}
                 </span>
-              </label>
+                </label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-<!--    学生证-->
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label font2">学生证</label>
-      </div>
+      <!--    学生证-->
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label font2">学生证</label>
+        </div>
 
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <img v-bind:src="imgurl.simgurl1" alt="">
-            <div class="file has-name font2">
-              <label class="file-label">
-                <input class="file-input" type="file" multiple name="files" v-on:change="getsimg1">
-                <span class="file-cta">
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <img v-bind:src="imgurl.simgurl1" alt="">
+              <div class="file has-name font2">
+                <label class="file-label">
+                  <input class="file-input" type="file" multiple name="files" v-on:change="getsimg1">
+                  <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
@@ -122,20 +123,20 @@
                   学生证封面
                 </span>
                 </span>
-                <span class="file-name">
+                  <span class="file-name">
                   {{ placeholderr.sfilename1 }}
                 </span>
-              </label>
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <img v-bind:src="imgurl.simgurl2" alt="">
-            <div class="file has-name font2">
-              <label class="file-label">
-                <input class="file-input" type="file" multiple name="files" v-on:change="getsimg2">
-                <span class="file-cta">
+          <div class="field">
+            <div class="control">
+              <img v-bind:src="imgurl.simgurl2" alt="">
+              <div class="file has-name font2">
+                <label class="file-label">
+                  <input class="file-input" type="file" multiple name="files" v-on:change="getsimg2">
+                  <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
@@ -143,32 +144,31 @@
                   学生证主页
                 </span>
                 </span>
-                <span class="file-name">
+                  <span class="file-name">
                   {{ placeholderr.sfilename2 }}
                 </span>
-              </label>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label font2"></label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <button class="button font2" @click="upload" :class="{'is-loading':is_loading}">提交</button>
+              <p class="font3">请保证以上信息和图片内容一致</p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label font2"></label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <button class="button font2" @click="upload" :class="{'is-loading':is_loading}">提交</button>
-            <p class="font3">请保证以上信息和图片内容一致</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 </template>
 
