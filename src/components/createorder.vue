@@ -1,148 +1,150 @@
 <template>
   <div is="createorder" class="card column is-5 is-offset-2 blockbackground">
-    <div v-show="show_create_block">
-      <div class="field font2">
-        <p class="help is-danger" v-if="show_danger.grade">
-          请选择年级
-        </p>
-        <label class="label font1">年 级:</label>
-        <div >
-          <label class="radio" v-for="grade in pschoolinfo.grades" >
-            <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
-            {{grade+'&nbsp&nbsp'}}
-          </label>
-        </div>
-
-        <div >
-          <label class="radio" v-for="grade in mschoolinfo.grades">
-            <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
-            {{grade+'&nbsp&nbsp'}}
-          </label>
-        </div>
-
-        <div class="field">
-          <label class="radio" v-for="grade in hschoolinfo.grades">
-            <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
-            {{grade+'&nbsp&nbsp'}}
-          </label>
-        </div>
-
-        <div class="field">
-          <p class="help is-danger" v-if="show_danger.classvalue">
-            请选择科目
+    <div class="card-content">
+      <div v-show="show_create_block">
+        <div class="field font2">
+          <p class="help is-danger" v-if="show_danger.grade">
+            请选择年级
           </p>
-          <label class="label font1">学 科</label>
-          <div v-if="showclasses.pclass">
-            <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
-              <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
-              {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+          <label class="label font1">年 级:</label>
+          <div >
+            <label class="radio" v-for="grade in pschoolinfo.grades" >
+              <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+              {{grade+'&nbsp&nbsp'}}
             </label>
           </div>
 
-          <div v-if="showclasses.mclass">
-            <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
-              <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
-              {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+          <div >
+            <label class="radio" v-for="grade in mschoolinfo.grades">
+              <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+              {{grade+'&nbsp&nbsp'}}
             </label>
-          </div>
-
-          <div v-if="showclasses.hclass">
-            <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
-              <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
-              {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="columns">
-        <div class="column is-half">
-          <div class="field is-horizontal">
-            <div class="field-body">
-              <div class="field">
-                <label class="label font2">单价/小时</label>
-                <div class="control has-icons-left">
-                  <input v-bind:class="{'is-danger':show_danger.hourlym}" class="input is-link" type="number" placeholder="" v-model.number="hourly_money" onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
-                  <span class="icon is-small is-left">
-                  <i class="fas fa-yen-sign"></i>
-                </span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label font2">时长(小时)</label>
-                <div class="control has-icons-left">
-                  <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="number" placeholder="Time" v-model.number="teaching_time" onkeyup="this.value=this.value.replace(/\D/g,'')">
-                  <span class="icon is-small is-left">
-                  <i class="far fa-clock"></i>
-                </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field is-horizontal">
-        <div class="field-body">
-          <div class="field">
-            <label class="label font2">名 字</label>
-            <div class="control has-icons-left">
-              <input v-bind:class="{'is-danger':show_danger.sname}" class="input is-link" type="text" placeholder="Student's Name" v-model.trim="student_name" maxlength="10">
-              <span class="icon is-small is-left">
-              <i class="fas fa-signature"></i>
-            </span>
-            </div>
           </div>
 
           <div class="field">
-            <label class="label font2">微 信</label>
-            <div class="control has-icons-left">
-              <input v-bind:class="{'is-danger':show_danger.swechat}" class="input is-success" type="text" placeholder="Wechat" v-model.trim="student_wei" maxlength="16">
-              <span class="icon is-small is-left">
-              <i class="fab fa-weixin"></i>
-            </span>
-            </div>
+            <label class="radio" v-for="grade in hschoolinfo.grades">
+              <input type="radio" name="radio" v-bind:value="grade" v-model="selectedgrade" v-on:click="initselectedclass">
+              {{grade+'&nbsp&nbsp'}}
+            </label>
           </div>
-        </div>
-      </div>
 
-      <div class="field is-horizontal">
-        <div class="field-body">
-          <div class="field is-expanded">
-            <div class="field has-addons">
-              <p class="control">
-                <a class="button is-static">
-                  +86
-                </a>
-              </p>
-              <p class="control is-expanded">
-                <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model.trim="student_phone_number" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label font2">其 它 要 求</label>
-        <div class="control">
-          <textarea class="textarea is-info" placeholder="Other requirements" maxlength="460" v-model.trim="student_require"></textarea>
-        </div>
-      </div>
-
-      <!--    <div class="field">
-            <div class="control">
-              <label class="checkbox">
-                <input type="checkbox">
-                I agree to the <a href="#">terms and conditions</a>
+          <div class="field">
+            <p class="help is-danger" v-if="show_danger.classvalue">
+              请选择科目
+            </p>
+            <label class="label font1">学 科</label>
+            <div v-if="showclasses.pclass">
+              <label class="checkbox" v-for="classvalue in pschoolinfo.classes">
+                <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass" >
+                {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
               </label>
             </div>
-          </div>-->
 
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button" v-on:click="create_a_order">提 交</button>
+            <div v-if="showclasses.mclass">
+              <label class="checkbox" v-for="classvalue in mschoolinfo.classes" >
+                <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+                {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+              </label>
+            </div>
+
+            <div v-if="showclasses.hclass">
+              <label class="checkbox" v-for="classvalue in hschoolinfo.classes" >
+                <input type="checkbox" v-bind:value="classvalue" v-model="selectedclass">
+                {{classvalue+'&nbsp&nbsp&nbsp&nbsp&nbsp'}}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-half">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <label class="label font2">单价/小时</label>
+                  <div class="control has-icons-left">
+                    <input v-bind:class="{'is-danger':show_danger.hourlym}" class="input is-link" type="number" placeholder="" v-model.number="hourly_money" onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
+                    <span class="icon is-small is-left">
+                  <i class="fas fa-yen-sign"></i>
+                </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label font2">时长(小时)</label>
+                  <div class="control has-icons-left">
+                    <input v-bind:class="{'is-danger':show_danger.teachtime}" class="input is-success" type="number" placeholder="Time" v-model.number="teaching_time" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                    <span class="icon is-small is-left">
+                  <i class="far fa-clock"></i>
+                </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field">
+              <label class="label font2">名 字</label>
+              <div class="control has-icons-left">
+                <input v-bind:class="{'is-danger':show_danger.sname}" class="input is-link" type="text" placeholder="Student's Name" v-model.trim="student_name" maxlength="10">
+                <span class="icon is-small is-left">
+              <i class="fas fa-signature"></i>
+            </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label font2">微 信</label>
+              <div class="control has-icons-left">
+                <input v-bind:class="{'is-danger':show_danger.swechat}" class="input is-success" type="text" placeholder="Wechat" v-model.trim="student_wei" maxlength="16">
+                <span class="icon is-small is-left">
+              <i class="fab fa-weixin"></i>
+            </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field is-expanded">
+              <div class="field has-addons">
+                <p class="control">
+                  <a class="button is-static">
+                    +86
+                  </a>
+                </p>
+                <p class="control is-expanded">
+                  <input v-bind:class="{'is-danger':show_danger.sphonenum}" class="input" type="tel" placeholder="Your phone number" v-model.trim="student_phone_number" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label font2">其 它 要 求</label>
+          <div class="control">
+            <textarea class="textarea is-info" placeholder="Other requirements" maxlength="460" v-model.trim="student_require"></textarea>
+          </div>
+        </div>
+
+        <!--    <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  I agree to the <a href="#">terms and conditions</a>
+                </label>
+              </div>
+            </div>-->
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button" v-on:click="create_a_order">提 交</button>
+          </div>
         </div>
       </div>
     </div>

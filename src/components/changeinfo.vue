@@ -1,214 +1,216 @@
 <template>
  <div id="changeinfo" class="card column">
-   <div class="block">
-           <button class="delete is-small" v-on:click="closecmyinfo"></button>
-   </div>
-<!--   <div class="block">
-     <button class="button is-link is-outlined is-small" v-on:click="closecmyinfo">
-       <span>关闭</span>
-       <span class="icon is-small">
-      <i class="fas fa-times"></i>
-    </span>
-     </button>
-   </div>-->
-
-   <div class="field is-horizontal">
-     <div class="field-label is-normal">
-       <label class="label font2">年龄</label>
+   <div class="card-content">
+     <div class="block">
+       <button class="delete is-small" v-on:click="closecmyinfo"></button>
      </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="columns">
-           <div class="column is-two-fifths">
-             <p class="control  is-expanded has-icons-left">
-               <input v-bind:class="{'is-danger':showselectdanger.agedanger}" class="input font2" type="number" placeholder="Age"  v-model.number="usr_age" maxlength="3">
-               <span class="icon is-small is-left">
+     <!--   <div class="block">
+          <button class="button is-link is-outlined is-small" v-on:click="closecmyinfo">
+            <span>关闭</span>
+            <span class="icon is-small">
+           <i class="fas fa-times"></i>
+         </span>
+          </button>
+        </div>-->
+
+     <div class="field is-horizontal">
+       <div class="field-label is-normal">
+         <label class="label font2">年龄</label>
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="columns">
+             <div class="column is-two-fifths">
+               <p class="control  is-expanded has-icons-left">
+                 <input v-bind:class="{'is-danger':showselectdanger.agedanger}" class="input font2" type="number" placeholder="Age"  v-model.number="usr_age" maxlength="3">
+                 <span class="icon is-small is-left">
                   <i class="fas fa-baby"></i>
               </span>
+               </p>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <div class="field is-horizontal">
+       <div class="field-label"></div>
+       <div class="field-body">
+         <div class="field is-expanded">
+           <div class="field has-addons">
+             <p class="control">
+               <a class="button is-static font2">
+                 +86
+               </a>
+             </p>
+             <p class="control is-expanded">
+               <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
              </p>
            </div>
          </div>
        </div>
      </div>
-   </div>
 
-   <div class="field is-horizontal">
-     <div class="field-label"></div>
-     <div class="field-body">
-       <div class="field is-expanded">
-         <div class="field has-addons">
-           <p class="control">
-             <a class="button is-static font2">
-               +86
-             </a>
-           </p>
-           <p class="control is-expanded">
-             <input class="input font2" type="tel" placeholder="Your phone number" v-model="usr_phone_number" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
-           </p>
-         </div>
+
+
+     <div class="field is-horizontal">
+       <div class="field-label">
+         <label class="label font2">性别</label>
        </div>
-     </div>
-   </div>
-
-
-
-   <div class="field is-horizontal">
-     <div class="field-label">
-       <label class="label font2">性别</label>
-     </div>
-     <div class="field-body">
-       <div class="field is-narrow">
-         <div class="control">
-           <label class="radio font2">
-             <input type="radio" name="member" v-model="usr_sex" value="男" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">
-             男
-           </label>
-           <label class="radio font2">
-             <input type="radio" name="member" v-model="usr_sex" value="女" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">
-             女
-           </label>
-         </div>
-       </div>
-     </div>
-   </div>
-
-  <!--省市   -->
-   <div class="field is-horizontal">
-     <div class="field-label"></div>
-     <div class="field-body">
-       <div class="field is-expanded">
-         <div class="field has-addons">
-           <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.provincedanger}">
-             <select v-model="selectcity.province" >
-               <option value="a" disabled>省.自治区.直辖市</option>
-               <option v-for="provincename in Object.keys(cityinfo)" v-bind:value="provincename">{{provincename}}</option>
-             </select>
-           </div>
-           <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.citydanger}">
-             <select v-model="selectcity.city" >
-               <option value="b" disabled>地级市.地区.自治州</option>
-               <option v-for="cityname in Object.keys(cityinfo[selectcity.province])" v-bind:value="cityname">{{cityname}}</option>
-             </select>
-           </div>
-           <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.countydanger}">
-             <select v-model="selectcity.county" >
-               <option value="c" disabled>市辖区.县级市.县</option>
-               <option v-for="countyname in cityinfo[selectcity.province][selectcity.city]" v-bind:value="countyname">{{countyname}}</option>
-             </select>
-         </div>
-         </div>
-       </div>
-
-     </div>
-
-   </div>
-
-   <div class="field is-horizontal">
-     <div class="field-label is-normal">
-       <label class="label font2">就读学校</label>
-     </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="control">
-           <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school" v-bind:disabled="usr_is_certificate_verify" maxlength="20">
-         </div>
-       </div>
-     </div>
-   </div>
-
-
-   <div class="field is-horizontal">
-     <div class="field-label is-normal">
-       <label class="label font2">所学专业</label>
-     </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="control">
-           <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" v-bind:disabled="usr_is_certificate_verify" maxlength="20">
-         </div>
-       </div>
-     </div>
-   </div>
-
-   <div class="field is-horizontal">
-     <div class="field-label is-normal">
-       <label class="label font2">执教年级</label>
-     </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="control">
-           <div class="select is-multiple ">
-             <select multiple size="6" v-model="selectedg.selectedpgrades">
-               <option class="font2" v-bind:value="grade" v-for="grade in pschool.grades">{{grade}}</option>
-             </select>
-           </div>
-           <div class="select is-multiple ">
-             <select multiple size="6" v-model="selectedg.selectedmgrades">
-               <option class="font2" v-bind:value="grade" v-for="grade in mschool.grades">{{grade}}</option>
-             </select>
-           </div>
-           <div class="select is-multiple ">
-             <select multiple size="6" v-model="selectedg.selectedhgrades">
-               <option class="font2" v-bind:value="grade" v-for="grade in hschool.grades">{{grade}}</option>
-             </select>
+       <div class="field-body">
+         <div class="field is-narrow">
+           <div class="control">
+             <label class="radio font2">
+               <input type="radio" name="member" v-model="usr_sex" value="男" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">
+               男
+             </label>
+             <label class="radio font2">
+               <input type="radio" name="member" v-model="usr_sex" value="女" v-bind:disabled="usr_info.is_certificate_verify ==1 &&usr_info.is_identity_verify ==1">
+               女
+             </label>
            </div>
          </div>
        </div>
      </div>
-   </div>
-  <p><span class="tag is-link">小 学</span>{{selectedg.selectedpgrades}}<span class="tag is-link">初 中</span>{{selectedg.selectedmgrades}}<span class="tag is-link">高 中</span>{{selectedg.selectedhgrades}}</p>
 
-   <div class="field is-horizontal">
-     <div class="field-label is-normal">
-       <label class="label font2">执教学科</label>
+     <!--省市   -->
+     <div class="field is-horizontal">
+       <div class="field-label"></div>
+       <div class="field-body">
+         <div class="field is-expanded">
+           <div class="field has-addons">
+             <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.provincedanger}">
+               <select v-model="selectcity.province" >
+                 <option value="a" disabled>省.自治区.直辖市</option>
+                 <option v-for="provincename in Object.keys(cityinfo)" v-bind:value="provincename">{{provincename}}</option>
+               </select>
+             </div>
+             <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.citydanger}">
+               <select v-model="selectcity.city" >
+                 <option value="b" disabled>地级市.地区.自治州</option>
+                 <option v-for="cityname in Object.keys(cityinfo[selectcity.province])" v-bind:value="cityname">{{cityname}}</option>
+               </select>
+             </div>
+             <div class="select is-link is-small" v-bind:class="{'is-danger':showselectdanger.countydanger}">
+               <select v-model="selectcity.county" >
+                 <option value="c" disabled>市辖区.县级市.县</option>
+                 <option v-for="countyname in cityinfo[selectcity.province][selectcity.city]" v-bind:value="countyname">{{countyname}}</option>
+               </select>
+             </div>
+           </div>
+         </div>
+
+       </div>
+
      </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="control">
-           <div class="select is-multiple ">
-             <select multiple size="8" v-model="selectedc.selectedpclasses">
-               <option class="font2" v-bind:value="classvalue" v-for="classvalue in pschool.classes">{{classvalue}}</option>
-             </select>
-           </div>
-           <div class="select is-multiple ">
-             <select multiple size="8" v-model="selectedc.selectedmclasses">
-               <option class="font2" v-bind:value="classvalue" v-for="classvalue in mschool.classes">{{classvalue}}</option>
-             </select>
-           </div>
-           <div class="select is-multiple ">
-             <select multiple size="8" v-model="selectedc.selectedhclasses">
-               <option class="font2" v-bind:value="classvalue" v-for="classvalue in hschool.classes">{{classvalue}}</option>
-             </select>
+
+     <div class="field is-horizontal">
+       <div class="field-label is-normal">
+         <label class="label font2">就读学校</label>
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="control">
+             <input class="input is-link font2" type="text" placeholder="Your school" v-model="usr_school" v-bind:disabled="usr_is_certificate_verify" maxlength="20">
            </div>
          </div>
        </div>
      </div>
-   </div>
-   <p><span class="tag is-link">小 学</span>{{selectedc.selectedpclasses}}<span class="tag is-link">初 中</span>{{selectedc.selectedmclasses}}<span class="tag is-link">高 中</span>{{selectedc.selectedhclasses}}</p>
 
-   <div class="field is-horizontal">
-     <div class="field-label is-normal">
-       <label class="label font2">个人经历</label>
-     </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="control">
-           <textarea class="textarea is-link font2" placeholder="Please enter your personal history" rows="6" maxlength="500" v-model="usr_experience"></textarea>
+
+     <div class="field is-horizontal">
+       <div class="field-label is-normal">
+         <label class="label font2">所学专业</label>
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="control">
+             <input class="input is-link font2" type="text" placeholder="Your major" v-model="usr_major" v-bind:disabled="usr_is_certificate_verify" maxlength="20">
+           </div>
          </div>
        </div>
      </div>
-   </div>
 
-   <div class="field is-horizontal">
-     <div class="field-label">
-       <!-- Left empty for spacing -->
+     <div class="field is-horizontal">
+       <div class="field-label is-normal">
+         <label class="label font2">执教年级</label>
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="control">
+             <div class="select is-multiple ">
+               <select multiple size="6" v-model="selectedg.selectedpgrades">
+                 <option class="font2" v-bind:value="grade" v-for="grade in pschool.grades">{{grade}}</option>
+               </select>
+             </div>
+             <div class="select is-multiple ">
+               <select multiple size="6" v-model="selectedg.selectedmgrades">
+                 <option class="font2" v-bind:value="grade" v-for="grade in mschool.grades">{{grade}}</option>
+               </select>
+             </div>
+             <div class="select is-multiple ">
+               <select multiple size="6" v-model="selectedg.selectedhgrades">
+                 <option class="font2" v-bind:value="grade" v-for="grade in hschool.grades">{{grade}}</option>
+               </select>
+             </div>
+           </div>
+         </div>
+       </div>
      </div>
-     <div class="field-body">
-       <div class="field">
-         <div class="control">
-           <button class="button is-primary is-small" @click="uploadinfo">
-             上 传
-           </button>
+     <p><span class="tag is-link">小 学</span>{{selectedg.selectedpgrades}}<span class="tag is-link">初 中</span>{{selectedg.selectedmgrades}}<span class="tag is-link">高 中</span>{{selectedg.selectedhgrades}}</p>
+
+     <div class="field is-horizontal">
+       <div class="field-label is-normal">
+         <label class="label font2">执教学科</label>
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="control">
+             <div class="select is-multiple ">
+               <select multiple size="8" v-model="selectedc.selectedpclasses">
+                 <option class="font2" v-bind:value="classvalue" v-for="classvalue in pschool.classes">{{classvalue}}</option>
+               </select>
+             </div>
+             <div class="select is-multiple ">
+               <select multiple size="8" v-model="selectedc.selectedmclasses">
+                 <option class="font2" v-bind:value="classvalue" v-for="classvalue in mschool.classes">{{classvalue}}</option>
+               </select>
+             </div>
+             <div class="select is-multiple ">
+               <select multiple size="8" v-model="selectedc.selectedhclasses">
+                 <option class="font2" v-bind:value="classvalue" v-for="classvalue in hschool.classes">{{classvalue}}</option>
+               </select>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <p><span class="tag is-link">小 学</span>{{selectedc.selectedpclasses}}<span class="tag is-link">初 中</span>{{selectedc.selectedmclasses}}<span class="tag is-link">高 中</span>{{selectedc.selectedhclasses}}</p>
+
+     <div class="field is-horizontal">
+       <div class="field-label is-normal">
+         <label class="label font2">个人经历</label>
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="control">
+             <textarea class="textarea is-link font2" placeholder="Please enter your personal history" rows="6" maxlength="500" v-model="usr_experience"></textarea>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <div class="field is-horizontal">
+       <div class="field-label">
+         <!-- Left empty for spacing -->
+       </div>
+       <div class="field-body">
+         <div class="field">
+           <div class="control">
+             <button class="button is-primary is-small" @click="uploadinfo">
+               上 传
+             </button>
+           </div>
          </div>
        </div>
      </div>
