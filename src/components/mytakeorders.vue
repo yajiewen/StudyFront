@@ -23,22 +23,32 @@
             <p class="font3">接单时间:{{ order.order_accept_time }}</p>
           </div>
 
-          <div class="columns">
-            <div class="column font2">年 级 <p class="font3">{{order.order_teaching_grade}}</p></div>
-            <div class="column font2">科 目 <p class="font3">{{order.order_teaching_subjects}}</p></div>
-            <div class="column font2">金 额 <p class="font3">{{order.order_total_money}} 元</p></div>
-            <div class="column font2">状 态
-              <div class="tags are-small">
-                <span class="tag is-link " v-if="order.order_status == 2">待完成</span>
-                <span class="tag is-success " v-if="order.order_status == 3">已完成</span>
-                <span class="tag is-danger " v-if="order.order_status == 4">申请退款中</span>
-                <span class="tag is-info " v-if="order.order_status == 5">已退款</span>
-                <span class="tag is-primary " v-if="order.order_status == 6">已取消</span>
-                <span class="tag is-warning " v-if="order.order_status == 7">客服处理中</span>
-                <span class="tag is-light " v-if="order.order_status == 8">待确认</span>
-              </div>
-            </div>
-          </div>
+          <table class="tablepading">
+            <tr>
+              <td><span class="font2">年 级</span></td>
+              <td><span class="font2">科 目</span></td>
+              <td><span class="font2">金 额</span></td>
+              <td><span class="font2">状 态</span></td>
+            </tr>
+            <tr>
+              <td><span class="font3">{{order.order_teaching_grade}}</span></td>
+              <td><span class="font3">{{order.order_teaching_subjects}}</span></td>
+              <td><span class="font3">{{order.order_total_money}} 元</span></td>
+              <td>
+                <span class="font3">
+                  <div class="tags are-small">
+                    <span class="tag is-link " v-if="order.order_status == 2">待完成</span>
+                    <span class="tag is-success " v-if="order.order_status == 3">已完成</span>
+                    <span class="tag is-danger " v-if="order.order_status == 4">申请退款中</span>
+                    <span class="tag is-info " v-if="order.order_status == 5">已退款</span>
+                    <span class="tag is-primary " v-if="order.order_status == 6">已取消</span>
+                    <span class="tag is-warning " v-if="order.order_status == 7">客服处理中</span>
+                    <span class="tag is-light " v-if="order.order_status == 8">待确认</span>
+                  </div>
+                </span>
+              </td>
+            </tr>
+          </table>
 
           <div>
             <button v-bind:class="{'is-loading':button_is_loading}" class="button is-small" v-on:click="askcomplete(order.order_token)" v-if="order.order_status == 2">结单</button>
@@ -216,5 +226,7 @@ export default {
   /*background-color: rgb(10 10 10 / 10%);*/
   background-color: #F5F5F5;
 }
-
+.tablepading{
+  width: 100%;
+}
 </style>

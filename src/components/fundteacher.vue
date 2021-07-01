@@ -115,12 +115,19 @@
      <div class="inbox-messages" id="inbox-messages">
        <div v-for="(teacher, index) in teacherinfo.teacherinfolist.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}" class="card" v-bind:id="index" v-on:click="showMessage(index)" >
          <div class="card-content">
-           <div class="columns">
-             <div class="column font2">年 龄 <p class="font3">{{teacher.usr_age}}</p></div>
-             <div class="column font2">毕 业 学 校 <p class="font3">{{teacher.usr_school}}</p></div>
-             <div class="column font2">联 系 电 话<p class="font3">{{teacher.usr_phone_number}}</p></div>
-             <div class="column font2"><button class="button is-small" v-on:click="showdetailinfo(index)"><i class="fas fa-chevron-down"></i></button></div>
-           </div>
+           <table class="tablepading">
+             <tr>
+               <td><span class="font2">年 龄</span></td>
+               <td><span class="font2">毕 业 学 校</span></td>
+               <td><span class="font2">联 系 电 话</span></td>
+               <td><button class="button is-small" v-on:click="showdetailinfo(index)"><i class="fas fa-chevron-down"></i></button></td>
+             </tr>
+             <tr>
+                <td><span class="font3">{{teacher.usr_age}}</span></td>
+                <td><span class="font3">{{teacher.usr_school}}</span></td>
+                <td><span class="font3">{{teacher.usr_phone_number}}</span></td>
+             </tr>
+           </table>
 
 <!--详细信息-->
            <div v-show="showdetail == index">
@@ -129,6 +136,13 @@
                <li class="font2">执 教 学 科: {{teacher.usr_teaching_subjects}}</li>
                <li><span class="tag is-link is-light" v-if="teacher.usr_identity_verify == 1">身 份 已 认 证 v</span><span class="tag is-light" v-else >身 份 未 认 证</span></li>
                <li><span class="tag is-link is-light" v-if="teacher.use_certificate_verify == 1">学 籍 已 认 证 v</span><span class="tag is-light" v-else >学 籍 未 认 证</span></li>
+               <li>
+<!--                 <figure class="image is-48x48">-->
+<!--                   <div >-->
+<!--                     <a :href="teacher.usr_head_img_url" target="_blank"><img :src="teacher.usr_head_img_url" alt="Placeholder image"></a>-->
+<!--                   </div>-->
+<!--                 </figure>-->
+               </li>
              </ul>
            </div>
          </div>
@@ -337,12 +351,13 @@ export default {
   font-size: 0.5em
 }
 .cardbackground{  /*选中后换的背景颜色*/
-  /*background-color:ghostwhite;*/
-  /*background-color: rgb(10 10 10 / 10%);*/
   background-color: #F5F5F5;
 }
 .sunposition{
   position: absolute;
   right: 10%;
+}
+.tablepading{
+  width: 100%;
 }
 </style>
