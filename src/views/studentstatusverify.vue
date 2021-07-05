@@ -64,6 +64,8 @@
 import Navabar from "../components/Navabar";
 import axios from 'axios'
 import * as imageConversion from "image-conversion";
+import stucard1 from "../assets/stucard1.png"
+import stucard2 from "../assets/stucard2.png"
 //自定义axios 否则会使用全局default 配置的axios
 let upaxios = axios.create({
   headers:{
@@ -89,9 +91,9 @@ export default {
       showupload:true,
       timer:0,
       filename1:'请选择文件',
-      imgurl1:'',
+      imgurl1:stucard1,
       filename2:'请选择文件',
-      imgurl2:'',
+      imgurl2:stucard2,
       formdata: new FormData, //保存文件
       imgstyle:['jpg','jpeg','png',], //可上传的图片格式
       isgetfile:{
