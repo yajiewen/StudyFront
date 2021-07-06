@@ -175,6 +175,10 @@
 <script>
 import axios from 'axios'
 import * as imageConversion from "image-conversion";
+import idcard1 from "../assets/idcard1.png"
+import idcard2 from "../assets/idcard2.png"
+import stucard1 from "../assets/stucard1.png"
+import stucard2 from "../assets/stucard2.png"
 
 
 export default {
@@ -191,10 +195,10 @@ export default {
         sfilename2: '选择文件',
       },
       imgurl: {
-        iimgurl1: '',
-        iimgurl2: '',
-        simgurl1: '',
-        simgurl2: '',
+        iimgurl1: idcard1,
+        iimgurl2: idcard2,
+        simgurl1: stucard1,
+        simgurl2: stucard2,
       },
       isgetfile:{
         iimg1: false,
