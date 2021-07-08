@@ -21,6 +21,12 @@
               <span>学籍审核</span>
             </a>
           </li>
+          <li :class="{'is-active':showactive.cus_complete}" @click="showcuscompleteblock">
+            <a>
+              <span class="icon is-small"><i class="fas fa-check-square" aria-hidden="true"></i></span>
+              <span>客服结单</span>
+            </a>
+          </li>
           <li :class="{'is-active':showactive.cus_intervene}" @click="showcusinterveneblock">
             <a>
               <span class="icon is-small"><i class="fas fa-phone" aria-hidden="true"></i></span>
@@ -42,6 +48,7 @@ export default {
         badaccouont:true,
         identity:false,
         stu_status:false,
+        cus_complete:false,
         cus_intervene:false,
       }
     }
@@ -99,6 +106,19 @@ export default {
         }
       }
     },
+    showcuscompleteblock(){
+      if(this.showactive.cus_complete == false){
+        for(let keyvalue of Object.keys(this.showactive)){
+          if(keyvalue == 'cus_complete'){
+            this.showactive[keyvalue] = true
+          }else{
+            this.showactive[keyvalue] = false
+          }
+          //发射显示account模块
+          this.$emit('showcusmpleteblock')
+        }
+      }
+    }
   }
 }
 </script>

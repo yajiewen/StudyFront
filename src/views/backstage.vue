@@ -35,11 +35,12 @@
 <!-- 主页面-->
    <div v-if="shownavbar">
      <!-- 导航栏-->
-     <backnavbar @showcusinterveneblock="showcusinterv" @showstudentblock="showstudent" @showidentityblock="showinden" @showaccountblock="showacc"></backnavbar>
+     <backnavbar @showcusmpleteblock="showcuscomplete" @showcusinterveneblock="showcusinterv" @showstudentblock="showstudent" @showidentityblock="showinden" @showaccountblock="showacc"></backnavbar>
       <!--  body内容-->
       <badaccount @refresha="getbadaccountlist" :badinfo="badainfo" v-show="blockshow.account_v"></badaccount>
       <identityv @refreshi="getidentitylist" :identinfo="ideninfo" v-show="blockshow.identity_v"></identityv>
       <studentv @refreshs="getstudetlist" :stuinfo="stuinfo" v-show="blockshow.student_v"></studentv>
+      <ordertocomplete @refreshco="getcorderlist" :corderinfo="corderinfo" v-show="blockshow.cuscomple_v"></ordertocomplete>
       <cintervene v-show="blockshow.cusinter_v"></cintervene>
    </div>
 
@@ -53,6 +54,7 @@ import badaccount from "../components/badaccount";
 import identityv from "../components/identityv";
 import studentv from "../components/studentv";
 import cintervene from "../components/cintervene";
+import ordertocomplete from "../components/ordertocomplete";
 
 export default {
   name: "backstage",
@@ -62,6 +64,7 @@ export default {
     identityv,
     studentv,
     cintervene,
+    ordertocomplete,
   },
   data(){
     return{
@@ -70,6 +73,11 @@ export default {
       message:'',
       //垃圾账号信息
       badainfo:{
+        num:0,
+        infolist:[],
+      },
+      // 待结单列表
+      corderinfo:{
         num:0,
         infolist:[],
       },
@@ -89,6 +97,7 @@ export default {
         account_v:true,
         identity_v:false,
         student_v:false,
+        cuscomple_v:false,
         cusinter_v:false,
       }
     }
@@ -103,6 +112,18 @@ export default {
       if(res.data.is_login=='yes'){
         this.badainfo.num = res.data.account_num
         this.badainfo.infolist = res.data.bad_account_list
+      }
+    })
+
+    //请求待结单列表
+    axios({
+      withCredentials:true,
+      method:'get',
+      url:'backstage/orderstocomplete/'
+    }).then(res => {
+      if(res.data.is_login=='yes'){
+        this.corderinfo.num = res.data.order_num
+        this.corderinfo.infolist = res.data.order_list
       }
     })
 
@@ -153,6 +174,15 @@ export default {
     showstudent(){ //显示垃圾账号模块
       for(let keyvalue of Object.keys(this.blockshow)){
         if(keyvalue == 'student_v'){
+          this.blockshow[keyvalue]= true
+        }else{
+          this.blockshow[keyvalue]= false
+        }
+      }
+    },
+    showcuscomplete(){ // 显示客服结单模块
+      for(let keyvalue of Object.keys(this.blockshow)){
+        if(keyvalue == 'cuscomple_v'){
           this.blockshow[keyvalue]= true
         }else{
           this.blockshow[keyvalue]= false
@@ -216,6 +246,18 @@ export default {
           this.stuinfo.infolist = res.data.student_list
         }else{
           alert('请重新登录')
+        }
+      })
+    },
+    getcorderlist(){
+      axios({
+        withCredentials:true,
+        method:'get',
+        url:'backstage/orderstocomplete/'
+      }).then(res => {
+        if(res.data.is_login=='yes'){
+          this.corderinfo.num = res.data.order_num
+          this.corderinfo.infolist = res.data.order_list
         }
       })
     },
