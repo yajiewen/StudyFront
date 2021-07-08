@@ -76,11 +76,11 @@
           <div v-for="(order, index) in orderlistinfo.ordersinfo.slice(slicestart,sliceend)" v-bind:class="{cardbackground:index == click_item_id}"  v-bind:id="index" v-on:click="showMessage(index)">
             <table class="tablepading">
               <tr>
-                <td><span class="font2">{{order.order_teaching_grade}}</span></td>
-                <td><span class="font2">{{order.order_teaching_subjects}}</span></td>
-                <td><span class="font2">{{order.order_total_money}} 元</span></td>
-                <td><span class="font2"><a v-on:click="showdetailf(index,order.order_teaching_grade,order.order_teaching_subjects)">详细信息</a></span></td>
-                <td>
+                <td class="tdwidth"><span class="font2">{{order.order_teaching_grade}}</span></td>
+                <td class="tdwidth"><span class="font2">{{order.order_teaching_subjects}}</span></td>
+                <td class="tdwidth"><span class="font2">{{order.order_total_money}} 元</span></td>
+                <td class="tdwidth"><span class="font2"><a v-on:click="showdetailf(index,order.order_teaching_grade,order.order_teaching_subjects)">详细信息</a></span></td>
+                <td class="tdwidth">
                   <button v-if="usr_info.uemail !=order.order_boss_email " class="button is-small" v-on:click="cshowtakemenu(index)"><i class="fas fa-chevron-down"></i></button>
                   <button v-else class="button is-small" disabled="usr_info.uemail == order.order_boss_email " title="我发的定单!"><i class="fas fa-user-alt"></i></button>
                 </td>
@@ -448,5 +448,8 @@ export default {
 }
 .tablepading{
   width: 100%;
+}
+.tdwidth{
+  width: 20%;
 }
 </style>
