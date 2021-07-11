@@ -19,9 +19,20 @@
     <div class="column">
       <footer class="footer">
         <div class="content has-text-centered font2">
-          <p>
+          <p class="font1">
             <strong>思 达 迪  </strong>线上 线下大学生家教平台
           </p>
+          <p>
+            如您在使用过程中遇到任何问题,请随时拨打客服联系电话:
+          </p>
+          <p>
+            <strong>155 7893 7050</strong>
+          </p>
+          <p>
+            或发送邮件至:
+            <strong>287 4341 865@qq.com</strong>
+          </p>
+
         </div>
       </footer>
     </div>
