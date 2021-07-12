@@ -31,7 +31,7 @@
       <a v-on:click="tofindpassword" style="color: hsl(204, 86%, 53%) ;font-style: italic;text-align: right;">找回密码</a>
 
       <div class="field">
-        <button class="button is-link is-fullwidth" v-on:click="sendlogin" ><strong>登&nbsp;&nbsp;录</strong></button>
+        <button v-bind:class="{'is-loading':isloginloading}" class="button is-link is-fullwidth" v-on:click="sendlogin" ><strong>登&nbsp;&nbsp;录</strong></button>
       </div>
       <hr>
       <div class="field">
@@ -56,6 +56,7 @@
         upassword: '',
         message:'',
         is_show_log_button:true,
+        isloginloading : false,
       }
     },
     methods:{
@@ -69,6 +70,7 @@
         }
         else
         {
+          this.isloginloading = true
           axios({
             withCredentials : true,
             url:'account/login/',
@@ -83,18 +85,20 @@
             if (res.data.is_login =='yes' && res.data.is_verify =='yes')
             {
               this.$router.push('/')
+              this.isloginloading = false
             }
             else if(res.data.is_login =='no' && res.data.is_verify =='yes')
             {
               this.message = '用户名密码不匹配'
               setTimeout(() =>{this.message=''},1000)
+              this.isloginloading = false
             }
             else if(res.data.is_login =='no' && res.data.is_verify =='no')
             {
               this.message = '*邮箱未验证'
               setTimeout(() =>{this.message=''},1000)
+              this.isloginloading = false
             }
-
           })
         }
       },
