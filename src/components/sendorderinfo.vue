@@ -180,11 +180,16 @@ export default {
       econtent:'',
       successmess:'',
 
+
     }
   },
   methods:{
     showtinfo(){
-      this.$emit('gettinfo',this.order_info.order_worker_email)
+        if(Object.keys(this.workerinfo).length == 0 ){ //判断对象为空
+          this.$emit('gettinfo',this.order_info.order_worker_email)
+        }else{
+          this.$emit('changeshow')
+        }
     },
     changecolor(keyname){
       let i = 0
