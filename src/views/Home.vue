@@ -471,7 +471,6 @@ export default {
           if(res.data.is_identity_verify=='yes' && res.data.is_paid_fund_teacher_fuc == 'yes'){
             this.teacherlistinfo.teachernum = res.data.teacher_num
             this.teacherlistinfo.teacherinfolist = res.data.teacherinfo
-            console.log('已刷新');
           }
         }else{
           this.is_show_log_button = true

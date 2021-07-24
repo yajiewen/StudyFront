@@ -104,12 +104,12 @@ export default {
       //模块显示
       shownavbar:false,
       blockshow:{
-        account_v:true,
+        account_v:false,
         identity_v:false,
         student_v:false,
         cuscomple_v:false,
         cusinter_v:false,
-        stageusrinfo_v:false,
+        stageusrinfo_v:true,
       }
     }
   },

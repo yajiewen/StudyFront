@@ -51,12 +51,12 @@ export default {
   data(){
     return{
       showactive:{
-        badaccouont:true,
+        badaccouont:false,
         identity:false,
         stu_status:false,
         cus_complete:false,
         cus_intervene:false,
-        stage_usrinfo:false,
+        stage_usrinfo:true,
       }
     }
   },
