@@ -3,6 +3,12 @@
     <div class="column">
       <div class="tabs is-centered font2">
         <ul>
+          <li :class="{'is-active':showactive.stage_usrinfo}" @click="showstageusrinfoblock">
+            <a>
+              <span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span>
+              <span>主页信息</span>
+            </a>
+          </li>
           <li :class="{'is-active':showactive.badaccouont}" @click="showaccountblock">
             <a>
               <span class="icon is-small"><i class="fas fa-user-alt-slash" aria-hidden="true"></i></span>
@@ -50,10 +56,24 @@ export default {
         stu_status:false,
         cus_complete:false,
         cus_intervene:false,
+        stage_usrinfo:false,
       }
     }
   },
   methods:{
+    showstageusrinfoblock(){
+      if(this.showactive.stage_usrinfo == false){
+        for(let keyvalue of Object.keys(this.showactive)){
+          if(keyvalue == 'stage_usrinfo'){
+            this.showactive[keyvalue] = true
+          }else{
+            this.showactive[keyvalue] = false
+          }
+          //发射显示account模块
+          this.$emit('showsusrinfoblock')
+        }
+      }
+    },
     showaccountblock(){
       if(this.showactive.badaccouont == false){
         for(let keyvalue of Object.keys(this.showactive)){

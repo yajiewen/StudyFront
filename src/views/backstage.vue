@@ -35,13 +35,14 @@
 <!-- 主页面-->
    <div v-if="shownavbar">
      <!-- 导航栏-->
-     <backnavbar @showcusmpleteblock="showcuscomplete" @showcusinterveneblock="showcusinterv" @showstudentblock="showstudent" @showidentityblock="showinden" @showaccountblock="showacc"></backnavbar>
+     <backnavbar @showsusrinfoblock="showstageusrinfo" @showcusmpleteblock="showcuscomplete" @showcusinterveneblock="showcusinterv" @showstudentblock="showstudent" @showidentityblock="showinden" @showaccountblock="showacc"></backnavbar>
       <!--  body内容-->
       <badaccount @refresha="getbadaccountlist" :badinfo="badainfo" v-show="blockshow.account_v"></badaccount>
       <identityv @refreshi="getidentitylist" :identinfo="ideninfo" v-show="blockshow.identity_v"></identityv>
       <studentv @refreshs="getstudetlist" :stuinfo="stuinfo" v-show="blockshow.student_v"></studentv>
       <ordertocomplete @refreshco="getcorderlist" :corderinfo="corderinfo" v-show="blockshow.cuscomple_v"></ordertocomplete>
       <cintervene v-show="blockshow.cusinter_v"></cintervene>
+      <stageusrinfo v-show="blockshow.stageusrinfo_v" :stage_usr_info="stage_usr_info"></stageusrinfo>
    </div>
 
  </div>
@@ -55,6 +56,7 @@ import identityv from "../components/identityv";
 import studentv from "../components/studentv";
 import cintervene from "../components/cintervene";
 import ordertocomplete from "../components/ordertocomplete";
+import stageusrinfo from "../components/stageusrinfo";
 
 export default {
   name: "backstage",
@@ -65,6 +67,7 @@ export default {
     studentv,
     cintervene,
     ordertocomplete,
+    stageusrinfo,
   },
   data(){
     return{
@@ -91,6 +94,13 @@ export default {
         num:0,
         infolist:[],
       },
+      // 平台用户统计信息
+      stage_usr_info:{
+        regs_num:0,
+        id_identified_num:0,
+        teacher_num:0,
+        buy_find_teacher_num:0,
+      },
       //模块显示
       shownavbar:false,
       blockshow:{
@@ -99,6 +109,7 @@ export default {
         student_v:false,
         cuscomple_v:false,
         cusinter_v:false,
+        stageusrinfo_v:false,
       }
     }
   },
@@ -151,6 +162,20 @@ export default {
         this.stuinfo.infolist = res.data.student_list
       }
     })
+
+    //请求平台用户统计信息
+    axios({
+      withCredentials:true,
+      method:'get',
+      url:'backstage/stageusrinfo/'
+    }).then(res => {
+      if(res.data.is_login=='yes'){
+          this.stage_usr_info.regs_num = res.data.regs_num
+          this.stage_usr_info.id_identified_num = res.data.id_identified_num
+          this.stage_usr_info.teacher_num = res.data.teacher_num
+          this.stage_usr_info.buy_find_teacher_num = res.data.buy_find_teacher_num
+      }
+    })
   },
   methods:{
     showacc(){ //显示垃圾账号模块
@@ -192,6 +217,16 @@ export default {
     showcusinterv(){ //显示垃圾账号模块
       for(let keyvalue of Object.keys(this.blockshow)){
         if(keyvalue == 'cusinter_v'){
+          this.blockshow[keyvalue]= true
+        }else{
+          this.blockshow[keyvalue]= false
+        }
+      }
+    },
+    // 显示平台用户信息统计模块
+    showstageusrinfo(){
+      for(let keyvalue of Object.keys(this.blockshow)){
+        if(keyvalue == 'stageusrinfo_v'){
           this.blockshow[keyvalue]= true
         }else{
           this.blockshow[keyvalue]= false

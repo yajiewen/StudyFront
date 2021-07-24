@@ -9,7 +9,6 @@ axios.defaults.baseURL = 'https://www.kidtut.net/'
 //设置全局axios为form-data
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.timeout =  6000;
 axios.defaults.transformRequest = [function (data) {   //解决前端发送数据格式要为form-data的问题自动把data转为form形式
   let ret = ''
   for (let it in data) {
@@ -22,6 +21,7 @@ axios.defaults.transformRequest = [function (data) {   //解决前端发送数�
 //在main.js设置全局的请求次数，请求的间隙
 // axios.defaults.retry = 4;
 // axios.defaults.retryDelay = 1000;
+//axios.defaults.timeout =  6000;
 //
 // axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
 //   var config = err.config;
