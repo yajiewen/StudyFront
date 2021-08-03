@@ -326,8 +326,18 @@ export default {
               if(res.data.is_login=='yes'){
                 this.badainfo.num = res.data.account_num
                 this.badainfo.infolist = res.data.bad_account_list
-              }else{
-                alert('请重新登录')
+              }
+            })
+
+            //请求待结单列表
+            axios({
+              withCredentials:true,
+              method:'get',
+              url:'backstage/orderstocomplete/'
+            }).then(res => {
+              if(res.data.is_login=='yes'){
+                this.corderinfo.num = res.data.order_num
+                this.corderinfo.infolist = res.data.order_list
               }
             })
 
@@ -338,10 +348,9 @@ export default {
               url:'backstage/ilist/'
             }).then(res => {
               if(res.data.is_login=='yes'){
+                this.shownavbar = true
                 this.ideninfo.num = res.data.identity_num
                 this.ideninfo.infolist = res.data.identity_list
-              }else{
-                alert('请重新登录')
               }
             })
 
@@ -354,8 +363,20 @@ export default {
               if(res.data.is_login=='yes'){
                 this.stuinfo.num = res.data.student_num
                 this.stuinfo.infolist = res.data.student_list
-              }else{
-                alert('请重新登录')
+              }
+            })
+
+            //请求平台用户统计信息
+            axios({
+              withCredentials:true,
+              method:'get',
+              url:'backstage/stageusrinfo/'
+            }).then(res => {
+              if(res.data.is_login=='yes'){
+                this.stage_usr_info.regs_num = res.data.regs_num
+                this.stage_usr_info.id_identified_num = res.data.id_identified_num
+                this.stage_usr_info.teacher_num = res.data.teacher_num
+                this.stage_usr_info.buy_find_teacher_num = res.data.buy_find_teacher_num
               }
             })
 
