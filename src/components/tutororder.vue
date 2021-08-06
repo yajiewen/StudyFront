@@ -350,6 +350,7 @@ export default {
               this.$emit('getnewinfo') //刷新个人信息中的钱包
               this.showisloading = -1 //关闭loading 状态
               this.showtakemenu = -1 //关闭接单menu
+              alert('接单成功!')
             }else { //接单失败显示原因(这里逻辑不能错)
               if(res.data.is_self_take == 'yes'){
                 alert('不可以自己接自己的订单!')

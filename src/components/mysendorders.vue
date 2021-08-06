@@ -1,7 +1,8 @@
 <template>
   <div id="mysendorders" class="card column is-one-third">
     <div class="notification is-link">
-      我 的 学 习 订 单/ / / / / / / / / / / / /共 {{mysendordersnum}} 单
+      我 的 学 习 订 单
+      <span class="rightposition">共 {{mysendordersnum}} 单</span>
     </div>
     <div class="action-buttons">
       <div class="control is-grouped">
@@ -69,7 +70,7 @@
               </td>
             </tr>
           </table>
-
+          <span class="rightposition2" v-if="order.order_status == 3 || order.order_status == 5 || order.order_status == 6"><button class="delete is-small" v-on:click="bhideorder(order.order_token)"></button></span>
           <div>
             <button class="button is-small" v-on:click="payorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0">付款</button>
             <button class="button is-small" v-on:click="cancelorder(order.order_token,order.order_boss_email)" v-if="order.order_status == 0 ||order.order_status ==1">取消订单</button>
@@ -315,7 +316,26 @@ export default {
         alert('请重新输入')
       }
     },
-
+    bhideorder(order_token){
+      axios({
+        withCredentials:true,
+        url:'orders/bhideorder/',
+        method:"post",
+        data:{
+          otoken:order_token,
+        }
+      }).then(res => {
+        if(res.data.is_login == 'yes'){
+          if(res.data.is_hide == 'yes'){
+            this.$emit('refreshsorders') //刷新订单
+            this.$emit('closeorderinfo') //需要关闭订单详细信息重新点 因为没法自动更新信息
+            alert("订单删除成功")
+          }
+        }else{
+          alert('请重新登录')
+        }
+      })
+    },
   }
 }
 </script>
@@ -335,5 +355,14 @@ export default {
 }
 .tablepading{
   width: 100%;
+}
+
+.rightposition{
+  position: absolute;
+  right: 10%;
+}
+.rightposition2{
+  position: absolute;
+  right: 1%;
 }
 </style>
